@@ -41,7 +41,7 @@
 <p>然后开始生成密钥 SSH key ：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;邮箱地址&quot;</span><br></pre></td></tr></table></figure>
 
-<p>点击回车。接着会让你输入文件名，点击回车直接忽略，接着会让输入两次密码，点击两次回车，直接设置为空，不用输入密码 。</p>
+<p>点击回车。接着会让输入文件名，点击回车直接忽略，接着会让输入两次密码，点击两次回车，直接设置为空，不用输入密码 。</p>
 <p>创建成功后，可以通过如下命令拷贝 SSH key 的内容 ：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ clip &lt; ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
 
@@ -51,10 +51,11 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
 
 <p>若返回 Hi xxx! You’ve successfully authenticated, but GitHub does not provide shell access. 内容，则证明添加成功。</p>
-<h2 id="修改站点配置文件-config-yml"><a href="#修改站点配置文件-config-yml" class="headerlink" title="修改站点配置文件(_config.yml)"></a>修改站点配置文件(_config.yml)</h2><p>对应的目录 ：myBlog/_config.yml/，myBlog 为 hexo init 初始化文件夹的名称，替换成你自己初始化文件夹的名称。</p>
+<h2 id="修改站点配置文件-config-yml"><a href="#修改站点配置文件-config-yml" class="headerlink" title="修改站点配置文件(_config.yml)"></a>修改站点配置文件(_config.yml)</h2><p>对应的目录 ：myBlog/_config.yml/，myBlog 为 hexo init 初始化文件夹的名称，替换成初始化文件夹的名称。</p>
 <p>修改 depoly ：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git </span><br><span class="line">  repo: git@github.com:username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 
+<p>其中username替换为自己的用户名。</p>
 <p>修改 site 相关信息 ：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title: xx</span><br><span class="line">subtitle:     </span><br><span class="line">description:</span><br><span class="line">keywords:</span><br><span class="line">author: xx</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone:</span><br></pre></td></tr></table></figure>
 
@@ -67,8 +68,11 @@
 <h2 id="部署到-Github"><a href="#部署到-Github" class="headerlink" title="部署到 Github"></a>部署到 Github</h2><p>安装一个部署插件 hexo-deployer-git ：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 
-<p>最后执行以下命令就可以部署上传啦，以下 g 是 generate 缩写，d 是 deploy 缩写：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g -d</span><br></pre></td></tr></table></figure>
+<p>生成静态文件:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+
+<p>提交到远程仓库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
 
 ]]></content>
   </entry>
