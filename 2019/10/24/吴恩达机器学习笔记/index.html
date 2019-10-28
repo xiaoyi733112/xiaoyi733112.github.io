@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="引言监督学习监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。 回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。 无监督学习据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。 单变量线性回归模型表示$h_\theta \left( x \r">
+<meta name="description" content="参考：吴恩达老师的机器学习课程个人笔记  引言监督学习监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。 回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。 无监督学习据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。 单变量线性回归模型表示">
 <meta name="keywords" content="机器学习 线性回归 逻辑回归">
 <meta property="og:type" content="article">
 <meta property="og:title" content="吴恩达机器学习笔记">
 <meta property="og:url" content="http://yoursite.com/2019/10/24/吴恩达机器学习笔记/index.html">
 <meta property="og:site_name" content="Xiaoyi">
-<meta property="og:description" content="引言监督学习监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。 回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。 无监督学习据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。 单变量线性回归模型表示$h_\theta \left( x \r">
+<meta property="og:description" content="参考：吴恩达老师的机器学习课程个人笔记  引言监督学习监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。 回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。 无监督学习据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。 单变量线性回归模型表示">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-28T09:51:50.000Z">
+<meta property="og:updated_time" content="2019-10-28T14:57:04.583Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达机器学习笔记">
-<meta name="twitter:description" content="引言监督学习监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。 回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。 无监督学习据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。 单变量线性回归模型表示$h_\theta \left( x \r">
+<meta name="twitter:description" content="参考：吴恩达老师的机器学习课程个人笔记  引言监督学习监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。 回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。 无监督学习据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。 单变量线性回归模型表示">
 
 
 
@@ -353,7 +353,8 @@
       
 
       
-        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。</p>
+        <p>参考：<a href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes" target="_blank" rel="noopener">吴恩达老师的机器学习课程个人笔记 </a></p>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。</p>
 <p>回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。<br>分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。</p>
 <h3 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h3><p>据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。</p>
 <h1 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h1><h3 id="模型表示"><a href="#模型表示" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_\theta \left( x \right)=\theta_{0} + \theta_{1}x$</p>

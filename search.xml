@@ -4,84 +4,442 @@
     <title>正则表达式</title>
     <url>/2019/10/28/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><p>参考：<a href="https://docs.python.org/3/library/re.html" target="_blank" rel="noopener">re — Regular expression operations</a><br><a href="https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="noopener">Python正则表达式指南</a></p>
-<h2 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h2><p>各种正则表达式运算符的优先级顺序：</p>
-<p>| \ | 转义符 |<br>| (), (?:), (?=), [] | 圆括号和方括号|<br>| *, +, ?, {n}, {n,}, {n,m} | 限定符 |<br>| ^, $, \任何元字符、任何字符 | 定位点和序列（即：位置和顺序） |<br>| | | 替换，”或”操作字符具有高于替换运算符的优先级 |</p>
+<h2 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h2><table>
+    <tr>
+        <th>语法</th>
+        <th>说明</th>
+        <th>表达式实例</th>
+        <th>完整匹配的字符串</th>
+    </tr>
+    <tr align="center">
+        <td colspan="4"><b>字符</b></td>
+    </tr>
+    <tr>
+        <td>一般字符</td>
+        <td>匹配自身。</td>
+        <td>abc</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>.</td>
+        <td>(点) 在默认模式，匹配任意除换行符”\n”外的字符。<br>在DOTALL模式中匹配包括换行符的任意字符。</td>
+        <td>a.c</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>\</td>
+        <td>转义字符,使后一个字符改变原来的意思。<br>如果字符串中有字符*需要匹配，可以使用\*或者字符集[*]。</td>
+        <td>a\.c<br><br>a\\c</td>
+        <td>a.c<br><br>a\c</td>
+    </tr>
+    <tr>
+        <td>[...]</td>
+        <td>字符集（字符类）。对应的位置可以是字符集中任意字符。字符集中的字符可以逐个列出,也可以给出范围,如[abc]或[a-c]。第一个字符如果是^则表示取反，如[^abc]表示不是abc的其他字符。<br>所有的特殊字符在字符集中都失去其原有的特殊含义。在字符集中如果要使用]、-或^，可以在前面加上反斜杠，或把]、-放在第一个字符，把^放在非第一个字符。</td>
+        <td>a[bcd]e</td>
+        <td>abe<br>ace<br>ade</td>
+    </tr>
+    <tr align="center">
+        <td colspan="4"><b>非打印字符</b></td>
+    </tr>
+    <tr>
+        <td>\cx</td>
+        <td> 匹配由x指明的控制字符。例如， \cM 匹配一个 Control-M 或回车符。x 的值必须为 A-Z 或 a-z 之一。否则，将 c 视为一个原义的 'c' 字符。</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>\f</td>
+        <td>匹配一个换页符。等价于 \x0c 和 \cL。</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>\n</td>
+        <td>匹配一个换行符。等价于 \x0a 和 \cJ。</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>\r</td>
+        <td>匹配一个换行符。等价于 \x0a 和 \cJ。</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>\t</td>
+        <td>匹配一个制表符。等价于 \x09 和 \cI。</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>\v</td>
+        <td>匹配一个垂直制表符。等价于 \x0b 和 \cK。</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr align="center">
+        <td colspan="4"><b>预定义字符集（可以写在字符集[...]中）</b></td>
+    </tr>
+    <tr>
+        <td>*</td>
+        <td>匹配前一个字符0次或无限次。</td>
+        <td>abc*</td>
+        <td>ab<br>abccc</td>
+    </tr>
+    <tr>
+        <td>+</td>
+        <td>匹配前一个字符1次或无限次。</td>
+        <td>abc+</td>
+        <td>abc<br>abccc</td>
+    </tr>
+    <tr>
+        <td>?</td>
+        <td>匹配前一个字符0次或1次。</td>
+        <td>abc?</td>
+        <td>ab<br>abc</td>
+    </tr>
+    <tr>
+        <td>{m}</td>
+        <td>匹配前一个字符m次。</td>
+        <td>ab{2}c</td>
+        <td>abbc</td>
+    </tr>
+    <tr>
+        <td>{m,n}</td>
+        <td>匹配前一个字符m次至n次，在 m 和 n 之间取尽量多。<br>m和n可以省略：若省略m，则匹配0至n次；若省略n，则匹配m至无限次。</td>
+        <td>ab{1,2}c</td>
+        <td>abc<br>abbc</td>
+    </tr>
+    <tr>
+        <td>*?<br>+?<br>??<br>{m,n}?</td>
+        <td>使*  +  ?  {m,n}变成非贪婪模式，只匹配尽量少的字符次数。</td>
+        <td>a{3,5}<br><br>a{3,5}?</td>
+        <td>aaaaaa  ->  aaaaa<br><br>aaaaaa  ->  aaa</td>
+    </tr>
+    <tr align="center">
+        <td colspan="4"><b>边界匹配（不消耗待匹配字符串中的字符）</b></td>
+    </tr>
+    <tr>
+        <td>^</td>
+        <td>匹配字符串开头。<br>在多行模式中也匹配换行后的首个符号。</td>
+        <td>^abc</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>$</td>
+        <td>匹配字符串未尾或者换行符的前一个字符。<br>在多行模式中匹配换行符的前一个字符。</td>
+        <td>abc$</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>\A</td>
+        <td>仅匹配字符串开头。</td>
+        <td>\Aabc</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>\Z</td>
+        <td>仅匹配字符串末尾。</td>
+        <td>abc\Z</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>\b</td>
+        <td>匹配空字符串，但只在单词开始或结尾的位置。一个单词被定义为一个单词字符的序列。通常 \b 定义为 \w 和 \W 字符之间，或者 \w 和字符串开始/结尾的边界。</td>
+        <td>\babc\b</td>
+        <td>abc<br>abc.<br>(abc)</td>
+    </tr>
+    <tr>
+        <td>\B</td>
+        <td>匹配空字符串，但不能在词的开头或者结尾。[^\b]</td>
+        <td>abc\B</td>
+        <td>abcd<br>abc3</td>
+    </tr>
+    <tr align="center">
+        <td colspan="4"><b>逻辑、分组</b></td>
+    </tr>
+    <tr>
+        <td>|</td>
+        <td>|代表左右表达式任意匹配一个。<br>它总是先尝试匹配左边的表达式，一旦成功匹配则跳过匹配右边的表达式。<br>如果|没有被包括在()中，则它的范围是整个正则表达式。</td>
+        <td>abc|def</td>
+        <td>abc<br>def</td>
+    </tr>
+    <tr>
+        <td>(…)</td>
+        <td>被括起来的表达式将作为分组，从表达式左边开始每遇到一个分组的左括号’(’，编号+1。<br>另外，分组表达式作为一个整体，可以后接数量词。表达式中的|仅在该组中有效。</td>
+        <td>(abc){2}<br><br>a(123|456)c</td>
+        <td>abcabc<br><br>a456c</td>
+    </tr>
+    <tr>
+        <td>(?P<name>)</name></td>
+        <td>（命名组合）类似正则组合，但是匹配到的子串组在外部是通过定义的 name 来获取的。</td>
+        <td>(?P<id>abc){2}</id></td>
+        <td>abcabc</td>
+    </tr>
+    <tr>
+        <td>(?P=name)</td>
+        <td>反向引用一个命名组合；它匹配前面那个叫 name 的命名组中匹配到的同样的字符串。</td>
+        <td>(?P<id>\d)abc(?P=id)</id></td>
+        <td>1abc1<br>5abc5</td>
+    </tr>
+    <tr>
+        <td>\<number></number></td>
+        <td>匹配数字代表的组合。每个括号是一个组合，组合从1开始编号。</td>
+        <td>(\d)abc\1</td>
+        <td>1abc1<br>5abc5</td>
+    </tr>
+    <tr align="center">
+        <td colspan="4"><b>特殊构造（不作为分组）</b></td>
+    </tr>
+    <tr>
+        <td>(?:…)</td>
+        <td>正则括号的非捕获版本。 匹配在括号内的任何正则表达式，但该分组所匹配的子字符串不能在执行匹配后被获取或是之后在模式中被引用。</td>
+        <td>(?:abc){2}</td>
+        <td>abcabc</td>
+    </tr>
+    <tr>
+        <td>(?aiLmsux)</td>
+        <td>( 'a', 'i', 'L', 'm', 's', 'u', 'x' 中的一个或多个) 这个组合匹配一个空字符串；这些字符对正则表达式设置以下标记 re.A (只匹配ASCII字符), re.I (忽略大小写), re.L (语言依赖), re.M (多行模式), re.S (点dot匹配全部字符), re.U (Unicode匹配), and re.X (冗长模式)。 (这些标记在 模块内容中描述) 如果你想将这些标记包含在正则表达式中，这个方法就很有用，免去了在 re.compile() 中传递 flag 参数。标记应该在表达式字符串首位表示。</td>
+        <td>(?i)abc</td>
+        <td>abc</td>
+    </tr>
+    <tr>
+        <td>(?#...)</td>
+        <td>注释，#后的内容将作为注释被忽路。</td>
+        <td>abc(?#comment)123 </td>
+        <td>abc123</td>
+    </tr>
+    <tr>
+        <td>(?=...)</td>
+        <td>之后的字符串内容需要匹配表达式才能成功匹配。<br>不消耗字符串内容。</td>
+        <td>a(?=\d)</td>
+        <td>后面是数字的a</td>
+    </tr>
+    <tr>
+        <td>(?!...）</td>
+        <td>之后的字符串内容需要不匹配表达式才能成功匹配。<br>不消耗字符串内容。</td>
+        <td>a(?!\d)</td>
+        <td>后面不是数字的a</td>
+    </tr>
+    <tr>
+        <td>(?<=...)< td>
+        <td>之前的字符串内容需要匹配表达式才能成功匹配。<br>不消耗字符串内容。</td>
+        <td>(?<=\d)a< td>
+        <td>前面是数字的a</td>
+    </=\d)a<></td></=...)<></td></tr>
+    <tr>
+        <td>(?<!...)</td>
+        </td><td>之前的字符串内容需要不匹配表达式才能成功匹配。<br>不消耗字符串内容。</td>
+        <td>(?<!\d)a</td>
+        </td><td>前面不是数字的a</td>
+    </tr>
+    <tr>
+        <td>(?(id/name)yes-pattern|no-pattern)</td>
+        <td>如果编号为id/別名为name的组匹配到字符，则需要匹配 yes-pattern ,否则雲要匹配no-pattern。|no-patern可以省略。</td>
+        <td>(\d)abc(?(1)\d|abc)</td>
+        <td>1abc2<br>abcabc</td>
+    </tr>
+</table>
+
+<p>各种正则表达式运算符的优先级顺序：</p>
+<table>
+    <tr>
+        <th>运算符</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>\</td>
+        <td>转义符</td>
+    </tr>
+    <tr>
+        <td>(), (?:), (?=), []</td>
+        <td>圆括号和方括号</td>
+    </tr>
+    <tr>
+        <td>*, +, ?, {n}, {n,}, {n,m}</td>
+        <td>限定符</td>
+    </tr>
+    <tr>
+        <td>^, $, \任何元字符、任何字符</td>
+        <td>定位点和序列（即：位置和顺序）</td>
+    </tr>
+    <tr>
+        <td>|</td>
+        <td>替换，"或"操作字符具有高于替换运算符的优先级</td>
+    </tr>
+</table>
+
 <h2 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h2><h3 id="模块内容"><a href="#模块内容" class="headerlink" title="模块内容"></a>模块内容</h3><p>Python通过re模块提供对正则表达式的支持。使用re的一般步骤是先将正则表达式的字符串形式编译为Pattern实例，然后使用Pattern实例处理文本并获得匹配结果（一个Match实例），最后使用Match实例获得信息，进行其他的操作。</p>
-<p>re.compile(pattern，flags = 0)</p>
-<p>用于将正则表达式的样式编译为一个正则表达式（ Pattern ）对象（正则对象），可以用于匹配，通过这个对象的方法 match(), search()来使用。<br>参数：<br>pattern : 一个字符串形式的正则表达式<br>flags : 可选，表示匹配模式，比如忽略大小写，多行模式等，具体参数为：<br>  re.A(re.ASCII)：让 \w, \W, \b, \B, \d, \D, \s 和 \S 只匹配ASCII，而不是Unicode。<br>  re.DEBUG：显示有关已编译表达式的调试信息。<br>  re.I(re.IGNORECASE)：忽略大小写。<br>  re.L(re.LOCALE)：使预定字符类 \w \W \b \B \s \S 取决于当前区域设定。<br>  re.M(re.MULTILINE)：多行模式，改变’^’和’$’的行为<br>  re.S(re.DOTALL)：点任意匹配模式，改变’.’的行为<br>  re.X(re.VERBOSE)：详细模式。这个模式下正则表达式可以是多行，忽略空白字符，并可以加入注释。</p>
-<p>re.search(pattern, string, flags=0)</p>
-<p>扫描整个字符串 找到匹配样式的第一个位置，并返回一个相应的匹配对象。</p>
-<p>re.match(pattern, string, flags=0)</p>
-<p>如果 string 开始的0或者多个字符匹配到了正则表达式样式，就返回一个相应的匹配对象。对于多行模式也只匹配字符串开始的位置。</p>
-<p>re.fullmatch(pattern, string, flags=0)</p>
-<p>如果整个 string 匹配到正则表达式样式，就返回一个相应的匹配对象。</p>
-<p>re.split(pattern, string, maxsplit=0, flags=0)</p>
-<p>用 pattern 分开 string 。 如果在 pattern 中捕获到括号，那么所有的组里的文字也会包含在列表里。如果 maxsplit 非零， 最多进行 maxsplit 次分隔， 剩下的字符全部返回到列表的最后一个元素。</p>
-<p>re.findall(pattern, string, flags=0)</p>
-<p>对 string 返回一个不重复的 pattern 的匹配列表， string 从左到右进行扫描，匹配按找到的顺序返回。如果样式里存在一到多个组，就返回一个组合列表；就是一个元组的列表（如果样式里有超过一个组合的话）。空匹配也会包含在结果里。</p>
-<p>re.finditer(pattern, string, flags=0)</p>
-<p>pattern 在 string 里所有的非重复匹配，返回为一个迭代器 iterator 保存了 匹配对象 。 string 从左到右扫描，匹配按顺序排列。空匹配也包含在结果里。</p>
-<p>re.sub(pattern, repl, string, count=0, flags=0)</p>
-<p>使用repl替换string中每一个匹配的子串后返回替换后的字符串。 repl 可以是字符串或函数；如为字符串，则其中任何反斜杠转义序列都会被处理。</p>
-<p>re.subn(pattern, repl, string, count=0, flags=0)</p>
-<p>行为与 sub() 相同，但是返回一个元组 (字符串, 替换次数)。</p>
-<p>re.escape(pattern)</p>
-<p>转义 pattern 中的特殊字符。</p>
-<p>re.purge()</p>
-<p>清除正则表达式缓存。</p>
-<p>exception re.error(msg, pattern=None, pos=None)</p>
-<h3 id="正则表达式对象-（正则对象）"><a href="#正则表达式对象-（正则对象）" class="headerlink" title="正则表达式对象 （正则对象）"></a>正则表达式对象 （正则对象）</h3><p>Pattern.search(string[, pos[, endpos]])</p>
-<p>扫描整个 string 寻找第一个匹配的位置， 并返回一个相应的匹配对象。</p>
-<p>pos：字符串中开始搜索的位置索引。</p>
-<p>endpos：字符串中结束搜索的位置索引。</p>
-<p>Pattern.match(string[, pos[, endpos]])</p>
-<p>如果 string 的开始位置 能够找到这个正则样式的任意个匹配，就返回一个相应的匹配对象。</p>
-<p>Pattern.fullmatch(string[, pos[, endpos]])</p>
-<p>如果整个 string 匹配这个正则表达式，就返回一个相应的匹配对象 。 </p>
-<p>Pattern.split(string, maxsplit=0)</p>
-<p>Pattern.findall(string[, pos[, endpos]])</p>
-<p>Pattern.finditer(string[, pos[, endpos]])</p>
-<p>Pattern.sub(repl, string, count=0)</p>
-<p>Pattern.subn(repl, string, count=0)</p>
-<p>均是模块函数使用了编译后的样式。</p>
-<p>Pattern.flags</p>
-<p>正则匹配标记。</p>
-<p>Pattern.groups</p>
-<p>捕获组合的数量。</p>
-<p>Pattern.groupindex</p>
-<p>映射由 (?P<id>) 定义的命名符号组合和数字组合的字典。</id></p>
-<p>Pattern.pattern</p>
-<p>编译对象的原始样式字符串。</p>
+<table>
+    <tr>
+        <th>re模块</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>re.compile(pattern，flags = 0)</td>
+        <td>用于将正则表达式的样式编译为一个正则表达式（ Pattern ）对象（正则对象），可以用于匹配，通过这个对象的方法 match(), search()来使用。<br>参数：<br>pattern: 一个字符串形式的正则表达式<br>flags: 可选，表示匹配模式，比如忽略大小写，多行模式等，具体参数为：<br>re.A(re.ASCII)：让 \w, \W, \b, \B, \d, \D, \s 和 \S 只匹配ASCII，而不是Unicode。<br>re.DEBUG：显示有关已编译表达式的调试信息。<br>re.I(re.IGNORECASE)：忽略大小写。<br>re.L(re.LOCALE)：使预定字符类 \w \W \b \B \s \S 取决于当前区域设定。<br>re.M(re.MULTILINE)：多行模式，改变'^'和'$'的行为<br>re.S(re.DOTALL)：点任意匹配模式，改变'.'的行为<br>re.X(re.VERBOSE)：详细模式。这个模式下正则表达式可以是多行，忽略空白字符，并可以加入注释。</td>
+    </tr>
+    <tr>
+        <td>re.search(pattern, string, flags=0)</td>
+        <td>扫描整个字符串 找到匹配样式的第一个位置，并返回一个相应的匹配对象。</td>
+    </tr>
+    <tr>
+        <td>re.match(pattern, string, flags=0)</td>
+        <td>如果 string 开始的0或者多个字符匹配到了正则表达式样式，就返回一个相应的匹配对象。对于多行模式也只匹配字符串开始的位置。</td>
+    </tr>
+    <tr>
+        <td>re.fullmatch(pattern, string, flags=0)</td>
+        <td>如果整个 string 匹配到正则表达式样式，就返回一个相应的匹配对象。</td>
+    </tr>
+    <tr>
+        <td>re.split(pattern, string, maxsplit=0, flags=0)</td>
+        <td>用 pattern 分开 string 。 如果在 pattern 中捕获到括号，那么所有的组里的文字也会包含在列表里。如果 maxsplit 非零， 最多进行 maxsplit 次分隔， 剩下的字符全部返回到列表的最后一个元素。</td>
+    </tr>
+    <tr>
+        <td>re.findall(pattern, string, flags=0)</td>
+        <td>对 string 返回一个不重复的 pattern 的匹配列表， string 从左到右进行扫描，匹配按找到的顺序返回。如果样式里存在一到多个组，就返回一个组合列表；就是一个元组的列表（如果样式里有超过一个组合的话）。空匹配也会包含在结果里。</td>
+    </tr>
+    <tr>
+        <td>re.finditer(pattern, string, flags=0)</td>
+        <td>pattern 在 string 里所有的非重复匹配，返回为一个迭代器 iterator 保存了 匹配对象 。 string 从左到右扫描，匹配按顺序排列。空匹配也包含在结果里。</td>
+    </tr>
+    <tr>
+        <td>re.sub(pattern, repl, string, count=0, flags=0)</td>
+        <td>使用repl替换string中每一个匹配的子串后返回替换后的字符串。 repl 可以是字符串或函数；如为字符串，则其中任何反斜杠转义序列都会被处理。</td>
+    </tr>
+    <tr>
+        <td>re.subn(pattern, repl, string, count=0, flags=0)</td>
+        <td>行为与 sub() 相同，但是返回一个元组 (字符串, 替换次数)。</td>
+    </tr>
+    <tr>
+        <td>re.escape(pattern)</td>
+        <td>转义 pattern 中的特殊字符。</td>
+    </tr>
+    <tr>
+        <td>re.purge()</td>
+        <td>清除正则表达式缓存。</td>
+    </tr>
+</table>
+
+
+<h3 id="正则表达式对象-（正则对象）"><a href="#正则表达式对象-（正则对象）" class="headerlink" title="正则表达式对象 （正则对象）"></a>正则表达式对象 （正则对象）</h3><table>
+    <tr>
+        <th>正则对象</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>Pattern.search(string[, pos[, endpos]])</td>
+        <td>扫描整个 string 寻找第一个匹配的位置， 并返回一个相应的匹配对象。<br>pos：字符串中开始搜索的位置索引。<br>endpos：字符串中结束搜索的位置索引。</td>
+    </tr>
+    <tr>
+        <td>Pattern.match(string[, pos[, endpos]])</td>
+        <td>如果 string 的开始位置 能够找到这个正则样式的任意个匹配，就返回一个相应的匹配对象。</td>
+    </tr>
+    <tr>
+        <td>Pattern.fullmatch(string[, pos[, endpos]])</td>
+        <td>如果整个 string 匹配这个正则表达式，就返回一个相应的匹配对象 。 </td>
+    </tr>
+    <tr>
+        <td>Pattern.split(string, maxsplit=0)</td>
+        <td rowspan="6">模块函数使用了编译后的样式。</td>
+    </tr>
+    <tr>
+        <td>Pattern.split(string, maxsplit=0)</td>
+    </tr>
+    <tr>
+        <td>Pattern.findall(string[, pos[, endpos]])</td>
+    </tr>
+    <tr>
+        <td>Pattern.finditer(string[, pos[, endpos]])</td>
+    </tr>
+    <tr>
+        <td>Pattern.sub(repl, string, count=0)</td>
+    </tr>
+    <tr>
+        <td>Pattern.subn(repl, string, count=0)</td>
+    </tr>
+    <tr>
+        <td>Pattern.flags</td>
+        <td>正则匹配标记。</td>
+    </tr>
+    <tr>
+        <td>Pattern.groups</td>
+        <td>捕获组合的数量。</td>
+    </tr>
+    <tr>
+        <td>Pattern.groupindex</td>
+        <td>映射由 (?P<id>) 定义的命名符号组合和数字组合的字典。</id></td>
+    </tr>
+    <tr>
+        <td>Pattern.pattern</td>
+        <td>编译对象的原始样式字符串。</td>
+    </tr>
+
+</table>
+
 <h3 id="匹配对象"><a href="#匹配对象" class="headerlink" title="匹配对象"></a>匹配对象</h3><p>用 if 语句来判断是否匹配：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">match = re.search(pattern, string)</span><br><span class="line"><span class="keyword">if</span> match:</span><br><span class="line">    process(match)</span><br></pre></td></tr></table></figure>
-<p>Match.expand(template)</p>
-<p>对 template 进行反斜杠转义替换并且返回。</p>
-<p>Match.group([group1, …])</p>
-<p>返回一个或者多个匹配的子组。</p>
-<p>Match.<strong>getitem</strong>(g)</p>
-<p>等价于 m.group(g)。</p>
-<p>Match.groups(default=None)</p>
-<p>返回一个元组，包含所有匹配的子组，相当于调用group(1,2,…last)。。 </p>
-<p>Match.groupdict(default=None)</p>
-<p>返回一个以有别名的组的别名为键、以该组截获的子串为值的字典，包含了所有的命名子组。</p>
-<p>Match.start([group])</p>
-<p>Match.end([group])</p>
-<p>返回 group 匹配到的字串的开始和结束索引。</p>
-<p>Match.span([group])</p>
-<p>返回一个二元组 (m.start(group), m.end(group))。</p>
-<p>Match.pos</p>
-<p>pos 的值，会传递给 search() 或 match() 的方法 a 正则对象 。</p>
-<p>Match.endpos</p>
-<p>endpos 的值，会传递给 search() 或 match() 的方法 a 正则对象 。</p>
-<p>Match.lastindex</p>
-<p>返回组的最后一个匹配的整数索引值。</p>
-<p>Match.lastgroup</p>
-<p>返回最后一个匹配的命名组名字。</p>
-<p>Match.re</p>
-<p>返回产生这个实例的正则对象。</p>
-<p>Match.string</p>
-<p>传递到 match() 或 search() 的字符串。</p>
-]]></content>
+<table>
+    <tr>
+        <th>匹配对象</th>
+        <th>描述</th>
+    </tr>
+    <tr>
+        <td>Match.expand(template)</td>
+        <td>对 template 进行反斜杠转义替换并且返回。</td>
+    </tr>
+    <tr>
+        <td>Match.group([group1, ...])</td>
+        <td>返回一个或者多个匹配的子组。</td>
+    </tr>
+    <tr>
+        <td>Match.__getitem__(g)</td>
+        <td>等价于 m.group(g)。</td>
+    </tr>
+    <tr>
+        <td>Match.groups(default=None)</td>
+        <td>返回一个元组，包含所有匹配的子组，相当于调用group(1,2,…last)。</td>
+    </tr>
+    <tr>
+        <td>Match.groupdict(default=None)</td>
+        <td>返回一个以有别名的组的别名为键、以该组截获的子串为值的字典，包含了所有的命名子组。</td>
+    </tr>
+    <tr>
+        <td>Match.start([group])</td>
+        <td rowspan="2">返回 group 匹配到的字串的开始和结束索引。</td>
+    </tr>
+    <tr>
+        <td>Match.end([group])</td>
+    </tr>
+    <tr>
+        <td>Match.span([group])</td>
+        <td>返回一个二元组 (m.start(group), m.end(group))。</td>
+    </tr>
+    <tr>
+        <td>Match.pos</td>
+        <td>pos 的值，会传递给 search() 或 match() 的方法 a 正则对象。</td>
+    </tr>
+    <tr>
+        <td>Match.endpos</td>
+        <td>endpos 的值，会传递给 search() 或 match() 的方法 a 正则对象。</td>
+    </tr>
+    <tr>
+        <td>Match.lastindex</td>
+        <td>返回组的最后一个匹配的整数索引值。</td>
+    </tr>
+    <tr>
+        <td>Match.lastgroup</td>
+        <td>返回最后一个匹配的命名组名字。</td>
+    </tr>
+    <tr>
+        <td>Match.re</td>
+        <td>返回产生这个实例的正则对象。</td>
+    </tr>
+    <tr>
+        <td>Match.string</td>
+        <td>传递到 match() 或 search() 的字符串。</td>
+    </tr>
+</table>]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -92,7 +450,8 @@
   <entry>
     <title>吴恩达机器学习笔记</title>
     <url>/2019/10/24/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。</p>
+    <content><![CDATA[<p>参考：<a href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes" target="_blank" rel="noopener">吴恩达老师的机器学习课程个人笔记 </a></p>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。</p>
 <p>回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。<br>分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。</p>
 <h3 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h3><p>据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。</p>
 <h1 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h1><h3 id="模型表示"><a href="#模型表示" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_\theta \left( x \right)=\theta_{0} + \theta_{1}x$</p>
