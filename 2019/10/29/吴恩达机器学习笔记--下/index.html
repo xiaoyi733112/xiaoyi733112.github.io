@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-new.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达机器学习笔记--下">
+<meta property="og:url" content="http://yoursite.com/2019/10/29/吴恩达机器学习笔记--下/index.html">
+<meta property="og:site_name" content="Xiaoyi">
+<meta property="og:description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-29T10:15:52.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达机器学习笔记--下">
+<meta name="twitter:description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/29/吴恩达机器学习笔记--下/">
+
+
+
+
+
+  <title>吴恩达机器学习笔记--下 | Xiaoyi</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xiaoyi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/吴恩达机器学习笔记--下/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaoyi Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiaoyi">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达机器学习笔记--下</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-29T18:10:00+08:00">
+                2019-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/吴恩达机器学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">吴恩达机器学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考：<a href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes" target="_blank" rel="noopener">吴恩达老师的机器学习课程个人笔记 </a></p>
+<h1 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h1><h3 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h3><p>$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j}$</p>
+<p>如果$y=1​$，想要$\theta^Tx&gt;=1$（不只是$&gt;=0$）。</p>
+<p>如果$y=0$，想要$\theta^Tx&lt;=-1$（不只是$&lt;0$）。</p>
+<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>$\min_\limits{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$</p>
+<p>s.t. $\theta^T{x}^{(i)}&gt;=1$ if ${y}^{i}=1$</p>
+<p>$\theta^T{x}^{(i)}&lt;=-1$ if ${y}^{i}=0$</p>
+<p>用$p^{(i)}$来表示这是第 $i$个训练样本在参数向量${ {\theta } }$上的投影。则θ^Tx^{(i)}=p^{(i)}\cdot{\left| \theta \right|}$ ，那么决策边界可以写为：</p>
+<p>$\min_\limits{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$=\frac{1}{2}{\left| \theta \right|}^{2}</p>
+<p>s.t. $p^{(i)}\cdot{\left| \theta \right|}&gt;=1$if ${y}^{i}=1$</p>
+<p>$p^{(i)}\cdot{\left| \theta \right|}&lt;=-1$ if ${y}^{i}=0$</p>
+<p>则优化时需要极大化p^{(i)}的范数，它们是训练样本到决策边界的距离，那么支持向量机最终会找到大间距分类器。</p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p>核函数可以用来计算出新的特征。例如以高斯核函数构建第$i$个特征：${ {f}_{i} }=similarity(x,{ {l}^{(i)} })=e(-\frac{ { {\left| x-{ {l}^{(i)} } \right|}^{2} } }{2{ {\sigma }^{2} } })$。</p>
+<p>将核函数运用到支持向量机中，修改支持向量机的假设为：</p>
+<p>给定$x$，计算新特征$f$，当$θ^Tf&gt;=0$ 时，预测 $y=1$，否则反之。 </p>
+<p>相应地修改代价函数为：$\sum{_{j=1}^{n=m} }\theta _{j}^{2}={ {\theta}^{T} }\theta $，</p>
+<p>$min C\sum\limits_{i=1}^{m}{[{ {y}^{(i)} }cos { {t}_{1} } }( { {\theta }^{T} }{ {f}^{(i)} })+(1-{ {y}^{(i)} })cos { {t}_{0} }( { {\theta }^{T} }{ {f}^{(i)} })]+\frac{1}{2}\sum\limits_{j=1}^{n=m}{\theta _{j}^{2} }$</p>
+<p>在具体实施过程中，为了简化计算，在计算$\sum{_{j=1}^{n=m} }\theta _{j}^{2}={ {\theta}^{T} }\theta $时，用$θ^TMθ$代替$θ^Tθ$，其中$M$是根据我们选择的核函数而不同的一个矩阵。</p>
+<h3 id="使用支持向量机"><a href="#使用支持向量机" class="headerlink" title="使用支持向量机"></a>使用支持向量机</h3><p>支持向量机可以不使用核函数，不使用核函数又称为线性核函数(linear kernel)</p>
+<p>核函数的选择：高斯核函数(Gaussian Kernel)，多项式核函数（Polynomial Kerne），字符串核函数（String kernel），卡方核函数（ chi-square kernel），直方图交集核函数（histogram intersection kernel）等。</p>
+<p>使用逻辑回归还是支持向量机的准则：</p>
+<p>(1)如果相较于$m$而言，$n$要大许多，即训练集数据量不够支持我们训练一个复杂的非线性模型，我们选用逻辑回归模型或者不带核函数的支持向量机。</p>
+<p>(2)如果$n$较小，而且$m$大小中等，例如$n$在 1-1000 之间，而$m$在10-10000之间，使用高斯核函数的支持向量机。</p>
+<p>(3)如果$n$较小，而$m$较大，例如$n$在1-1000之间，而$m$大于50000，则使用支持向量机会非常慢，解决方案是创造、增加更多的特征，然后使用逻辑回归或不带核函数的支持向量机。</p>
+<h1 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h1><h3 id="无监督学习：简介"><a href="#无监督学习：简介" class="headerlink" title="无监督学习：简介"></a>无监督学习：简介</h3><p>训练集时一些列点$x^{(1)}$,$x^{(2)}$…$x^{(m)}$，但没有任何标签$y$。聚类算法将无标签的训练集分成一些不同的组。在理论上，相同的组的数据之间有相同的属性或者是特征，不同组数据之间的属性或者特征相差较大。</p>
+<h3 id="K-均值算法"><a href="#K-均值算法" class="headerlink" title="K-均值算法"></a>K-均值算法</h3><p>K-均值是一个迭代算法，假设我们想要将数据聚类成n个组，其方法为:</p>
+<p>首先选择$K$个随机的点，称为聚类中心（cluster centroids）；</p>
+<p>对于数据集中的每一个数据，按照距离$K$个中心点的距离，将其与距离最近的中心点关联起来，与同一个中心点关联的所有点聚成一类。</p>
+<p>计算每一个组的平均值，将该组所关联的中心点移动到平均值的位置。</p>
+<p>重复步骤2-4直至中心点不再变化。</p>
+<p>用$μ^1$,$μ^2$,…,$μ^k$ 来表示聚类中心，用$c^{(1)}$,$c^{(2)}$,…,$c^{(m)}$来存储与第$i$个实例数据最近的聚类中心的索引，K-均值算法的伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Repeat &#123;</span><br><span class="line"></span><br><span class="line">for i = 1 to m</span><br><span class="line"></span><br><span class="line">c(i) := index (form 1 to K) of cluster centroid closest to x(i)</span><br><span class="line"></span><br><span class="line">for k = 1 to K</span><br><span class="line"></span><br><span class="line">μk := average (mean) of points assigned to cluster k</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优化目标-1"><a href="#优化目标-1" class="headerlink" title="优化目标"></a>优化目标</h3><p>K-均值最小化问题，是要最小化所有的数据点与其所关联的聚类中心点之间的距离之和，因此K-均值的代价函数（又称畸变函数Distortion function）为：</p>
+<script type="math/tex; mode=display">J(c^{(1)},...,c^{(m)},μ_1,...,μ_K)=\dfrac {1}{m}\sum^{m}_{i=1}\left\| X^{\left( i\right) }-\mu_{c^{(i)} }\right\| ^{2}</script><p>其中${ {\mu }_{ { {c}^{(i)} } } }$代表与${ {x}^{(i)} }$最近的聚类中心点。优化目标就是最小化代价函数。</p>
+<h3 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h3><p>随机初始化聚类的中心点：选择中心的个数$K$，再随机选择$K$个训练实例，然后令$K$个聚类中心分别与这$K$个训练实例相等。</p>
+<h3 id="选择聚类数"><a href="#选择聚类数" class="headerlink" title="选择聚类数"></a>选择聚类数</h3><p>改变$K$值，也就是聚类类别数目的总数，计算成本函数或者计算畸变函数$J$，然后根据“肘部法则”选择$K$。</p>
+<h3 id="聚类参考资料"><a href="#聚类参考资料" class="headerlink" title="聚类参考资料"></a>聚类参考资料</h3><p>1.相似度/距离计算方法总结</p>
+<p>(1). 闵可夫斯基距离<strong>Minkowski</strong>/（其中欧式距离：$p=2$) </p>
+<p>$dist(X,Y)={ {\left( { {\sum\limits_{i=1}^{n}{\left| { {x}_{i} }-{ {y}_{i} } \right|} }^{p} } \right)}^{\frac{1}{p} } }$</p>
+<p>(2). 杰卡德相似系数(<strong>Jaccard</strong>)：</p>
+<p>$J(A,B)=\frac{\left| A\cap B \right|}{\left|A\cup B \right|}$</p>
+<p>(3). 余弦相似度(<strong>cosine similarity</strong>)：</p>
+<p>$n$维向量$x$和$y$的夹角记做$\theta$，根据余弦定理，其余弦值为：</p>
+<p>$cos (\theta )=\frac{ { {x}^{T} }y}{\left|x \right|\cdot \left| y \right|}=\frac{\sum\limits_{i=1}^{n}{ { {x}_{i} }{ {y}_{i} } } }{\sqrt{\sum\limits_{i=1}^{n}{ { {x}_{i} }^{2} } }\sqrt{\sum\limits_{i=1}^{n}{ { {y}_{i} }^{2} } } }$<br>(4). Pearson皮尔逊相关系数：<br>${ {\rho }_{XY} }=\frac{\operatorname{cov}(X,Y)}{ { {\sigma }_{X} }{ {\sigma }_{Y} } }=\frac{E[(X-{ {\mu }_{X} })(Y-{ {\mu }_{Y} })]}{ { {\sigma }_{X} }{ {\sigma }_{Y} } }=\frac{\sum\limits_{i=1}^{n}{(x-{ {\mu }_{X} })(y-{ {\mu }_{Y} })} }{\sqrt{\sum\limits_{i=1}^{n}{ { {(x-{ {\mu }_{X} })}^{2} } } }\sqrt{\sum\limits_{i=1}^{n}{ { {(y-{ {\mu }_{Y} })}^{2} } } } }$</p>
+<p>Pearson相关系数即将$x$、$y$坐标向量各自平移到原点后的夹角余弦。</p>
+<p>2.聚类的衡量指标</p>
+<p>(1). 均一性：$p$</p>
+<p>类似于精确率，一个簇中只包含一个类别的样本，则满足均一性。其实也可以认为就是正确率(每个 聚簇中正确分类的样本数占该聚簇总样本数的比例和)</p>
+<p>(2). 完整性：$r$</p>
+<p>类似于召回率，同类别样本被归类到相同簇中，则满足完整性;每个聚簇中正确分类的样本数占该<br>类型的总样本数比例的和</p>
+<p>(3). <strong>V-measure</strong>:</p>
+<p>均一性和完整性的加权平均 </p>
+<p>$V = \frac{(1+\beta^2)<em>pr}{\beta^2</em>p+r}$</p>
+<p>(4). 轮廓系数</p>
+<p>样本$i$的轮廓系数：$s(i)$</p>
+<p>簇内不相似度:计算样本$i$到同簇其它样本的平均距离为$a(i)$，应尽可能小。</p>
+<p>簇间不相似度:计算样本$i$到其它簇$C_j$的所有样本的平均距离$b_{ij}$，应尽可能大。</p>
+<p>轮廓系数：$s(i)$值越接近1表示样本$i$聚类越合理，越接近-1，表示样本$i$应该分类到 另外的簇中，近似为0，表示样本$i$应该在边界上;所有样本的$s(i)$的均值被成为聚类结果的轮廓系数。 </p>
+<p>$s(i) = \frac{b(i)-a(i)}{max\{a(i),b(i)\} }$</p>
+<p>(5). <strong>ARI</strong></p>
+<p>数据集$S$共有$N$个元素，  两个聚类结果分别是：</p>
+<p>$X=\{ { {X}_{1} },{ {X}_{2} },…,{ {X}_{r} }\},Y=\{ { {Y}_{1} },{ {Y}_{2} },…,{ {Y}_{s} }\}$</p>
+<p>$X$和$Y$的元素个数为：</p>
+<p>$a=\{ { {a}_{1} },{ {a}_{2} },…,{ {a}_{r} }\},b=\{ { {b}_{1} },{ {b}_{2} },…,{ {b}_{s} }\}$</p>
+<p>记：${ {n}_{ij} }=\left| { {X}_{i} }\cap { {Y}_{i} } \right|$</p>
+<p>$ARI=\frac{\sum\limits_{i,j}{C_{ { {n}_{ij} } }^{2} }-\left[ \left( \sum\limits_{i}{C_{ { {a}_{i} } }^{2} } \right)\cdot \left( \sum\limits_{i}{C_{ { {b}_{i} } }^{2} } \right) \right]/C_{n}^{2} }{\frac{1}{2}\left[ \left( \sum\limits_{i}{C_{ { {a}_{i} } }^{2} } \right)+\left( \sum\limits_{i}{C_{ { {b}_{i} } }^{2} } \right) \right]-\left[ \left( \sum\limits_{i}{C_{ { {a}_{i} } }^{2} } \right)\cdot \left( \sum\limits_{i}{C_{ { {b}_{i} } }^{2} } \right) \right]/C_{n}^{2} }$</p>
+<h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><h3 id="降维动机"><a href="#降维动机" class="headerlink" title="降维动机"></a>降维动机</h3><p>数据压缩</p>
+<p>数据可视化</p>
+<h3 id="主成分分析"><a href="#主成分分析" class="headerlink" title="主成分分析"></a>主成分分析</h3><p>PCA减少$n$维到$k$维：</p>
+<p>第一步是均值归一化。我们需要计算出所有特征的均值，然后令 $x_j= x_j-μ_j$。如果特征是在不同的数量级上，我们还需要将其除以标准差 $σ^2$。</p>
+<p>第二步是计算协方差矩阵（covariance matrix）$Σ$：<br>$\sum=\dfrac {1}{m}\sum^{n}_{i=1}\left( x^{(i)}\right) \left( x^{(i)}\right) ^{T}$</p>
+<p>第三步是计算协方差矩阵$Σ$*特征向量（eigenvectors）：奇异值分解（singular value decomposition）&amp;[U, S, V]= svd(sigma)&amp;，其中<script type="math/tex">Sigma=\dfrac {1}{m}\sum^{n}_{i=1}\left( x^{(i)}\right) \left( x^{(i)}\right) ^{T}</script>。</p>
+<h3 id="选择主成分的数量"><a href="#选择主成分的数量" class="headerlink" title="选择主成分的数量"></a>选择主成分的数量</h3><p>主要成分分析是减少投射的平均均方误差，训练集的方差为：$\dfrac {1}{m}\sum^{m}_{i=1}\left| x^{\left( i\right) }\right| ^{2}$。</p>
+<p>奇异值分解后得到$[U, S, V] = svd(sigma)$</p>
+<p>其中的$S$是一个$n×n$的矩阵，只有对角线上有值，而其它单元都是0，可以使用这个矩阵来计算平均均方误差与训练集方差的比例：</p>
+<script type="math/tex; mode=display">\dfrac {\dfrac {1}{m}\sum^{m}_{i=1}\left\| x^{\left( i\right) }-x^{\left( i\right) }_{approx}\right\| ^{2} }{\dfrac {1}{m}\sum^{m}_{i=1}\left\| x^{(i)}\right\| ^{2} }=1-\dfrac {\Sigma^{k}_{i=1}S_{ii} }{\Sigma^{m}_{i=1}S_{ii} }\leq 1\%</script><p>也就是：<script type="math/tex">\frac {\Sigma^{k}_{i=1}s_{ii} }{\Sigma^{n}_{i=1}s_{ii} }\geq0.99</script></p>
+<p>在压缩过数据后，可以采用如下方法来近似地获得原有的特征：</p>
+<script type="math/tex; mode=display">x^{\left( i\right) }_{approx}=U_{reduce}z^{(i)}</script><h3 id="重建的压缩表示"><a href="#重建的压缩表示" class="headerlink" title="重建的压缩表示"></a>重建的压缩表示</h3><p>降维：$z=U^{T}_{reduce}x$。回到原始空间：$x_{appox}=U_{reduce}\cdot z$，$x_{appox}\approx x$。</p>
+<h1 id="异常检测-Anomaly-Detection"><a href="#异常检测-Anomaly-Detection" class="headerlink" title="异常检测(Anomaly Detection)"></a>异常检测(Anomaly Detection)</h1><h3 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h3><p>通常如果认为变量 $x$ 符合高斯分布 $x \sim N(\mu, \sigma^2)$则其概率密度函数为：</p>
+<p>$p(x,\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$</p>
+<p>我们利用已有的数据来预测总体中的$μ$和$σ^2$的计算方法如下：</p>
+<p>$\mu=\frac{1}{m}\sum\limits_{i=1}^{m}x^{(i)}$</p>
+<p>$\sigma^2=\frac{1}{m}\sum\limits_{i=1}^{m}(x^{(i)}-\mu)^2$</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>应用高斯分布开发异常检测算法：</p>
+<p>对于给定的数据集 $x^{(1)},x^{(2)},…,x^{(m)}$，我们要针对每一个特征计算 $\mu$ 和 $\sigma^2$ 的估计值。</p>
+<p>$\mu_j=\frac{1}{m}\sum\limits_{i=1}^{m}x_j^{(i)}$</p>
+<p>$\sigma_j^2=\frac{1}{m}\sum\limits_{i=1}^m(x_j^{(i)}-\mu_j)^2$</p>
+<p>一旦获得了平均值和方差的估计值，给定新的一个训练实例，根据模型计算 $p(x)$：</p>
+<p>$p(x)=\prod\limits_{j=1}^np(x_j;\mu_j,\sigma_j^2)=\prod\limits_{j=1}^1\frac{1}{\sqrt{2\pi}\sigma_j}exp(-\frac{(x_j-\mu_j)^2}{2\sigma_j^2})$</p>
+<p>当$p(x) &lt; \varepsilon$时，为异常。</p>
+<h3 id="异常检测与监督学习对比"><a href="#异常检测与监督学习对比" class="headerlink" title="异常检测与监督学习对比"></a>异常检测与监督学习对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>异常检测</th>
+<th>监督学习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非常少量的正向类（异常数据 $y=1$）, 大量的负向类（$y=0$）</td>
+<td>同时有大量的正向类和负向类</td>
+</tr>
+<tr>
+<td>许多不同种类的异常，非常难。根据非常 少量的正向类数据来训练算法。</td>
+<td>有足够多的正向类实例，足够用于训练 算法，未来遇到的正向类实例可能与训练集中的非常近似。</td>
+</tr>
+<tr>
+<td>未来遇到的异常可能与已掌握的异常、非常的不同。</td>
+<td></td>
+</tr>
+<tr>
+<td>例如： 欺诈行为检测 生产（例如飞机引擎）检测数据中心的计算机运行状况</td>
+<td>例如：邮件过滤器 天气预报 肿瘤分类</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="多元高斯分布"><a href="#多元高斯分布" class="headerlink" title="多元高斯分布"></a>多元高斯分布</h3><p>多元高斯分布的$p\left( x \right)$:<br>$p(x)=\frac{1}{(2\pi)^{\frac{n}{2} }|\Sigma|^{\frac{1}{2} } }exp\left(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right)$</p>
+<h3 id="使用多元高斯分布进行异常检测"><a href="#使用多元高斯分布进行异常检测" class="headerlink" title="使用多元高斯分布进行异常检测"></a>使用多元高斯分布进行异常检测</h3><p>有一组样本${ { { x^{(1)},x^{(2)},…,x^{(m)} } } }$是一个$n$维向量，估计参数 $\mu$ 和 $\Sigma$：</p>
+<p>估计$\mu$:$\mu=\frac{1}{m}\sum_{i=1}^{m}x^{(i)}$</p>
+<p>估计$\Sigma$：<br>$\Sigma=\frac{1}{m}\sum_{i=1}^{m}(x^{(i)}-\mu)(x^{(i)}-\mu)^T$</p>
+<h1 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h1><h3 id="基于内容的推荐系统"><a href="#基于内容的推荐系统" class="headerlink" title="基于内容的推荐系统"></a>基于内容的推荐系统</h3><p>$\theta^{(j)}$用户 $j$ 的参数向量</p>
+<p>$x^{(i)}$电影 $i$ 的特征向量</p>
+<p>对于用户 $j$ 和电影 $i$，预测评分为：$(\theta^{(j)})^T x^{(i)}$</p>
+<p>代价函数：</p>
+<p>针对用户 $j$，该线性回归模型的代价为预测误差的平方和，加上正则化项：</p>
+<script type="math/tex; mode=display">
+\min_{\theta (j)}\frac{1}{2}\sum_{i:r(i,j)=1}\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)^2+\frac{\lambda}{2}\left(\theta_{k}^{(j)}\right)^2</script><p>其中 $i:r(i,j)$表示我们只计算那些用户 $j$ 评过分的电影。在一般的线性回归模型中，误差项和正则项应该都是乘以$1/2m$，在这将$m$去掉。并且不对方差项$\theta_0$进行正则化处理。</p>
+<p>上面的代价函数只是针对一个用户的，为了学习所有用户，将所有用户的代价函数求和：</p>
+<script type="math/tex; mode=display">
+\min_{\theta^{(1)},...,\theta^{(n_u)} } \frac{1}{2}\sum_{j=1}^{n_u}\sum_{i:r(i,j)=1}\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2</script><p>梯度下降的更新公式：</p>
+<script type="math/tex; mode=display">
+\theta_k^{(j)}:=\theta_k^{(j)}-\alpha\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})x_{k}^{(i)} \quad (\text{for} \, k = 0)</script><script type="math/tex; mode=display">
+\theta_k^{(j)}:=\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})x_{k}^{(i)}+\lambda\theta_k^{(j)}\right) \quad (\text{for} \, k\neq 0)</script><h3 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h3><p>基于内容的推荐系统中，对于每一部电影，都掌握了可用的特征，使用这些特征训练出了每一个用户的参数。相反地，如果拥有用户的参数，我可以学习得出电影的特征。</p>
+<script type="math/tex; mode=display">
+\mathop{min}\limits_{x^{(1)},...,x^{(n_m)} }\frac{1}{2}\sum_{i=1}^{n_m}\sum_{j{r(i,j)=1} }((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(i)})^2</script><p>但是如果既没有用户的参数，也没有电影的特征，这两种方法都不可行了。协同过滤算法可以同时学习这两者。</p>
+<p>优化目标便改为同时针对$x$和$\theta$进行。</p>
+<script type="math/tex; mode=display">
+J(x^{(1)},...x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i:j):r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(j)})^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2</script><p>对代价函数求偏导数的结果如下：</p>
+<script type="math/tex; mode=display">
+x_k^{(i)}:=x_k^{(i)}-\alpha\left(\sum_{j:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\theta_k^{j}+\lambda x_k^{(i)}\right)</script><script type="math/tex; mode=display">
+\theta_k^{(i)}:=\theta_k^{(i)}-\alpha\left(\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}x_k^{(i)}+\lambda \theta_k^{(j)}\right)</script><p>注：在协同过滤从算法中，通常不使用方差项，如果需要的话，算法会自动学得。</p>
+<p>协同过滤算法使用步骤如下：</p>
+<p>1.初始 $x^{(1)},x^{(1)},…x^{(nm)},\ \theta^{(1)},\theta^{(2)},…,\theta^{(n_u)}$为一些随机小值</p>
+<p>2.使用梯度下降算法最小化代价函数</p>
+<p>3.在训练完算法后，预测$(\theta^{(j)})^Tx^{(i)}$为用户 $j$ 给电影 $i$ 的评分</p>
+<p>通过这个学习过程获得的特征矩阵包含了有关电影的重要数据，可以作为给用户推荐电影的依据。</p>
+<h3 id="协同过滤算法"><a href="#协同过滤算法" class="headerlink" title="协同过滤算法"></a>协同过滤算法</h3><p>协同过滤优化目标：</p>
+<p>给定$x^{(1)},…,x^{(n_m)}$，估计$\theta^{(1)},…,\theta^{(n_u)}$：</p>
+<script type="math/tex; mode=display">
+\min_{\theta^{(1)},...,\theta^{(n_u)} }\frac{1}{2}\sum_{j=1}^{n_u}\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2</script><p>给定$\theta^{(1)},…,\theta^{(n_u)}$，估计$x^{(1)},…,x^{(n_m)}$：</p>
+<p>同时最小化$x^{(1)},…,x^{(n_m)}$和$\theta^{(1)},…,\theta^{(n_u)}$：</p>
+<script type="math/tex; mode=display">
+J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(i)})^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2</script><script type="math/tex; mode=display">
+\min_{x^{(1)},...,x^{(n_m)} \\\ \theta^{(1)},...,\theta^{(n_u)} }J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})</script><h1 id="大规模机器学习"><a href="#大规模机器学习" class="headerlink" title="大规模机器学习"></a>大规模机器学习</h1><h3 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h3><p>在随机梯度下降法中，定义代价函数为一个单一训练实例的代价：</p>
+<p>​<script type="math/tex">cost\left(  \theta, \left( {x}^{(i)} , {y}^{(i)} \right)  \right) = \frac{1}{2}\left( {h}_{\theta}\left({x}^{(i)}\right)-{y}^{ {(i)} } \right)^{2}</script></p>
+<p>随机梯度下降算法为：首先对训练集随机“洗牌”，然后：</p>
+<p> Repeat (usually anywhere between1-10){</p>
+<p>  <strong>for</strong> $i = 1:m${</p>
+<p> ​       $\theta:={\theta}_{j}-\alpha\left( {h}_{\theta}\left({x}^{(i)}\right)-{y}^{(i)} \right){ {x}_{j} }^{(i)}$      </p>
+<p>​        (<strong>for</strong> $j=0:n$)</p>
+<p> ​    }<br> }</p>
+<p>随机梯度下降算法在每一次计算之后便更新参数 ${ {\theta } }$ ，而不需要首先将所有的训练集求和。</p>
+<h3 id="小批量梯度下降"><a href="#小批量梯度下降" class="headerlink" title="小批量梯度下降"></a>小批量梯度下降</h3><p>小批量梯度下降算法是介于批量梯度下降算法和随机梯度下降算法之间的算法，每计算常数$b$次训练实例，便更新一次参数  ${ {\theta } }$ 。</p>
+<p> <strong>Repeat</strong> {</p>
+<p> <strong>for</strong> $i = 1:m${</p>
+<p> ​       $\theta:={\theta}_{j}-\alpha\frac{1}{b}\sum_\limits{k=i}^{i+b-1}\left( {h}_{\theta}\left({x}^{(k)}\right)-{y}^{(k)} \right){ {x}_{j} }^{(k)}$      </p>
+<p>​       (<strong>for</strong> $j=0:n$)</p>
+<p>​      $ i +=10 $   </p>
+<p> ​     }<br> }</p>
+<h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p>在线学习的算法与随机梯度下降算法有些类似，是对单一的实例进行学习，而非对一个提前定义的训练集进行循环。</p>
+<p>Repeat forever (as long as the website is running) {<br>Get $\left(x,y\right)$ corresponding to the current user<br>​$\theta:={\theta}_{j}-\alpha\left( {h}_{\theta}\left({x}\right)-{y} \right){ {x}_{j} }$<br>​(<strong>for</strong> $j=0:n$)<br>}</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/28/正则表达式/" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Xiaoyi Jin">
+            
+              <p class="site-author-name" itemprop="name">Xiaoyi Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机"><span class="nav-number">1.</span> <span class="nav-text">支持向量机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化目标"><span class="nav-number">1.0.1.</span> <span class="nav-text">优化目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决策边界"><span class="nav-number">1.0.2.</span> <span class="nav-text">决策边界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数"><span class="nav-number">1.0.3.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用支持向量机"><span class="nav-number">1.0.4.</span> <span class="nav-text">使用支持向量机</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类"><span class="nav-number">2.</span> <span class="nav-text">聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无监督学习：简介"><span class="nav-number">2.0.1.</span> <span class="nav-text">无监督学习：简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-均值算法"><span class="nav-number">2.0.2.</span> <span class="nav-text">K-均值算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化目标-1"><span class="nav-number">2.0.3.</span> <span class="nav-text">优化目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机初始化"><span class="nav-number">2.0.4.</span> <span class="nav-text">随机初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择聚类数"><span class="nav-number">2.0.5.</span> <span class="nav-text">选择聚类数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚类参考资料"><span class="nav-number">2.0.6.</span> <span class="nav-text">聚类参考资料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#降维"><span class="nav-number">3.</span> <span class="nav-text">降维</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#降维动机"><span class="nav-number">3.0.1.</span> <span class="nav-text">降维动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主成分分析"><span class="nav-number">3.0.2.</span> <span class="nav-text">主成分分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择主成分的数量"><span class="nav-number">3.0.3.</span> <span class="nav-text">选择主成分的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重建的压缩表示"><span class="nav-number">3.0.4.</span> <span class="nav-text">重建的压缩表示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常检测-Anomaly-Detection"><span class="nav-number">4.</span> <span class="nav-text">异常检测(Anomaly Detection)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯分布"><span class="nav-number">4.0.1.</span> <span class="nav-text">高斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">4.0.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常检测与监督学习对比"><span class="nav-number">4.0.3.</span> <span class="nav-text">异常检测与监督学习对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多元高斯分布"><span class="nav-number">4.0.4.</span> <span class="nav-text">多元高斯分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用多元高斯分布进行异常检测"><span class="nav-number">4.0.5.</span> <span class="nav-text">使用多元高斯分布进行异常检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐系统"><span class="nav-number">5.</span> <span class="nav-text">推荐系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于内容的推荐系统"><span class="nav-number">5.0.1.</span> <span class="nav-text">基于内容的推荐系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协同过滤"><span class="nav-number">5.0.2.</span> <span class="nav-text">协同过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协同过滤算法"><span class="nav-number">5.0.3.</span> <span class="nav-text">协同过滤算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大规模机器学习"><span class="nav-number">6.</span> <span class="nav-text">大规模机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机梯度下降法"><span class="nav-number">6.0.1.</span> <span class="nav-text">随机梯度下降法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小批量梯度下降"><span class="nav-number">6.0.2.</span> <span class="nav-text">小批量梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在线学习"><span class="nav-number">6.0.3.</span> <span class="nav-text">在线学习</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaoyi Jin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
