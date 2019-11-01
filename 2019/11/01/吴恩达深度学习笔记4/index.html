@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-new.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,神经网络,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="卷积神经网络边缘检测示例构造一个3×3的过滤器，像这样$\begin{bmatrix}1 &amp;amp; 0 &amp;amp; -1\\ 1 &amp;amp; 0 &amp;amp; -1\\ 1 &amp;amp; 0 &amp;amp; -1\end{bmatrix}$，在论文它有时候会被称为核。卷积运算用“$*$”来表示。使用3×3的过滤器，将其覆盖在输入图像，然后进行元素乘法（element-wise products）运算，然">
+<meta name="keywords" content="深度学习,神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达深度学习笔记-4-卷积神经网络">
+<meta property="og:url" content="http://yoursite.com/2019/11/01/吴恩达深度学习笔记4/index.html">
+<meta property="og:site_name" content="Xiaoyi">
+<meta property="og:description" content="卷积神经网络边缘检测示例构造一个3×3的过滤器，像这样$\begin{bmatrix}1 &amp;amp; 0 &amp;amp; -1\\ 1 &amp;amp; 0 &amp;amp; -1\\ 1 &amp;amp; 0 &amp;amp; -1\end{bmatrix}$，在论文它有时候会被称为核。卷积运算用“$*$”来表示。使用3×3的过滤器，将其覆盖在输入图像，然后进行元素乘法（element-wise products）运算，然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-01T07:40:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达深度学习笔记-4-卷积神经网络">
+<meta name="twitter:description" content="卷积神经网络边缘检测示例构造一个3×3的过滤器，像这样$\begin{bmatrix}1 &amp;amp; 0 &amp;amp; -1\\ 1 &amp;amp; 0 &amp;amp; -1\\ 1 &amp;amp; 0 &amp;amp; -1\end{bmatrix}$，在论文它有时候会被称为核。卷积运算用“$*$”来表示。使用3×3的过滤器，将其覆盖在输入图像，然后进行元素乘法（element-wise products）运算，然">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/01/吴恩达深度学习笔记4/">
+
+
+
+
+
+  <title>吴恩达深度学习笔记-4-卷积神经网络 | Xiaoyi</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xiaoyi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/01/吴恩达深度学习笔记4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaoyi Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiaoyi">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达深度学习笔记-4-卷积神经网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-01T11:00:00+08:00">
+                2019-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/吴恩达深度学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">吴恩达深度学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><h3 id="边缘检测示例"><a href="#边缘检测示例" class="headerlink" title="边缘检测示例"></a>边缘检测示例</h3><p>构造一个3×3的过滤器，像这样$\begin{bmatrix}1 &amp; 0 &amp; -1\\ 1 &amp; 0 &amp; -1\\ 1 &amp; 0 &amp; -1\end{bmatrix}$，在论文它有时候会被称为核。卷积运算用“$*$”来表示。使用3×3的过滤器，将其覆盖在输入图像，然后进行元素乘法（element-wise products）运算，然后将该矩阵每个元素相加得到卷积运算结果。对于这个过滤器，当左边的值大而右边的值小时，得到的结果大，可以很好的检测到垂直边缘。</p>
+<p>$\begin{bmatrix}1 &amp; 0 &amp; - 1 \\ 2 &amp; 0 &amp; - 2 \\ 1 &amp; 0 &amp; - 1 \\\end{bmatrix}$，叫*Sobel的过滤器，它的优点在于增加了中间一行元素的权重，这使得结果的鲁棒性会更高一些。</p>
+<p>$\begin{bmatrix} 3&amp; 0 &amp; - 3 \\ 10 &amp; 0 &amp; - 10 \\ 3 &amp; 0 &amp; - 3 \\\end{bmatrix}$，这叫做Scharr过滤器，它有着和之前完全不同的特性，实际上也是一种垂直边缘检测，如果将其翻转90度，就能得到对应水平边缘检测。</p>
+<h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><p>如果有一个$n×n$的图像，用$f×f$的过滤器做卷积，那么输出的维度就是$(n-f+1)×(n-f+1)$。</p>
+<p>样的话会有两个缺点，第一个缺点是每次做卷积操作图像就会缩小，第二个缺点是，角落边缘的像素点只被一个输出所触碰或者使用。</p>
+<p>为了解决这些问题，可以在卷积操作之前填充这幅图像。可以用0去填充。</p>
+<p>选择填充多少像素，有Valid卷积和Same卷积。Valid卷积意味着不填充，这样的话，如果有一个$n×n$的图像，用一个$f×f$的过滤器卷积，它将会有一个$(n-f+1)×(n-f+1)$维的输出。另一个经常被用到的填充方法叫做Sam*卷积，那意味填充后，输出大小和输入大小是一样的。如果有一个$n×n$的图像，用$p$个像素填充边缘，输出的大小就是这样的$(n+2p-f+1)×(n+2p-f+1)$。如果想让$n+2p-f+1=n$的话，使得输出和输入大小相等，如果用这个等式求解$p$，那么$p=(f-1)/2$。所以当$f$是一个奇数的时候，只要选择相应的填充尺寸，就能确保得到和输入相同尺寸的输出。</p>
+<h3 id="卷积步长"><a href="#卷积步长" class="headerlink" title="卷积步长"></a>卷积步长</h3><p>之前我们移动蓝框的步长是1，现在移动的步长是s，让过滤器跳过s个步长。如果用一个$f×f$的过滤器卷积一个$n×n$的图像，padding为$p$，步幅为$s$，输出于是变为$\frac{n+2p - f}{s} + 1 \times \frac{n+2p - f}{s} + 1$。如果商不是一个整数时，选择向下取整。$⌊ ⌋$这是向下取整的符号，这也叫做对$z$进行地板除(floor)，这意味着$z$向下取整到最近的整数。意味着如果有任意一个蓝框移动到了外面，那就不要进行相乘操作。</p>
+<h3 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h3><p>如果有一个$n \times n \times n_{c}$（通道数）的输入图像，这里的$n_{c}$就是通道数目，然后卷积上一个$f×f×n_{c}$，按照惯例，这个（前一个$n_{c}$）和这个（后一个$n_{c}$）必须数值相同。然后就得到了$（n-f+1）×（n-f+1）×n_{c^{‘}}$，这里$n_{c^{‘}}$其实就是下一层的通道数，它是用的过滤器的个数。</p>
+<h3 id="单层卷积网络"><a href="#单层卷积网络" class="headerlink" title="单层卷积网络"></a>单层卷积网络</h3><p>用于描述卷积神经网络中的一层（以$l$层为例），也就是卷积层的各种标记：</p>
+<p>$f^{[l]}$： 过滤器大小</p>
+<p>$p^{[l]}$：padding的数量</p>
+<p>$s^{[l]}$：步幅</p>
+<p>$n_{c}^{[l]}$：过滤器的数量</p>
+<p>输入：$n_{H}^{\left\lbrack l - 1 \right\rbrack} \times n_{W}^{\left\lbrack l - 1 \right\rbrack} \times n_{c}^{\left\lbrack l - 1\right\rbrack}$</p>
+<p>输出：$n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}$</p>
+<p>过滤器维度：$f^{[l]} \times  f^{[l]} \times  n_{c}^{[l - 1]}$</p>
+<p>激活值$a^{[l]}$：$n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}$；若有m个例子，就有$m$个激活值的集合：$A^{[l]} = m \times n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}$</p>
+<p>权重：$f^{[l]} \times f^{[l]} \times  n_{c}^{[l - 1]} \times n_{c}^{[l]}$</p>
+<p>偏差：1×1×1×$n_{c}^{[l]}$</p>
+<h3 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h3><p>最大池化：把输入拆分成不同的区域，，输出的每个元素是对应区域中的最大元素值。平均池化：选取过滤器的最大值。</p>
+<p>池化的超级参数包括过滤器大小$f$和步幅$s$，最大池化的输入是$n_{H} \times n_{W} \times n_{c}$，假设没有padding，则输出$\lfloor\frac{n_{H} - f}{s} +1\rfloor \times \lfloor\frac{n_{w} - f}{s} + 1\rfloor \times n_{c}$。</p>
+<h1 id="深度神经网络：实例研究"><a href="#深度神经网络：实例研究" class="headerlink" title="深度神经网络：实例研究"></a>深度神经网络：实例研究</h1><h3 id="经典网络"><a href="#经典网络" class="headerlink" title="经典网络"></a>经典网络</h3><p>LeNet-5</p>
+<p>AlexNet</p>
+<p>VGG-16</p>
+<p>VGG-19</p>
+<h3 id="残差网络（ResNets）"><a href="#残差网络（ResNets）" class="headerlink" title="残差网络（ResNets）"></a>残差网络（ResNets）</h3><p>在残差网络中有一点变化，将$a^{[l]}$直接向后，拷贝到神经网络的深层，在ReLU非线性激活函数前加上$a^{[l]}$，这是一条捷径。</p>
+<h3 id="网络中的网络以及-1×1-卷积"><a href="#网络中的网络以及-1×1-卷积" class="headerlink" title="网络中的网络以及 1×1 卷积"></a>网络中的网络以及 1×1 卷积</h3><p>1×1卷积层可以实现一些重要功能（doing something pretty non-trivial），它给神经网络添加了一个非线性函数，从而减少或保持输入层中的通道数量不变，当然也可以增加通道数量。</p>
+<h3 id="Inception-网络"><a href="#Inception-网络" class="headerlink" title="Inception 网络"></a>Inception 网络</h3><h3 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h3><p>使用训练好的网络的代码和权重，把前面的层都冻结了，相当于一个固定的函数，再在特定的数据集上训练后面未冻结的层。</p>
+<h3 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h3><p>数据增强能够增加训练的数据。方法：垂直镜像对称，随机裁剪，旋转，剪切，彩色转换等。</p>
+<h1 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h1><h3 id="目标定位"><a href="#目标定位" class="headerlink" title="目标定位"></a>目标定位</h3><h3 id="特征点检测"><a href="#特征点检测" class="headerlink" title="特征点检测"></a>特征点检测</h3><h3 id="目标检测-1"><a href="#目标检测-1" class="headerlink" title="目标检测"></a>目标检测</h3><h3 id="滑动窗口的卷积实现"><a href="#滑动窗口的卷积实现" class="headerlink" title="滑动窗口的卷积实现"></a>滑动窗口的卷积实现</h3><h3 id="Bounding-Box预测"><a href="#Bounding-Box预测" class="headerlink" title="Bounding Box预测"></a>Bounding Box预测</h3><h3 id="交并比"><a href="#交并比" class="headerlink" title="交并比"></a>交并比</h3><h3 id="非极大值抑制"><a href="#非极大值抑制" class="headerlink" title="非极大值抑制"></a>非极大值抑制</h3><h3 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h3><h3 id="YOLO-算法"><a href="#YOLO-算法" class="headerlink" title="YOLO 算法"></a>YOLO 算法</h3><h3 id="候选区域"><a href="#候选区域" class="headerlink" title="候选区域"></a>候选区域</h3><h1 id="人脸识别和神经风格转换"><a href="#人脸识别和神经风格转换" class="headerlink" title="人脸识别和神经风格转换"></a>人脸识别和神经风格转换</h1><h3 id="什么是人脸识别？"><a href="#什么是人脸识别？" class="headerlink" title="什么是人脸识别？"></a>什么是人脸识别？</h3><h3 id="One-Shot学习"><a href="#One-Shot学习" class="headerlink" title="One-Shot学习"></a>One-Shot学习</h3><h3 id="Siamese-网络"><a href="#Siamese-网络" class="headerlink" title="Siamese 网络"></a>Siamese 网络</h3><h3 id="Triplet-损失"><a href="#Triplet-损失" class="headerlink" title="Triplet 损失"></a>Triplet 损失</h3><h3 id="人脸验证与二分类"><a href="#人脸验证与二分类" class="headerlink" title="人脸验证与二分类"></a>人脸验证与二分类</h3><h3 id="什么是神经风格迁移？"><a href="#什么是神经风格迁移？" class="headerlink" title="什么是神经风格迁移？"></a>什么是神经风格迁移？</h3><h3 id="CNN特征可视化"><a href="#CNN特征可视化" class="headerlink" title="CNN特征可视化"></a>CNN特征可视化</h3><h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><h3 id="内容代价函数"><a href="#内容代价函数" class="headerlink" title="内容代价函数"></a>内容代价函数</h3><h3 id="风格代价函数"><a href="#风格代价函数" class="headerlink" title="风格代价函数"></a>风格代价函数</h3><h3 id="一维到三维推广"><a href="#一维到三维推广" class="headerlink" title="一维到三维推广"></a>一维到三维推广</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/31/吴恩达深度学习笔记3/" rel="next" title="吴恩达深度学习笔记-3-结构化机器学习项目">
+                <i class="fa fa-chevron-left"></i> 吴恩达深度学习笔记-3-结构化机器学习项目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/01/吴恩达深度学习笔记5/" rel="prev" title="吴恩达深度学习笔记-5-序列模型">
+                吴恩达深度学习笔记-5-序列模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Xiaoyi Jin">
+            
+              <p class="site-author-name" itemprop="name">Xiaoyi Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">1.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#边缘检测示例"><span class="nav-number">1.0.1.</span> <span class="nav-text">边缘检测示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#padding"><span class="nav-number">1.0.2.</span> <span class="nav-text">padding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积步长"><span class="nav-number">1.0.3.</span> <span class="nav-text">卷积步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三维卷积"><span class="nav-number">1.0.4.</span> <span class="nav-text">三维卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单层卷积网络"><span class="nav-number">1.0.5.</span> <span class="nav-text">单层卷积网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层"><span class="nav-number">1.0.6.</span> <span class="nav-text">池化层</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#深度神经网络：实例研究"><span class="nav-number">2.</span> <span class="nav-text">深度神经网络：实例研究</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#经典网络"><span class="nav-number">2.0.1.</span> <span class="nav-text">经典网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#残差网络（ResNets）"><span class="nav-number">2.0.2.</span> <span class="nav-text">残差网络（ResNets）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络中的网络以及-1×1-卷积"><span class="nav-number">2.0.3.</span> <span class="nav-text">网络中的网络以及 1×1 卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inception-网络"><span class="nav-number">2.0.4.</span> <span class="nav-text">Inception 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移学习"><span class="nav-number">2.0.5.</span> <span class="nav-text">迁移学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据增强"><span class="nav-number">2.0.6.</span> <span class="nav-text">数据增强</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测"><span class="nav-number">3.</span> <span class="nav-text">目标检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标定位"><span class="nav-number">3.0.1.</span> <span class="nav-text">目标定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征点检测"><span class="nav-number">3.0.2.</span> <span class="nav-text">特征点检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标检测-1"><span class="nav-number">3.0.3.</span> <span class="nav-text">目标检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动窗口的卷积实现"><span class="nav-number">3.0.4.</span> <span class="nav-text">滑动窗口的卷积实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bounding-Box预测"><span class="nav-number">3.0.5.</span> <span class="nav-text">Bounding Box预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交并比"><span class="nav-number">3.0.6.</span> <span class="nav-text">交并比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非极大值抑制"><span class="nav-number">3.0.7.</span> <span class="nav-text">非极大值抑制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Anchor-Boxes"><span class="nav-number">3.0.8.</span> <span class="nav-text">Anchor Boxes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-算法"><span class="nav-number">3.0.9.</span> <span class="nav-text">YOLO 算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#候选区域"><span class="nav-number">3.0.10.</span> <span class="nav-text">候选区域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#人脸识别和神经风格转换"><span class="nav-number">4.</span> <span class="nav-text">人脸识别和神经风格转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是人脸识别？"><span class="nav-number">4.0.1.</span> <span class="nav-text">什么是人脸识别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#One-Shot学习"><span class="nav-number">4.0.2.</span> <span class="nav-text">One-Shot学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Siamese-网络"><span class="nav-number">4.0.3.</span> <span class="nav-text">Siamese 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Triplet-损失"><span class="nav-number">4.0.4.</span> <span class="nav-text">Triplet 损失</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#人脸验证与二分类"><span class="nav-number">4.0.5.</span> <span class="nav-text">人脸验证与二分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是神经风格迁移？"><span class="nav-number">4.0.6.</span> <span class="nav-text">什么是神经风格迁移？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN特征可视化"><span class="nav-number">4.0.7.</span> <span class="nav-text">CNN特征可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价函数"><span class="nav-number">4.0.8.</span> <span class="nav-text">代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内容代价函数"><span class="nav-number">4.0.9.</span> <span class="nav-text">内容代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#风格代价函数"><span class="nav-number">4.0.10.</span> <span class="nav-text">风格代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一维到三维推广"><span class="nav-number">4.0.11.</span> <span class="nav-text">一维到三维推广</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaoyi Jin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

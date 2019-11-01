@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-new.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,神经网络,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="深度学习的实践层面训练，验证，测试集机器学习发展的小数据量时代，常见做法是将所有数据三七分，70%训练集，30%测试集。如果明确设置了验证集，也可以按照60%训练集，20%验证集和20%测试集来划分。 假设有100万条数据，其中1万条作为验证集，1万条作为测试集，100万里取1万，比例是1%，即：训练集占98%，验证集和测试集各占1%。对于数据量过百万的应用，训练集可以占到99.5%，验证和测试集">
+<meta name="keywords" content="深度学习,神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达深度学习笔记-2-改善神经网络：超参数调试">
+<meta property="og:url" content="http://yoursite.com/2019/10/30/吴恩达深度学习笔记2/index.html">
+<meta property="og:site_name" content="Xiaoyi">
+<meta property="og:description" content="深度学习的实践层面训练，验证，测试集机器学习发展的小数据量时代，常见做法是将所有数据三七分，70%训练集，30%测试集。如果明确设置了验证集，也可以按照60%训练集，20%验证集和20%测试集来划分。 假设有100万条数据，其中1万条作为验证集，1万条作为测试集，100万里取1万，比例是1%，即：训练集占98%，验证集和测试集各占1%。对于数据量过百万的应用，训练集可以占到99.5%，验证和测试集">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-01T11:34:59.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达深度学习笔记-2-改善神经网络：超参数调试">
+<meta name="twitter:description" content="深度学习的实践层面训练，验证，测试集机器学习发展的小数据量时代，常见做法是将所有数据三七分，70%训练集，30%测试集。如果明确设置了验证集，也可以按照60%训练集，20%验证集和20%测试集来划分。 假设有100万条数据，其中1万条作为验证集，1万条作为测试集，100万里取1万，比例是1%，即：训练集占98%，验证集和测试集各占1%。对于数据量过百万的应用，训练集可以占到99.5%，验证和测试集">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/30/吴恩达深度学习笔记2/">
+
+
+
+
+
+  <title>吴恩达深度学习笔记-2-改善神经网络：超参数调试 | Xiaoyi</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xiaoyi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/吴恩达深度学习笔记2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaoyi Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiaoyi">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达深度学习笔记-2-改善神经网络：超参数调试</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T16:00:00+08:00">
+                2019-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/吴恩达深度学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">吴恩达深度学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="深度学习的实践层面"><a href="#深度学习的实践层面" class="headerlink" title="深度学习的实践层面"></a>深度学习的实践层面</h1><h3 id="训练，验证，测试集"><a href="#训练，验证，测试集" class="headerlink" title="训练，验证，测试集"></a>训练，验证，测试集</h3><p>机器学习发展的小数据量时代，常见做法是将所有数据三七分，70%训练集，30%测试集。如果明确设置了验证集，也可以按照60%训练集，20%验证集和20%测试集来划分。</p>
+<p>假设有100万条数据，其中1万条作为验证集，1万条作为测试集，100万里取1万，比例是1%，即：训练集占98%，验证集和测试集各占1%。对于数据量过百万的应用，训练集可以占到99.5%，验证和测试集各占0.25%，或者验证集占0.4%，测试集占0.1%。</p>
+<h3 id="偏差，方差"><a href="#偏差，方差" class="headerlink" title="偏差，方差"></a>偏差，方差</h3><p>通过分析在训练集上训练算法产生的误差和验证集上验证算法产生的误差来诊断算法是否存在高偏差和高方差，是否两个值都高，或者两个值都不高。</p>
+<p>训练集误差较低，验证集误差较高，过拟合，方差高。</p>
+<p>训练集误差和验证集误差都较高且差距不太大，欠拟合，偏差高。</p>
+<p>训练集误差较高，验证集误差更高，偏差和方差都高。</p>
+<h3 id="过拟合的解决方向"><a href="#过拟合的解决方向" class="headerlink" title="过拟合的解决方向"></a>过拟合的解决方向</h3><p>深度学习可能存在过拟合问题——高方差，有两个解决方法，一个是准备更多的数据，另一个是正则化。正则化的最常用的方法是$L2$正则化，另外还有dropout（随机失活）正则化。</p>
+<p>复制神经网络，dropout会遍历网络的每一层，并设置消除神经网络中节点的概率。假设网络中的每一层，每个节点都以设置的概率如0.5被删除，然后删除掉从该节点进出的连线，最后得到一个节点更少，规模更小的网络，然后backprop方法进行训练。</p>
+<p>其他防止过拟合的方法：early stopping</p>
+<h3 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h3><p>零均值</p>
+<p>归一化方差</p>
+<h3 id="梯度消失-梯度爆炸"><a href="#梯度消失-梯度爆炸" class="headerlink" title="梯度消失/梯度爆炸"></a>梯度消失/梯度爆炸</h3><p>权重$W​$只比1略大一点，或者说只是比单位矩阵大一点，深度神经网络的激活函数将爆炸式增长，如果$W​$比1略小一点，可能是$\begin{bmatrix}0.9 &amp; 0 \\ 0 &amp; 0.9 \\ \end{bmatrix}​$，在深度神经网络中，激活函数将以指数级递减。</p>
+<h3 id="神经网络的权注初始化"><a href="#神经网络的权注初始化" class="headerlink" title="神经网络的权注初始化"></a>神经网络的权注初始化</h3><p>深度神经网络会产生梯度消失和梯度爆炸问题，更谨慎的 选择随机初始化参数有助于解决这个问题。</p>
+<p>$z = w_{1}x_{1} + w_{2}x_{2} + \ldots +w_{n}x_{n}$，$b=0$，暂时忽略$b$，为了预防$z$值过大或过小，可以看到$n$越大，希望$w_{i}$越小，因为$z$是$w_{i}x_{i}$的和，如果把很多此类项相加，希望每项值更小，最合理的方法就是设置$w_{i}=\frac{1}{n}$，$n$表示神经元的输入特征数量，实际上，要做的就是设置某层权重矩阵$w^{[l]} = np.random.randn( \text{shape})*\text{np.}\text{sqrt}(\frac{1}{n^{[l-1]} })$，$n^{[l - 1]}$就是喂给第$l$层神经单元的数量（即第$l-1$层神经元数量）。</p>
+<h3 id="梯度的数值逼近"><a href="#梯度的数值逼近" class="headerlink" title="梯度的数值逼近"></a>梯度的数值逼近</h3><p>导数的官方定义是针对值很小的$\varepsilon$，$f^{‘}\theta) = \operatorname{}\frac{f( \theta + \varepsilon) -f(\theta -\varepsilon)}{2\varepsilon}$。对于一个非零的$\varepsilon$，它的逼近误差可以写成$O(\varepsilon^{2})$。</p>
+<h3 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h3><p>使用双边误差计算$d\theta_{\text{approx} }[i]$的值：</p>
+<p>$d\theta_{\text{approx} }\left[i \right] = \frac{J\left( \theta_{1},\theta_{2},\ldots\theta_{i} + \varepsilon,\ldots \right) - J\left( \theta_{1},\theta_{2},\ldots\theta_{i} - \varepsilon,\ldots \right)}{2\varepsilon}$</p>
+<p>这个值（$d\theta_{\text{approx} }\left[i \right]$）应该逼近$d\theta\left[i \right]$=$\frac{\partial J}{\partial\theta_{i} }$，$d\theta\left[i \right]$是代价函数的偏导数。</p>
+<p>检查是否逼近：</p>
+<p>$\frac{ {||d\theta_{\text{approx} } -d\theta||}_{2} }{ {||d\theta_{\text{approx} }||}_{2}+{||d\theta||}_{2} }$</p>
+<p>注意事项：不要在训练中使用梯度检验，它只用于调试。如果算法的梯度检验失败，要检查所有项。在实施梯度检验时，如果使用正则化，注意正则项。梯度检验不能与dropout同时使用，因为每次迭代过程中，dropout会随机消除隐藏层单元的不同子集，难以计算dropout在梯度下降上的代价函数$J​$。</p>
+<h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h3 id="Mini-batch-梯度下降"><a href="#Mini-batch-梯度下降" class="headerlink" title="Mini-batch 梯度下降"></a>Mini-batch 梯度下降</h3><p>batch梯度下降法指的是之前讲过的梯度下降法算法，就是同时处理整个训练集，这个名字就是来源于能够同时看到整个<strong>batch</strong>训练集的样本被处理。</p>
+<p>ini-batch梯度下降法，每次同时处理的单个的<strong>mini-batch</strong> $X^{\{t\} }$和$Y^{\{ t\} }$，而不是同时处理全部的$X$和$Y$训练集。</p>
+<p>在训练集上运行mini-batch梯度下降法，若有5000个各有1000个样本的组，运行<code>for t=1……5000</code>，在for循环里对$X^{\{t\} }$和$Y^{\{t\} }$执行一步梯度下降法。</p>
+<p>前向传播：$z^{\lbrack 1\rbrack} = W^{\lbrack 1\rbrack}X^{\{ t\} } + b^{\lbrack1\rbrack}$，然后执行$A^{[1]k} =g^{[1]}(Z^{[1]})$，以此类推，直到$A^{\lbrack L\rbrack} = g^{\left\lbrack L \right\rbrack}(Z^{\lbrack L\rbrack})$。</p>
+<p>接下来你计算mini-batch的损失成本函数$J$，子集规模是1000：$J^{\{t\} } = \frac{1}{1000}\sum_{i = 1}^{l}{L(\hat y^{(i)},y^{(i)})} +\frac{\lambda}{2 1000}\sum_{l}^{}{||w^{[l]}||}_{F}^{2}$</p>
+<p>然后更新权值，$W​$实际上是$W^{\lbrack l\rbrack}​$，更新为$W^{[l]}:= W^{[l]} - adW^{[l]}​$，对$b​$做相同处理，$b^{[l]}:= b^{[l]} - adb^{[l]}​$。</p>
+<h3 id="动量梯度下降法（Gradient-descent-with-Momentum）"><a href="#动量梯度下降法（Gradient-descent-with-Momentum）" class="headerlink" title="动量梯度下降法（Gradient descent with Momentum）"></a>动量梯度下降法（Gradient descent with Momentum）</h3><p>基本的想法是计算梯度的指数加权平均数，并利用该梯度更新权重。</p>
+<p>问题：使用梯度下降法时，是慢慢上下摆动到最小值，这种上下波动减慢了梯度下降法的速度。</p>
+<p>解决想法：在纵轴上，希望学习慢一点，但是在横轴上，希望加快学习，加速移向最小值。所以使用动量梯度下降法，需要做的是，在每次迭代中，确切来说在第$t$次迭代的过程中，会计算微分$dW$，$db$，这里省略上标$[l，用现有的mini-batch计算$dW$，$db$]$。如果用batch梯度下降法，现在的mini-batch就是全部的batch，对于batch梯度下降法的效果是一样的。要做的是计算$v_{ {dW} }= \beta v_{ {dW} } + \left( 1 - \beta \right)dW$，这跟指数加权平均数的计算相似，也就是$v = \beta v + \left( 1 - \beta \right)\theta_{t}$，$dW$的移动平均数，接着同样地计算$v_{db}$，$v_{db} = \beta v_{ {db} } + ( 1 - \beta){db}$，然后重新赋值权重，$W:= W -av_{ {dW} }$，同样$b:= b - a v_{db}$，这样就可以减缓梯度下降的幅度。</p>
+<p>On iteration t{<br>    Compute dW, db on the current minibatch:<br>    $v_{ {dW} }= \beta v_{ {dW} } + \left( 1 - \beta \right)dW$<br>    $v_{db} = \beta v_{ {db} } + ( 1 - \beta){db}$<br>    $W:= W -a v_{ {dW} }$，$b:= b - a v_{db}$</p>
+<p>Hyperparameters: $a$, $\beta$;   $\beta=0.9$<br>}</p>
+<h3 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h3><p>RMSprop，全称是均方根，因为要将微分进行平方，然后最后使用平方根。</p>
+<p>解决方法：RMSprop会这样更新参数值，$W:= W -a\frac{dW}{\sqrt{S_{dW} } }$，$b:=b -\alpha\frac{db}{\sqrt{S_{db} } }$。在横轴方向，希望学习速度快，而在垂直方向，希望减缓纵轴上的摆动。所以在横轴上要除以一个较小的数，垂直方向上上要除以较大的数字，这样就可以减缓纵轴上的变化。对于上下波动的微分，垂直方向的要比水平方向的大得多，结果就是纵轴上的更新要被一个较大的数相除，就能消除摆动，而水平方向的更新则被较小的数相除。</p>
+<p>On iteration t{<br>    Compute dW, db on the current minibatch:<br>    $S_{dW}= \beta S_{dW} + ((1 -\beta) {dW})^{2}$<br>    $S_{db}= \beta S_{db} + ((1 - \beta){db})^{2}$<br>    $W:= W -a\frac{dW}{\sqrt{S_{dW} } }$，$b:=b -\alpha\frac{db}{\sqrt{S_{db} } }$</p>
+<p>Hyperparameters: $a$, $\beta$<br>}</p>
+<h3 id="Adam-优化算法-Adam-optimization-algorithm"><a href="#Adam-优化算法-Adam-optimization-algorithm" class="headerlink" title="Adam 优化算法(Adam optimization algorithm)"></a>Adam 优化算法(Adam optimization algorithm)</h3><p>Adam算法结合了Momentum和RMSprop梯度下降法，是一种极其常用的学习算法，被证明能有效适用于不同神经网络，适用于广泛的结构。</p>
+<p>$v_{dW} = 0$，$S_{dW} =0$，$v_{db} = 0$，$S_{db} =0$</p>
+<p>On iteration t{<br>    Compute dW, db on the current minibatch:<br>    $v_{dW}= \beta_{1}v_{dW} + ( 1 - \beta_{1})dW$<br>    $v_{db}= \beta_{1}v_{db} + ( 1 -\beta_{1} ){db}$<br>    $S_{dW}= \beta_{2}S_{dW} + (( 1 - \beta_{2}){(dW)})^{2}$<br>    $S_{db}= \beta_{2}S_{db} + (( 1 - \beta_{2}){(db)})^{2}$<br>    $v_{dW}^{\text{corrected} }= \frac{v_{dW} }{1 - \beta_{1}^{t} }$<br>    $v_{db}^{\text{corrected} } =\frac{v_{db} }{1 -\beta_{1}^{t} }$<br>    $S_{dW}^{\text{corrected} } =\frac{S_{dW} }{1 - \beta_{2}^{t} }$<br>    $S_{db}^{\text{corrected} } =\frac{S_{db} }{1 - \beta_{2}^{t} }$<br>    $W:= W - \frac{a v_{dW}^{\text{corrected} } }{\sqrt{S_{dW}^{\text{corrected} } } +\varepsilon}$<br>    $b:=b - \frac{\alpha v_{\text{db} }^{\text{corrected} } }{\sqrt{S_{\text{db} }^{\text{corrected} } } +\varepsilon}$<br>}</p>
+<h3 id="学习率衰减"><a href="#学习率衰减" class="headerlink" title="学习率衰减"></a>学习率衰减</h3><p>加快学习算法的一个办法就是随时间慢慢减少学习率，称之为学习率衰减。</p>
+<p>可以将$a$学习率设为$a= \frac{1}{1 + decayrate * \text{epoch}\text{-num} }a_{0}$（decay-rate称为衰减率，epoch-num为代数，$\alpha_{0}$为初始学习率），注意这个衰减率是另一个需要调整的超参数。</p>
+<p>到的其它公式有$a =\frac{k}{\sqrt{\text{epoch-num} } }a_{0}$或者$a =\frac{k}{\sqrt{t} }a_{0}$（$t$为mini-batch的数字）。有时也用离散下降的学习率。</p>
+<h3 id="局部最优的问题"><a href="#局部最优的问题" class="headerlink" title="局部最优的问题"></a>局部最优的问题</h3><p>局部最优，鞍点，平稳段。</p>
+<h1 id="超参数调试、Batch正则化和程序框架"><a href="#超参数调试、Batch正则化和程序框架" class="headerlink" title="超参数调试、Batch正则化和程序框架"></a>超参数调试、Batch正则化和程序框架</h1><h3 id="调试处理"><a href="#调试处理" class="headerlink" title="调试处理"></a>调试处理</h3><p>学习速率$a$是需要调试的最重要的超参数。除了$a$，还有一些参数需要调试，例如Momentum参数$\beta$，0.9就是个很好的默认值。当应Adam算法时，对于$\beta_{1}$，${\beta}_{2}$和$\varepsilon$，总是选定其分别为0.9，0.999和$10^{-8}$，如果想的话也可以调试它们。</p>
+<p>尝试调整一些超参数时，随机选择点，接着用这些随机取的点试验超参数的效果。当给超参数取值时，另一个惯例是采用由粗糙到精细的策略。</p>
+<p>随机取值并不是在有效范围内的随机均匀取值，而是选择合适的标尺。如对数标尺等。</p>
+<p>搜索超参数时，一种方法是是照看一个模型，通常是有庞大的数据组，但没有许多计算资源或足够的CPU和GPU的前提下，基本而言，只可以一次负担起试验一个模型或一小批模型，在这种情况下，当它在试验时，观察它的表现，耐心地调试学习率，逐渐改良。另一种方法则是同时试验多种模型，获得像这样的学习曲线，选择工作效率较好的参数。</p>
+<h3 id="Batch归一化"><a href="#Batch归一化" class="headerlink" title="Batch归一化"></a>Batch归一化</h3><p>Batch归一化会使参数搜索问题变得很容易，使神经网络对超参数的选择更加稳定，超参数的范围会更加庞大，工作效果也很好，也会使训练更加容易，甚至是深层网络。</p>
+<p>在神经网络中，已知一些中间值，假设有一些隐藏单元值，从$z^{(1)}$到$z^{(m)}$。已把这些$z$值标准化，化为含平均值0和标准单位方差，所以$z$的每一个分量都含有平均值0和方差1，但不想让隐藏单元总是含有平均值0和方差1，也许隐藏单元有了不同的分布会有意义，所要做的就是计算，称之为${\tilde{z} }^{(i)}$，${\tilde{z} }^{(i)}= \gamma z_{\text{norm} }^{(i)} +\beta$，这里$\gamma$和$\beta$是模型的学习参数，所以使用梯度下降或一些其它类似梯度下降的算法，更新$\gamma$和$\beta$，正如更新神经网络的权重一样。</p>
+<p>$\gamma$和$\beta$的作用是，可以随意设置${\tilde{z} }^{(i)}$的平均值，事实上，如果$\gamma= \sqrt{\sigma^{2} +\varepsilon}$，如果$\gamma$等于这个分母项（$z_{\text{norm} }^{(i)} = \frac{z^{(i)} -\mu}{\sqrt{\sigma^{2} +\varepsilon} }$中的分母），$\beta$等于$\mu$，这里的这个值是$z_{\text{norm} }^{(i)}= \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \varepsilon} }$中的$\mu$，那么$\gamma z_{\text{norm} }^{(i)} +\beta$的作用在于，它会精确转化这个方程，如果这些成立（$\gamma =\sqrt{\sigma^{2} + \varepsilon},\beta =\mu$），那么${\tilde{z} }^{(i)} = z^{(i)}$。</p>
+<p>通过对$\gamma$和$\beta$合理设定，规范化过程，即这四个等式，从根本来说，只是计算恒等函数，通过赋予$\gamma$和$\beta$其它值，可以使你构造含其它平均值和方差的隐藏单元值。</p>
+<h3 id="softmax回归"><a href="#softmax回归" class="headerlink" title="softmax回归"></a>softmax回归</h3><p>$z^{[l]} = W^{[l]}a^{[L-1]} + b^{[l]}$</p>
+<p>$a^{[l]} = \frac{e^{z^{[l]} } }{\sum_{j =1}^{m}{z_{i} }^{[l]}}$</p>
+<p>${a_{i} }^{[l]} = \frac{e^{ {z_{i} }^{[l]} } }{\sum_{j =1}^{m}{z_{i} }^{[l]}}$</p>
+<p>损失函数：$L(\hat y,y ) = - \sum_{j = 1}^{4}{y_{j}log\hat y_{j} }$</p>
+<p>代价函数：$J( w^{[1]},b^{[1]},\ldots\ldots) = \frac{1}{m}\sum_{i = 1}^{m}{L( \hat y^{(i)},y^{(i)})}$</p>
+<h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/30/吴恩达深度学习笔记1/" rel="next" title="吴恩达深度学习笔记-1-神经网络和深度学习">
+                <i class="fa fa-chevron-left"></i> 吴恩达深度学习笔记-1-神经网络和深度学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/31/吴恩达深度学习笔记3/" rel="prev" title="吴恩达深度学习笔记-3-结构化机器学习项目">
+                吴恩达深度学习笔记-3-结构化机器学习项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Xiaoyi Jin">
+            
+              <p class="site-author-name" itemprop="name">Xiaoyi Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习的实践层面"><span class="nav-number">1.</span> <span class="nav-text">深度学习的实践层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#训练，验证，测试集"><span class="nav-number">1.0.1.</span> <span class="nav-text">训练，验证，测试集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏差，方差"><span class="nav-number">1.0.2.</span> <span class="nav-text">偏差，方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合的解决方向"><span class="nav-number">1.0.3.</span> <span class="nav-text">过拟合的解决方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归一化输入"><span class="nav-number">1.0.4.</span> <span class="nav-text">归一化输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度消失-梯度爆炸"><span class="nav-number">1.0.5.</span> <span class="nav-text">梯度消失/梯度爆炸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络的权注初始化"><span class="nav-number">1.0.6.</span> <span class="nav-text">神经网络的权注初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度的数值逼近"><span class="nav-number">1.0.7.</span> <span class="nav-text">梯度的数值逼近</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度检验"><span class="nav-number">1.0.8.</span> <span class="nav-text">梯度检验</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#优化算法"><span class="nav-number">2.</span> <span class="nav-text">优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mini-batch-梯度下降"><span class="nav-number">2.0.1.</span> <span class="nav-text">Mini-batch 梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动量梯度下降法（Gradient-descent-with-Momentum）"><span class="nav-number">2.0.2.</span> <span class="nav-text">动量梯度下降法（Gradient descent with Momentum）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RMSprop"><span class="nav-number">2.0.3.</span> <span class="nav-text">RMSprop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adam-优化算法-Adam-optimization-algorithm"><span class="nav-number">2.0.4.</span> <span class="nav-text">Adam 优化算法(Adam optimization algorithm)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习率衰减"><span class="nav-number">2.0.5.</span> <span class="nav-text">学习率衰减</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部最优的问题"><span class="nav-number">2.0.6.</span> <span class="nav-text">局部最优的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#超参数调试、Batch正则化和程序框架"><span class="nav-number">3.</span> <span class="nav-text">超参数调试、Batch正则化和程序框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调试处理"><span class="nav-number">3.0.1.</span> <span class="nav-text">调试处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Batch归一化"><span class="nav-number">3.0.2.</span> <span class="nav-text">Batch归一化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#softmax回归"><span class="nav-number">3.0.3.</span> <span class="nav-text">softmax回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorflow"><span class="nav-number">3.0.4.</span> <span class="nav-text">Tensorflow</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaoyi Jin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,17 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>吴恩达深度学习笔记-5-序列模型</title>
+    <url>/2019/11/01/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B05/</url>
+    <content><![CDATA[<h1 id="循环序列模型"><a href="#循环序列模型" class="headerlink" title="循环序列模型"></a>循环序列模型</h1><h3 id="循环神经网络模型"><a href="#循环神经网络模型" class="headerlink" title="循环神经网络模型"></a>循环神经网络模型</h3><p>在$t$时刻：</p>
+<p>$a^{&lt; t &gt;} = g_{1}(W_{aa}a^{&lt; t - 1 &gt;} + W_{ax}x^{&lt; t &gt;} + b_{a})$</p>
+<p>$\hat y^{&lt; t &gt;} = g_{2}(W_a^{&lt; t &gt;} + b_{y})$</p>
+<p>RNN前向传播示意图：</p>
+<h3 id="通过时间的反向传播"><a href="#通过时间的反向传播" class="headerlink" title="通过时间的反向传播"></a>通过时间的反向传播</h3><p>整个序列的损失函数：</p>
+<p>$L(\hat y,y) = \ \sum_{t = 1}^{T_{x}}{L^{&lt; t &gt;}(\hat  y^{&lt; t &gt;},y^{&lt; t &gt;})}$</p>
+<p>RNN反向传播示意图：</p>
+<h3 id="不同类型的循环神经网络"><a href="#不同类型的循环神经网络" class="headerlink" title="不同类型的循环神经网络"></a>不同类型的循环神经网络</h3><p>“*对多”、“多对一”、“一对一”和“一对多”的结构。</p>
+<h3 id="语言模型和序列生成"><a href="#语言模型和序列生成" class="headerlink" title="语言模型和序列生成"></a>语言模型和序列生成</h3><h3 id="对新序列采样"><a href="#对新序列采样" class="headerlink" title="对新序列采样"></a>对新序列采样</h3><h3 id="循环神经网络的梯度消失"><a href="#循环神经网络的梯度消失" class="headerlink" title="循环神经网络的梯度消失"></a>循环神经网络的梯度消失</h3><h3 id="GRU单元"><a href="#GRU单元" class="headerlink" title="GRU单元"></a>GRU单元</h3><h3 id="长短期记忆（LSTM（long-short-term-memory）unit）"><a href="#长短期记忆（LSTM（long-short-term-memory）unit）" class="headerlink" title="长短期记忆（LSTM（long short term memory）unit）"></a>长短期记忆（LSTM（long short term memory）unit）</h3><h3 id="双向循环神经网络"><a href="#双向循环神经网络" class="headerlink" title="双向循环神经网络"></a>双向循环神经网络</h3><h3 id="深层循环神经网络"><a href="#深层循环神经网络" class="headerlink" title="深层循环神经网络"></a>深层循环神经网络</h3><h1 id="自然语言处理与词嵌入"><a href="#自然语言处理与词嵌入" class="headerlink" title="自然语言处理与词嵌入"></a>自然语言处理与词嵌入</h1><h3 id="词汇表征"><a href="#词汇表征" class="headerlink" title="词汇表征"></a>词汇表征</h3><h3 id="使用词嵌入"><a href="#使用词嵌入" class="headerlink" title="使用词嵌入"></a>使用词嵌入</h3><h3 id="词嵌入的特性"><a href="#词嵌入的特性" class="headerlink" title="词嵌入的特性"></a>词嵌入的特性</h3><h3 id="嵌入矩阵"><a href="#嵌入矩阵" class="headerlink" title="嵌入矩阵"></a>嵌入矩阵</h3><h3 id="学习词嵌入"><a href="#学习词嵌入" class="headerlink" title="学习词嵌入"></a>学习词嵌入</h3><h3 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h3><h3 id="负采样"><a href="#负采样" class="headerlink" title="负采样"></a>负采样</h3><h3 id="GloVe-词向量"><a href="#GloVe-词向量" class="headerlink" title="GloVe 词向量"></a>GloVe 词向量</h3><h3 id="情感分类"><a href="#情感分类" class="headerlink" title="情感分类"></a>情感分类</h3><h3 id="词嵌入除偏"><a href="#词嵌入除偏" class="headerlink" title="词嵌入除偏"></a>词嵌入除偏</h3><h1 id="序列模型和注意力机制"><a href="#序列模型和注意力机制" class="headerlink" title="序列模型和注意力机制"></a>序列模型和注意力机制</h1><h3 id="基础模型"><a href="#基础模型" class="headerlink" title="基础模型"></a>基础模型</h3><h3 id="选择最可能的句子"><a href="#选择最可能的句子" class="headerlink" title="选择最可能的句子"></a>选择最可能的句子</h3><h3 id="集束搜索"><a href="#集束搜索" class="headerlink" title="集束搜索"></a>集束搜索</h3><h3 id="改进集束搜索"><a href="#改进集束搜索" class="headerlink" title="改进集束搜索"></a>改进集束搜索</h3><h3 id="集束搜索的误差分析"><a href="#集束搜索的误差分析" class="headerlink" title="集束搜索的误差分析"></a>集束搜索的误差分析</h3><h3 id="Bleu-得分"><a href="#Bleu-得分" class="headerlink" title="Bleu 得分"></a>Bleu 得分</h3><h3 id="注意力模型直观理解"><a href="#注意力模型直观理解" class="headerlink" title="注意力模型直观理解"></a>注意力模型直观理解</h3><h3 id="注意力模型"><a href="#注意力模型" class="headerlink" title="注意力模型"></a>注意力模型</h3><h3 id="语音识别"><a href="#语音识别" class="headerlink" title="语音识别"></a>语音识别</h3><h3 id="触发字检测"><a href="#触发字检测" class="headerlink" title="触发字检测"></a>触发字检测</h3>]]></content>
+      <categories>
+        <category>吴恩达深度学习笔记</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>吴恩达深度学习笔记-4-卷积神经网络</title>
+    <url>/2019/11/01/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B04/</url>
+    <content><![CDATA[<h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><h3 id="边缘检测示例"><a href="#边缘检测示例" class="headerlink" title="边缘检测示例"></a>边缘检测示例</h3><p>构造一个3×3的过滤器，像这样$\begin{bmatrix}1 &amp; 0 &amp; -1\\ 1 &amp; 0 &amp; -1\\ 1 &amp; 0 &amp; -1\end{bmatrix}$，在论文它有时候会被称为核。卷积运算用“$*$”来表示。使用3×3的过滤器，将其覆盖在输入图像，然后进行元素乘法（element-wise products）运算，然后将该矩阵每个元素相加得到卷积运算结果。对于这个过滤器，当左边的值大而右边的值小时，得到的结果大，可以很好的检测到垂直边缘。</p>
+<p>$\begin{bmatrix}1 &amp; 0 &amp; - 1 \\ 2 &amp; 0 &amp; - 2 \\ 1 &amp; 0 &amp; - 1 \\\end{bmatrix}$，叫*Sobel的过滤器，它的优点在于增加了中间一行元素的权重，这使得结果的鲁棒性会更高一些。</p>
+<p>$\begin{bmatrix} 3&amp; 0 &amp; - 3 \\ 10 &amp; 0 &amp; - 10 \\ 3 &amp; 0 &amp; - 3 \\\end{bmatrix}$，这叫做Scharr过滤器，它有着和之前完全不同的特性，实际上也是一种垂直边缘检测，如果将其翻转90度，就能得到对应水平边缘检测。</p>
+<h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><p>如果有一个$n×n$的图像，用$f×f$的过滤器做卷积，那么输出的维度就是$(n-f+1)×(n-f+1)$。</p>
+<p>样的话会有两个缺点，第一个缺点是每次做卷积操作图像就会缩小，第二个缺点是，角落边缘的像素点只被一个输出所触碰或者使用。</p>
+<p>为了解决这些问题，可以在卷积操作之前填充这幅图像。可以用0去填充。</p>
+<p>选择填充多少像素，有Valid卷积和Same卷积。Valid卷积意味着不填充，这样的话，如果有一个$n×n$的图像，用一个$f×f$的过滤器卷积，它将会有一个$(n-f+1)×(n-f+1)$维的输出。另一个经常被用到的填充方法叫做Sam*卷积，那意味填充后，输出大小和输入大小是一样的。如果有一个$n×n$的图像，用$p$个像素填充边缘，输出的大小就是这样的$(n+2p-f+1)×(n+2p-f+1)$。如果想让$n+2p-f+1=n$的话，使得输出和输入大小相等，如果用这个等式求解$p$，那么$p=(f-1)/2$。所以当$f$是一个奇数的时候，只要选择相应的填充尺寸，就能确保得到和输入相同尺寸的输出。</p>
+<h3 id="卷积步长"><a href="#卷积步长" class="headerlink" title="卷积步长"></a>卷积步长</h3><p>之前我们移动蓝框的步长是1，现在移动的步长是s，让过滤器跳过s个步长。如果用一个$f×f$的过滤器卷积一个$n×n$的图像，padding为$p$，步幅为$s$，输出于是变为$\frac{n+2p - f}{s} + 1 \times \frac{n+2p - f}{s} + 1$。如果商不是一个整数时，选择向下取整。$⌊ ⌋$这是向下取整的符号，这也叫做对$z$进行地板除(floor)，这意味着$z$向下取整到最近的整数。意味着如果有任意一个蓝框移动到了外面，那就不要进行相乘操作。</p>
+<h3 id="三维卷积"><a href="#三维卷积" class="headerlink" title="三维卷积"></a>三维卷积</h3><p>如果有一个$n \times n \times n_{c}$（通道数）的输入图像，这里的$n_{c}$就是通道数目，然后卷积上一个$f×f×n_{c}$，按照惯例，这个（前一个$n_{c}$）和这个（后一个$n_{c}$）必须数值相同。然后就得到了$（n-f+1）×（n-f+1）×n_{c^{‘}}$，这里$n_{c^{‘}}$其实就是下一层的通道数，它是用的过滤器的个数。</p>
+<h3 id="单层卷积网络"><a href="#单层卷积网络" class="headerlink" title="单层卷积网络"></a>单层卷积网络</h3><p>用于描述卷积神经网络中的一层（以$l$层为例），也就是卷积层的各种标记：</p>
+<p>$f^{[l]}$： 过滤器大小</p>
+<p>$p^{[l]}$：padding的数量</p>
+<p>$s^{[l]}$：步幅</p>
+<p>$n_{c}^{[l]}$：过滤器的数量</p>
+<p>输入：$n_{H}^{\left\lbrack l - 1 \right\rbrack} \times n_{W}^{\left\lbrack l - 1 \right\rbrack} \times n_{c}^{\left\lbrack l - 1\right\rbrack}$</p>
+<p>输出：$n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}$</p>
+<p>过滤器维度：$f^{[l]} \times  f^{[l]} \times  n_{c}^{[l - 1]}$</p>
+<p>激活值$a^{[l]}$：$n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}$；若有m个例子，就有$m$个激活值的集合：$A^{[l]} = m \times n_{H}^{[l]} \times n_{W}^{[l]} \times n_{c}^{[l]}$</p>
+<p>权重：$f^{[l]} \times f^{[l]} \times  n_{c}^{[l - 1]} \times n_{c}^{[l]}$</p>
+<p>偏差：1×1×1×$n_{c}^{[l]}$</p>
+<h3 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h3><p>最大池化：把输入拆分成不同的区域，，输出的每个元素是对应区域中的最大元素值。平均池化：选取过滤器的最大值。</p>
+<p>池化的超级参数包括过滤器大小$f$和步幅$s$，最大池化的输入是$n_{H} \times n_{W} \times n_{c}$，假设没有padding，则输出$\lfloor\frac{n_{H} - f}{s} +1\rfloor \times \lfloor\frac{n_{w} - f}{s} + 1\rfloor \times n_{c}$。</p>
+<h1 id="深度神经网络：实例研究"><a href="#深度神经网络：实例研究" class="headerlink" title="深度神经网络：实例研究"></a>深度神经网络：实例研究</h1><h3 id="经典网络"><a href="#经典网络" class="headerlink" title="经典网络"></a>经典网络</h3><p>LeNet-5</p>
+<p>AlexNet</p>
+<p>VGG-16</p>
+<p>VGG-19</p>
+<h3 id="残差网络（ResNets）"><a href="#残差网络（ResNets）" class="headerlink" title="残差网络（ResNets）"></a>残差网络（ResNets）</h3><p>在残差网络中有一点变化，将$a^{[l]}$直接向后，拷贝到神经网络的深层，在ReLU非线性激活函数前加上$a^{[l]}$，这是一条捷径。</p>
+<h3 id="网络中的网络以及-1×1-卷积"><a href="#网络中的网络以及-1×1-卷积" class="headerlink" title="网络中的网络以及 1×1 卷积"></a>网络中的网络以及 1×1 卷积</h3><p>1×1卷积层可以实现一些重要功能（doing something pretty non-trivial），它给神经网络添加了一个非线性函数，从而减少或保持输入层中的通道数量不变，当然也可以增加通道数量。</p>
+<h3 id="Inception-网络"><a href="#Inception-网络" class="headerlink" title="Inception 网络"></a>Inception 网络</h3><h3 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h3><p>使用训练好的网络的代码和权重，把前面的层都冻结了，相当于一个固定的函数，再在特定的数据集上训练后面未冻结的层。</p>
+<h3 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h3><p>数据增强能够增加训练的数据。方法：垂直镜像对称，随机裁剪，旋转，剪切，彩色转换等。</p>
+<h1 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h1><h3 id="目标定位"><a href="#目标定位" class="headerlink" title="目标定位"></a>目标定位</h3><h3 id="特征点检测"><a href="#特征点检测" class="headerlink" title="特征点检测"></a>特征点检测</h3><h3 id="目标检测-1"><a href="#目标检测-1" class="headerlink" title="目标检测"></a>目标检测</h3><h3 id="滑动窗口的卷积实现"><a href="#滑动窗口的卷积实现" class="headerlink" title="滑动窗口的卷积实现"></a>滑动窗口的卷积实现</h3><h3 id="Bounding-Box预测"><a href="#Bounding-Box预测" class="headerlink" title="Bounding Box预测"></a>Bounding Box预测</h3><h3 id="交并比"><a href="#交并比" class="headerlink" title="交并比"></a>交并比</h3><h3 id="非极大值抑制"><a href="#非极大值抑制" class="headerlink" title="非极大值抑制"></a>非极大值抑制</h3><h3 id="Anchor-Boxes"><a href="#Anchor-Boxes" class="headerlink" title="Anchor Boxes"></a>Anchor Boxes</h3><h3 id="YOLO-算法"><a href="#YOLO-算法" class="headerlink" title="YOLO 算法"></a>YOLO 算法</h3><h3 id="候选区域"><a href="#候选区域" class="headerlink" title="候选区域"></a>候选区域</h3><h1 id="人脸识别和神经风格转换"><a href="#人脸识别和神经风格转换" class="headerlink" title="人脸识别和神经风格转换"></a>人脸识别和神经风格转换</h1><h3 id="什么是人脸识别？"><a href="#什么是人脸识别？" class="headerlink" title="什么是人脸识别？"></a>什么是人脸识别？</h3><h3 id="One-Shot学习"><a href="#One-Shot学习" class="headerlink" title="One-Shot学习"></a>One-Shot学习</h3><h3 id="Siamese-网络"><a href="#Siamese-网络" class="headerlink" title="Siamese 网络"></a>Siamese 网络</h3><h3 id="Triplet-损失"><a href="#Triplet-损失" class="headerlink" title="Triplet 损失"></a>Triplet 损失</h3><h3 id="人脸验证与二分类"><a href="#人脸验证与二分类" class="headerlink" title="人脸验证与二分类"></a>人脸验证与二分类</h3><h3 id="什么是神经风格迁移？"><a href="#什么是神经风格迁移？" class="headerlink" title="什么是神经风格迁移？"></a>什么是神经风格迁移？</h3><h3 id="CNN特征可视化"><a href="#CNN特征可视化" class="headerlink" title="CNN特征可视化"></a>CNN特征可视化</h3><h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><h3 id="内容代价函数"><a href="#内容代价函数" class="headerlink" title="内容代价函数"></a>内容代价函数</h3><h3 id="风格代价函数"><a href="#风格代价函数" class="headerlink" title="风格代价函数"></a>风格代价函数</h3><h3 id="一维到三维推广"><a href="#一维到三维推广" class="headerlink" title="一维到三维推广"></a>一维到三维推广</h3>]]></content>
+      <categories>
+        <category>吴恩达深度学习笔记</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>吴恩达深度学习笔记-3-结构化机器学习项目</title>
+    <url>/2019/10/31/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B03/</url>
+    <content><![CDATA[<h1 id="机器学习（ML）策略"><a href="#机器学习（ML）策略" class="headerlink" title="机器学习（ML）策略"></a>机器学习（ML）策略</h1><h3 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h3><p>正交化的概念是指，想出一个维度，这个维度想做的是控制转向角，还有另一个维度来控制你的速度，那么就需要一个旋钮尽量只控制转向角，另一个旋钮控制速度。</p>
+<p>确保四件事情，首先，通常必须确保至少系统在训练集上得到的结果不错，所以训练集上的表现必须通过某种评估，达到能接受的程度，对于某些应用，这可能意味着达到人类水平的表现，但这取决于应用。但是，在训练集上表现不错之后，就希望系统也能在开发集上有好的表现，然后希望系统在测试集上也有好的表现。在最后，希望系统在测试集上系统的成本函数在实际使用中表现令人满意。</p>
+<h3 id="单一数字指标"><a href="#单一数字指标" class="headerlink" title="单一数字指标"></a>单一数字指标</h3><p>查准率，查全率，F1值。</p>
+<h3 id="训练-开发-测试集划分"><a href="#训练-开发-测试集划分" class="headerlink" title="训练/开发/测试集划分"></a>训练/开发/测试集划分</h3><p>在设立开发集和测试集时，要选择这样的开发集和测试集，能够反映未来会得到的数据，认为很重要的数据，必须得到好结果的数据，特别是，这里的开发集和测试集可能来自同一个分布。</p>
+<p>在机器学习中，使用70/30或者60/20/20分的经验法则。在现代机器学习中，更习惯操作规模大得多的数据集，比如说有1百万个训练样本，这样分可能更合理，98%作为训练集，1%开发集，1%测试集。</p>
+<p>加权的指标：$Error = \frac{1}{\sum_{}^{}w^{(i)} }\sum_{i = 1}^{m_{ {dev} } }{w^{(i)}I\{ y_{ {pred} }^{(i)} \neq y^{(i)}\} }$。</p>
+<h3 id="与人的表现比较"><a href="#与人的表现比较" class="headerlink" title="与人的表现比较"></a>与人的表现比较</h3><p>事实证明，机器学习的进展往往相当快，直到超越人类的表现之前一直很快，当超越人类的表现时，有时进展会变慢。</p>
+<h3 id="改善模型的表现"><a href="#改善模型的表现" class="headerlink" title="改善模型的表现"></a>改善模型的表现</h3><p>如果想提升机器学习系统的性能，需要看看训练错误率和贝叶斯错误率估计值之间的距离，知道可避免偏差有多大。换句话说，就是还能做多好，对训练集的优化还有多少空间。然后看看开发错误率和训练错误率之间的距离，就知道方差问题有多大。换句话说，应该做多少努力让算法表现能够从训练集推广到开发集，算法是没有在开发集上训练的。</p>
+<p>如果想用尽一切办法减少可避免偏差，建议试试这样的策略：比如使用规模更大的模型，这样算法在训练集上的表现会更好，或者训练更久。使用更好的优化算法，比如说加入momentum或者RMSprop，或者使用更好的算法，比如Adam。还可以试试寻找更好的新神经网络架构，或者说更好的超参数。这些手段包罗万有，可以改变激活函数，改变层数或者隐藏单位数，虽然这么做可能会让模型规模变大。或者试用其他模型，其他架构，如循环神经网络和卷积神经网络。</p>
+<h3 id="进行误差分析"><a href="#进行误差分析" class="headerlink" title="进行误差分析"></a>进行误差分析</h3><p>进行错误分析，应该找一组错误样本，可能在开发集里或者测试集里，观察错误标记的样本，看看假阳性（false positives）和假阴性（false negatives），统计属于不同错误类型的错误数量。</p>
+<h3 id="清除标注错误的数据"><a href="#清除标注错误的数据" class="headerlink" title="清除标注错误的数据"></a>清除标注错误的数据</h3><p>根据比例考虑是否修正错误数据。</p>
+<p>如果要修正开发集数据，手动重新检查标签，并尝试修正一些标签。首先，不管用什么修正手段，都要同时作用到开发集和测试集上。其次，要考虑同时检验算法判断正确和判断错误的样本，要检查算法出错的样本很容易，只需要看看那些样本是否需要修正，但还有可能有些样本算法判断正确，那些也需要修正。后，如果进入到一个开发集和测试集去修正这里的部分标签，可能会，也可能不会去对训练集做同样的事情。</p>
+<h3 id="快速搭建第一个系统，并进行迭代"><a href="#快速搭建第一个系统，并进行迭代" class="headerlink" title="快速搭建第一个系统，并进行迭代"></a>快速搭建第一个系统，并进行迭代</h3><p>如果想搭建全新的机器学习程序，就是快速搭好第一个系统，然后开始迭代。我快速设立开发集和测试集还有指标，这样就决定了目标所在，如果目标定错了，之后改也是可以的。但一定要设立某个目标，然后马上搭好一个机器学习系统原型，然后找到训练集，训练一下，看看效果，开始理解算法表现如何，在开发集测试集，评估指标上表现如何。当建立第一个系统后，就可以马上用到之前说的偏差方差分析，还有错误分析，来确定下一步优先做什么。</p>
+<h3 id="使用来自不同分布的数据，进行训练和测试"><a href="#使用来自不同分布的数据，进行训练和测试" class="headerlink" title="使用来自不同分布的数据，进行训练和测试"></a>使用来自不同分布的数据，进行训练和测试</h3><p>当有几组样本时，可以让训练集数据来自和开发集、测试集不同的分布，这样就可以有更多的训练数据。</p>
+<h3 id="数据分布不匹配时，偏差与方差的分析"><a href="#数据分布不匹配时，偏差与方差的分析" class="headerlink" title="数据分布不匹配时，偏差与方差的分析"></a>数据分布不匹配时，偏差与方差的分析</h3><p>如果认为存在数据不匹配问题，建议做错误分析，或者看看训练集，或者看看开发集，试图找出，试图了解这两个数据分布到底有什么不同，然后看看是否有办法收集更多看起来像开发集的数据作训练。</p>
+<h3 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h3><p>在第一阶段训练过程中，当你进行图像识别任务训练时，你可以训练神经网络的所有常用参数，所有的权重，所有的层，然后你就得到了一个能够做图像识别预测的网络。在训练了这个神经网络后，要实现迁移学习，你现在要做的是，把数据集换成新的$(x,y)$对，现在这些变成放射科图像，而$y$是你想要预测的诊断，你要做的是初始化最后一层的权重，让我们称之为$w^{[L]}$和$b^{[L]}$随机初始化。</p>
+<p>现在，我们在这个新数据集上重新训练网络，在新的放射科数据集上训练网络。要用放射科数据集重新训练神经网络有几种做法。你可能，如果你的放射科数据集很小，你可能只需要重新训练最后一层的权重，就是$w^{[L]}$和$b^{[L]}$并保持其他参数不变。如果你有足够多的数据，你可以重新训练神经网络中剩下的所有层。经验规则是，如果你有一个小数据集，就只训练输出层前的最后一层，或者也许是最后一两层。但是如果你有很多数据，那么也许你可以重新训练网络中的所有参数。如果你重新训练神经网络中的所有参数，那么这个在图像识别数据的初期训练阶段，有时称为预训练（pre-training），因为你在用图像识别数据去预先初始化，或者预训练神经网络的权重。然后，如果你以后更新所有权重，然后在放射科数据上训练，有时这个过程叫微调（fine tuning）。如果你在深度学习文献中看到预训练和微调，你就知道它们说的是这个意思，预训练和微调的权重来源于迁移学习。</p>
+<h3 id="多任务学习"><a href="#多任务学习" class="headerlink" title="多任务学习"></a>多任务学习</h3><p>输出是一个多维向量，每一个节点是一个任务的结果。</p>
+<h3 id="什么是端到端的深度学习？"><a href="#什么是端到端的深度学习？" class="headerlink" title="什么是端到端的深度学习？"></a>什么是端到端的深度学习？</h3><p>以前有一些数据处理系统或者学习系统，它们需要多个阶段的处理。那么端到端深度学习就是忽略所有这些不同的阶段，用单个神经网络代替它。</p>
+]]></content>
+      <categories>
+        <category>吴恩达深度学习笔记</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>吴恩达深度学习笔记-2-改善神经网络：超参数调试</title>
+    <url>/2019/10/30/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/</url>
+    <content><![CDATA[<h1 id="深度学习的实践层面"><a href="#深度学习的实践层面" class="headerlink" title="深度学习的实践层面"></a>深度学习的实践层面</h1><h3 id="训练，验证，测试集"><a href="#训练，验证，测试集" class="headerlink" title="训练，验证，测试集"></a>训练，验证，测试集</h3><p>机器学习发展的小数据量时代，常见做法是将所有数据三七分，70%训练集，30%测试集。如果明确设置了验证集，也可以按照60%训练集，20%验证集和20%测试集来划分。</p>
+<p>假设有100万条数据，其中1万条作为验证集，1万条作为测试集，100万里取1万，比例是1%，即：训练集占98%，验证集和测试集各占1%。对于数据量过百万的应用，训练集可以占到99.5%，验证和测试集各占0.25%，或者验证集占0.4%，测试集占0.1%。</p>
+<h3 id="偏差，方差"><a href="#偏差，方差" class="headerlink" title="偏差，方差"></a>偏差，方差</h3><p>通过分析在训练集上训练算法产生的误差和验证集上验证算法产生的误差来诊断算法是否存在高偏差和高方差，是否两个值都高，或者两个值都不高。</p>
+<p>训练集误差较低，验证集误差较高，过拟合，方差高。</p>
+<p>训练集误差和验证集误差都较高且差距不太大，欠拟合，偏差高。</p>
+<p>训练集误差较高，验证集误差更高，偏差和方差都高。</p>
+<h3 id="过拟合的解决方向"><a href="#过拟合的解决方向" class="headerlink" title="过拟合的解决方向"></a>过拟合的解决方向</h3><p>深度学习可能存在过拟合问题——高方差，有两个解决方法，一个是准备更多的数据，另一个是正则化。正则化的最常用的方法是$L2$正则化，另外还有dropout（随机失活）正则化。</p>
+<p>复制神经网络，dropout会遍历网络的每一层，并设置消除神经网络中节点的概率。假设网络中的每一层，每个节点都以设置的概率如0.5被删除，然后删除掉从该节点进出的连线，最后得到一个节点更少，规模更小的网络，然后backprop方法进行训练。</p>
+<p>其他防止过拟合的方法：early stopping</p>
+<h3 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h3><p>零均值</p>
+<p>归一化方差</p>
+<h3 id="梯度消失-梯度爆炸"><a href="#梯度消失-梯度爆炸" class="headerlink" title="梯度消失/梯度爆炸"></a>梯度消失/梯度爆炸</h3><p>权重$W​$只比1略大一点，或者说只是比单位矩阵大一点，深度神经网络的激活函数将爆炸式增长，如果$W​$比1略小一点，可能是$\begin{bmatrix}0.9 &amp; 0 \\ 0 &amp; 0.9 \\ \end{bmatrix}​$，在深度神经网络中，激活函数将以指数级递减。</p>
+<h3 id="神经网络的权注初始化"><a href="#神经网络的权注初始化" class="headerlink" title="神经网络的权注初始化"></a>神经网络的权注初始化</h3><p>深度神经网络会产生梯度消失和梯度爆炸问题，更谨慎的 选择随机初始化参数有助于解决这个问题。</p>
+<p>$z = w_{1}x_{1} + w_{2}x_{2} + \ldots +w_{n}x_{n}$，$b=0$，暂时忽略$b$，为了预防$z$值过大或过小，可以看到$n$越大，希望$w_{i}$越小，因为$z$是$w_{i}x_{i}$的和，如果把很多此类项相加，希望每项值更小，最合理的方法就是设置$w_{i}=\frac{1}{n}$，$n$表示神经元的输入特征数量，实际上，要做的就是设置某层权重矩阵$w^{[l]} = np.random.randn( \text{shape})*\text{np.}\text{sqrt}(\frac{1}{n^{[l-1]} })$，$n^{[l - 1]}$就是喂给第$l$层神经单元的数量（即第$l-1$层神经元数量）。</p>
+<h3 id="梯度的数值逼近"><a href="#梯度的数值逼近" class="headerlink" title="梯度的数值逼近"></a>梯度的数值逼近</h3><p>导数的官方定义是针对值很小的$\varepsilon$，$f^{‘}\theta) = \operatorname{}\frac{f( \theta + \varepsilon) -f(\theta -\varepsilon)}{2\varepsilon}$。对于一个非零的$\varepsilon$，它的逼近误差可以写成$O(\varepsilon^{2})$。</p>
+<h3 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h3><p>使用双边误差计算$d\theta_{\text{approx} }[i]$的值：</p>
+<p>$d\theta_{\text{approx} }\left[i \right] = \frac{J\left( \theta_{1},\theta_{2},\ldots\theta_{i} + \varepsilon,\ldots \right) - J\left( \theta_{1},\theta_{2},\ldots\theta_{i} - \varepsilon,\ldots \right)}{2\varepsilon}$</p>
+<p>这个值（$d\theta_{\text{approx} }\left[i \right]$）应该逼近$d\theta\left[i \right]$=$\frac{\partial J}{\partial\theta_{i} }$，$d\theta\left[i \right]$是代价函数的偏导数。</p>
+<p>检查是否逼近：</p>
+<p>$\frac{ {||d\theta_{\text{approx} } -d\theta||}_{2} }{ {||d\theta_{\text{approx} }||}_{2}+{||d\theta||}_{2} }$</p>
+<p>注意事项：不要在训练中使用梯度检验，它只用于调试。如果算法的梯度检验失败，要检查所有项。在实施梯度检验时，如果使用正则化，注意正则项。梯度检验不能与dropout同时使用，因为每次迭代过程中，dropout会随机消除隐藏层单元的不同子集，难以计算dropout在梯度下降上的代价函数$J​$。</p>
+<h1 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a>优化算法</h1><h3 id="Mini-batch-梯度下降"><a href="#Mini-batch-梯度下降" class="headerlink" title="Mini-batch 梯度下降"></a>Mini-batch 梯度下降</h3><p>batch梯度下降法指的是之前讲过的梯度下降法算法，就是同时处理整个训练集，这个名字就是来源于能够同时看到整个<strong>batch</strong>训练集的样本被处理。</p>
+<p>ini-batch梯度下降法，每次同时处理的单个的<strong>mini-batch</strong> $X^{\{t\} }$和$Y^{\{ t\} }$，而不是同时处理全部的$X$和$Y$训练集。</p>
+<p>在训练集上运行mini-batch梯度下降法，若有5000个各有1000个样本的组，运行<code>for t=1……5000</code>，在for循环里对$X^{\{t\} }$和$Y^{\{t\} }$执行一步梯度下降法。</p>
+<p>前向传播：$z^{\lbrack 1\rbrack} = W^{\lbrack 1\rbrack}X^{\{ t\} } + b^{\lbrack1\rbrack}$，然后执行$A^{[1]k} =g^{[1]}(Z^{[1]})$，以此类推，直到$A^{\lbrack L\rbrack} = g^{\left\lbrack L \right\rbrack}(Z^{\lbrack L\rbrack})$。</p>
+<p>接下来你计算mini-batch的损失成本函数$J$，子集规模是1000：$J^{\{t\} } = \frac{1}{1000}\sum_{i = 1}^{l}{L(\hat y^{(i)},y^{(i)})} +\frac{\lambda}{2 1000}\sum_{l}^{}{||w^{[l]}||}_{F}^{2}$</p>
+<p>然后更新权值，$W​$实际上是$W^{\lbrack l\rbrack}​$，更新为$W^{[l]}:= W^{[l]} - adW^{[l]}​$，对$b​$做相同处理，$b^{[l]}:= b^{[l]} - adb^{[l]}​$。</p>
+<h3 id="动量梯度下降法（Gradient-descent-with-Momentum）"><a href="#动量梯度下降法（Gradient-descent-with-Momentum）" class="headerlink" title="动量梯度下降法（Gradient descent with Momentum）"></a>动量梯度下降法（Gradient descent with Momentum）</h3><p>基本的想法是计算梯度的指数加权平均数，并利用该梯度更新权重。</p>
+<p>问题：使用梯度下降法时，是慢慢上下摆动到最小值，这种上下波动减慢了梯度下降法的速度。</p>
+<p>解决想法：在纵轴上，希望学习慢一点，但是在横轴上，希望加快学习，加速移向最小值。所以使用动量梯度下降法，需要做的是，在每次迭代中，确切来说在第$t$次迭代的过程中，会计算微分$dW$，$db$，这里省略上标$[l，用现有的mini-batch计算$dW$，$db$]$。如果用batch梯度下降法，现在的mini-batch就是全部的batch，对于batch梯度下降法的效果是一样的。要做的是计算$v_{ {dW} }= \beta v_{ {dW} } + \left( 1 - \beta \right)dW$，这跟指数加权平均数的计算相似，也就是$v = \beta v + \left( 1 - \beta \right)\theta_{t}$，$dW$的移动平均数，接着同样地计算$v_{db}$，$v_{db} = \beta v_{ {db} } + ( 1 - \beta){db}$，然后重新赋值权重，$W:= W -av_{ {dW} }$，同样$b:= b - a v_{db}$，这样就可以减缓梯度下降的幅度。</p>
+<p>On iteration t{<br>    Compute dW, db on the current minibatch:<br>    $v_{ {dW} }= \beta v_{ {dW} } + \left( 1 - \beta \right)dW$<br>    $v_{db} = \beta v_{ {db} } + ( 1 - \beta){db}$<br>    $W:= W -a v_{ {dW} }$，$b:= b - a v_{db}$</p>
+<p>Hyperparameters: $a$, $\beta$;   $\beta=0.9$<br>}</p>
+<h3 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h3><p>RMSprop，全称是均方根，因为要将微分进行平方，然后最后使用平方根。</p>
+<p>解决方法：RMSprop会这样更新参数值，$W:= W -a\frac{dW}{\sqrt{S_{dW} } }$，$b:=b -\alpha\frac{db}{\sqrt{S_{db} } }$。在横轴方向，希望学习速度快，而在垂直方向，希望减缓纵轴上的摆动。所以在横轴上要除以一个较小的数，垂直方向上上要除以较大的数字，这样就可以减缓纵轴上的变化。对于上下波动的微分，垂直方向的要比水平方向的大得多，结果就是纵轴上的更新要被一个较大的数相除，就能消除摆动，而水平方向的更新则被较小的数相除。</p>
+<p>On iteration t{<br>    Compute dW, db on the current minibatch:<br>    $S_{dW}= \beta S_{dW} + ((1 -\beta) {dW})^{2}$<br>    $S_{db}= \beta S_{db} + ((1 - \beta){db})^{2}$<br>    $W:= W -a\frac{dW}{\sqrt{S_{dW} } }$，$b:=b -\alpha\frac{db}{\sqrt{S_{db} } }$</p>
+<p>Hyperparameters: $a$, $\beta$<br>}</p>
+<h3 id="Adam-优化算法-Adam-optimization-algorithm"><a href="#Adam-优化算法-Adam-optimization-algorithm" class="headerlink" title="Adam 优化算法(Adam optimization algorithm)"></a>Adam 优化算法(Adam optimization algorithm)</h3><p>Adam算法结合了Momentum和RMSprop梯度下降法，是一种极其常用的学习算法，被证明能有效适用于不同神经网络，适用于广泛的结构。</p>
+<p>$v_{dW} = 0$，$S_{dW} =0$，$v_{db} = 0$，$S_{db} =0$</p>
+<p>On iteration t{<br>    Compute dW, db on the current minibatch:<br>    $v_{dW}= \beta_{1}v_{dW} + ( 1 - \beta_{1})dW$<br>    $v_{db}= \beta_{1}v_{db} + ( 1 -\beta_{1} ){db}$<br>    $S_{dW}= \beta_{2}S_{dW} + (( 1 - \beta_{2}){(dW)})^{2}$<br>    $S_{db}= \beta_{2}S_{db} + (( 1 - \beta_{2}){(db)})^{2}$<br>    $v_{dW}^{\text{corrected} }= \frac{v_{dW} }{1 - \beta_{1}^{t} }$<br>    $v_{db}^{\text{corrected} } =\frac{v_{db} }{1 -\beta_{1}^{t} }$<br>    $S_{dW}^{\text{corrected} } =\frac{S_{dW} }{1 - \beta_{2}^{t} }$<br>    $S_{db}^{\text{corrected} } =\frac{S_{db} }{1 - \beta_{2}^{t} }$<br>    $W:= W - \frac{a v_{dW}^{\text{corrected} } }{\sqrt{S_{dW}^{\text{corrected} } } +\varepsilon}$<br>    $b:=b - \frac{\alpha v_{\text{db} }^{\text{corrected} } }{\sqrt{S_{\text{db} }^{\text{corrected} } } +\varepsilon}$<br>}</p>
+<h3 id="学习率衰减"><a href="#学习率衰减" class="headerlink" title="学习率衰减"></a>学习率衰减</h3><p>加快学习算法的一个办法就是随时间慢慢减少学习率，称之为学习率衰减。</p>
+<p>可以将$a$学习率设为$a= \frac{1}{1 + decayrate * \text{epoch}\text{-num} }a_{0}$（decay-rate称为衰减率，epoch-num为代数，$\alpha_{0}$为初始学习率），注意这个衰减率是另一个需要调整的超参数。</p>
+<p>到的其它公式有$a =\frac{k}{\sqrt{\text{epoch-num} } }a_{0}$或者$a =\frac{k}{\sqrt{t} }a_{0}$（$t$为mini-batch的数字）。有时也用离散下降的学习率。</p>
+<h3 id="局部最优的问题"><a href="#局部最优的问题" class="headerlink" title="局部最优的问题"></a>局部最优的问题</h3><p>局部最优，鞍点，平稳段。</p>
+<h1 id="超参数调试、Batch正则化和程序框架"><a href="#超参数调试、Batch正则化和程序框架" class="headerlink" title="超参数调试、Batch正则化和程序框架"></a>超参数调试、Batch正则化和程序框架</h1><h3 id="调试处理"><a href="#调试处理" class="headerlink" title="调试处理"></a>调试处理</h3><p>学习速率$a$是需要调试的最重要的超参数。除了$a$，还有一些参数需要调试，例如Momentum参数$\beta$，0.9就是个很好的默认值。当应Adam算法时，对于$\beta_{1}$，${\beta}_{2}$和$\varepsilon$，总是选定其分别为0.9，0.999和$10^{-8}$，如果想的话也可以调试它们。</p>
+<p>尝试调整一些超参数时，随机选择点，接着用这些随机取的点试验超参数的效果。当给超参数取值时，另一个惯例是采用由粗糙到精细的策略。</p>
+<p>随机取值并不是在有效范围内的随机均匀取值，而是选择合适的标尺。如对数标尺等。</p>
+<p>搜索超参数时，一种方法是是照看一个模型，通常是有庞大的数据组，但没有许多计算资源或足够的CPU和GPU的前提下，基本而言，只可以一次负担起试验一个模型或一小批模型，在这种情况下，当它在试验时，观察它的表现，耐心地调试学习率，逐渐改良。另一种方法则是同时试验多种模型，获得像这样的学习曲线，选择工作效率较好的参数。</p>
+<h3 id="Batch归一化"><a href="#Batch归一化" class="headerlink" title="Batch归一化"></a>Batch归一化</h3><p>Batch归一化会使参数搜索问题变得很容易，使神经网络对超参数的选择更加稳定，超参数的范围会更加庞大，工作效果也很好，也会使训练更加容易，甚至是深层网络。</p>
+<p>在神经网络中，已知一些中间值，假设有一些隐藏单元值，从$z^{(1)}$到$z^{(m)}$。已把这些$z$值标准化，化为含平均值0和标准单位方差，所以$z$的每一个分量都含有平均值0和方差1，但不想让隐藏单元总是含有平均值0和方差1，也许隐藏单元有了不同的分布会有意义，所要做的就是计算，称之为${\tilde{z} }^{(i)}$，${\tilde{z} }^{(i)}= \gamma z_{\text{norm} }^{(i)} +\beta$，这里$\gamma$和$\beta$是模型的学习参数，所以使用梯度下降或一些其它类似梯度下降的算法，更新$\gamma$和$\beta$，正如更新神经网络的权重一样。</p>
+<p>$\gamma$和$\beta$的作用是，可以随意设置${\tilde{z} }^{(i)}$的平均值，事实上，如果$\gamma= \sqrt{\sigma^{2} +\varepsilon}$，如果$\gamma$等于这个分母项（$z_{\text{norm} }^{(i)} = \frac{z^{(i)} -\mu}{\sqrt{\sigma^{2} +\varepsilon} }$中的分母），$\beta$等于$\mu$，这里的这个值是$z_{\text{norm} }^{(i)}= \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \varepsilon} }$中的$\mu$，那么$\gamma z_{\text{norm} }^{(i)} +\beta$的作用在于，它会精确转化这个方程，如果这些成立（$\gamma =\sqrt{\sigma^{2} + \varepsilon},\beta =\mu$），那么${\tilde{z} }^{(i)} = z^{(i)}$。</p>
+<p>通过对$\gamma$和$\beta$合理设定，规范化过程，即这四个等式，从根本来说，只是计算恒等函数，通过赋予$\gamma$和$\beta$其它值，可以使你构造含其它平均值和方差的隐藏单元值。</p>
+<h3 id="softmax回归"><a href="#softmax回归" class="headerlink" title="softmax回归"></a>softmax回归</h3><p>$z^{[l]} = W^{[l]}a^{[L-1]} + b^{[l]}$</p>
+<p>$a^{[l]} = \frac{e^{z^{[l]} } }{\sum_{j =1}^{m}{z_{i} }^{[l]}}$</p>
+<p>${a_{i} }^{[l]} = \frac{e^{ {z_{i} }^{[l]} } }{\sum_{j =1}^{m}{z_{i} }^{[l]}}$</p>
+<p>损失函数：$L(\hat y,y ) = - \sum_{j = 1}^{4}{y_{j}log\hat y_{j} }$</p>
+<p>代价函数：$J( w^{[1]},b^{[1]},\ldots\ldots) = \frac{1}{m}\sum_{i = 1}^{m}{L( \hat y^{(i)},y^{(i)})}$</p>
+<h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3>]]></content>
+      <categories>
+        <category>吴恩达深度学习笔记</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>吴恩达深度学习笔记-1-神经网络和深度学习</title>
+    <url>/2019/10/30/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/</url>
+    <content><![CDATA[<h1 id="神经网络的编程基础"><a href="#神经网络的编程基础" class="headerlink" title="神经网络的编程基础"></a>神经网络的编程基础</h1><h3 id="二分类"><a href="#二分类" class="headerlink" title="二分类"></a>二分类</h3><p>符号定义 ：</p>
+<p>$x$：表示一个$n_x$维数据，为输入数据，维度为$(n_x,1)$； </p>
+<p>$y​$：表示输出结果，取值为$(0,1)​$；</p>
+<p>$(x^{(i)},y^{(i)})$：表示第$i$组数据，可能是训练数据，也可能是测试数据，此处默认为训练数据； </p>
+<p>$X=[x^{(1)},x^{(2)},…,x^{(m)}]$：表示所有的训练数据集的输入值，放在一个 $n_x×m$的矩阵中，其中$m$表示样本数目; </p>
+<p>$Y=[y^{(1)},y^{(2)},…,y^{(m)}]$：对应表示所有训练数据集的输出值，维度为$1×m$。</p>
+<p>用一对$(x,y)$来表示一个单独的样本，$x$代表$n_x$维的特征向量，$y$ 表示标签(输出结果)只能为0或1。</p>
+<h3 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h3><p>$z={ {w}^{T} }x+b$</p>
+<p>$\sigma \left( z \right)=\frac{1}{1+{ {e}^{-z} } }$</p>
+<h3 id="逻辑回归的代价函数"><a href="#逻辑回归的代价函数" class="headerlink" title="逻辑回归的代价函数"></a>逻辑回归的代价函数</h3><p>逻辑回归的损失函数：$L\left( \hat{y},y \right)=-y\log(\hat{y})-(1-y)\log$</p>
+<p>损失函数是在单个训练样本中定义的，它衡量的是算法在单个训练样本中表现如何，为了衡量算法在全部训练样本上的表现如何，需要定义一个算法的代价函数，算法的代价函数是对$m$个样本的损失函数求和然后除以$m$:</p>
+<p>$J\left( w,b \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{L\left( { { {\hat{y} } }^{(i)} },{ {y}^{(i)} } \right)}=\frac{1}{m}\sum\limits_{i=1}^{m}{\left( -{ {y}^{(i)} }\log { { {\hat{y} } }^{(i)} }-(1-{ {y}^{(i)} })\log (1-{ { {\hat{y} } }^{(i)} }) \right)}$</p>
+<p>训练逻辑回归模型时候，需要找到合适的$w$和$b$，来让代价函数 $J$ 的总代价降到最低。</p>
+<h3 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h3><p>$w:=w-a\frac{\partial J(w,b)}{\partial w}$</p>
+<p>$b:=b-a\frac{\partial J(w,b)}{\partial b}$</p>
+<h3 id="逻辑回归中的梯度下降"><a href="#逻辑回归中的梯度下降" class="headerlink" title="逻辑回归中的梯度下降"></a>逻辑回归中的梯度下降</h3><p>$z={ {w}^{T} }x+b={ {w}_{1} }{ {x}_{1} }+{ {w}_{2} }{ {x}_{2} }+b$ </p>
+<p>$\hat{y}=a=\sigma (z)=\frac{1}{1+{ {e}^{-z} } }$</p>
+<p>$L(a,y)=-(y\log (a)+(1-y)\log (1-a))$ </p>
+<p>求梯度：</p>
+<p>$\frac{da}{dz}=a\cdot (1-a)$</p>
+<p>$\frac{dL}{da}=(-\frac{y}{a}+\frac{(1-y)}{(1-a)})$</p>
+<p>${dz} = \frac{ {dL}(a,y)}{ {dz} } = \frac{ {dL} }{ {dz} } = \left( \frac{ {dL} }{ {da} } \right) \cdot \left(\frac{ {da} }{ {dz} } \right) = ( - \frac{y}{a} + \frac{(1 - y)}{(1 - a)})\cdot a(1 - a) = a - y$</p>
+<p>则：</p>
+<p>$d{ {w}_{1} }=\frac{1}{m}\sum\limits_{i}^{m}{x_{1}^{(i)} }({ {a}^{(i)} }-{ {y}^{(i)} })$</p>
+<p>$d{ {w}_{2} }=\frac{1}{m}\sum\limits_{i}^{m}{x_{2}^{(i)} }({ {a}^{(i)} }-{ {y}^{(i)} })$</p>
+<p>$db=\frac{1}{m}\sum\limits_{i}^{m}{({ {a}^{(i)} }-{ {y}^{(i)} })}$</p>
+<p>参数更新：</p>
+<p>${ {w}_{1} }={ {w}_{1} }-a d{ {w}_{1} }$</p>
+<p>${ {w}_{2} }={ {w}_{2} }-a d{ {w}_{2} }$</p>
+<p>$b=b-\alpha db$。</p>
+<h3 id="m-个样本的梯度下降"><a href="#m-个样本的梯度下降" class="headerlink" title="m 个样本的梯度下降"></a>m 个样本的梯度下降</h3><p>初始化$J=0,d{ {w}_{1} }=0,d{ {w}_{2} }=0,db=0$</p>
+<p>代码流程：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">J=0;dw1=0;dw2=0;db=0;</span><br><span class="line">for i = 1 to m</span><br><span class="line">    z(i) = wx(i)+b;</span><br><span class="line">    a(i) = sigmoid(z(i));</span><br><span class="line">    J += -[y(i)log(a(i))+(1-y(i)）log(1-a(i));</span><br><span class="line">    dz(i) = a(i)-y(i);</span><br><span class="line">    dw1 += x1(i)dz(i);</span><br><span class="line">    dw2 += x2(i)dz(i);</span><br><span class="line">    db += dz(i);</span><br><span class="line">J/= m;</span><br><span class="line">dw1/= m;</span><br><span class="line">dw2/= m;</span><br><span class="line">db/= m;</span><br><span class="line">w=w-alpha*dw</span><br><span class="line">b=b-alpha*db</span><br></pre></td></tr></table></figure>
+<h3 id="向量化的逻辑回归"><a href="#向量化的逻辑回归" class="headerlink" title="向量化的逻辑回归"></a>向量化的逻辑回归</h3><p>$Z = w^{T}X + b = np.dot( w.T,X)+b$</p>
+<p>$A = \sigma( Z )$</p>
+<p>$dZ = A - Y$</p>
+<p>$dw= \frac{1}{m}*X*dz^{T}$</p>
+<p>$db= \frac{1}{m}*np.sum( dZ)​$</p>
+<p>$w: = w - a*dw$</p>
+<p>$b: = b - a*db$</p>
+<h3 id="Python-中的广播"><a href="#Python-中的广播" class="headerlink" title="Python 中的广播"></a>Python 中的广播</h3><p>numpy广播机制：</p>
+<p>如果两个数组的后缘维度的轴长度相符或其中一方的轴长度为1，则认为它们是广播兼容的。广播会在缺失维度和轴长度为1的维度上进行。</p>
+<h1 id="浅层神经网络"><a href="#浅层神经网络" class="headerlink" title="浅层神经网络"></a>浅层神经网络</h1><h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>向量化的两层神经网络：</p>
+<p>$x$：</p>
+<script type="math/tex; mode=display">
+x =
+    \left[
+        \begin{array}{c}
+        \vdots & \vdots & \vdots & \vdots\\
+        x^{(1)} & x^{(2)} & \cdots & x^{(m)}\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \end{array}
+        \right]</script><p>$Z^{[1]}$：</p>
+<script type="math/tex; mode=display">
+Z^{[1]} =
+    \left[
+        \begin{array}{c}
+        \vdots & \vdots & \vdots & \vdots\\
+        z^{[1](1)} & z^{[1](2)} & \cdots & z^{[1](m)}\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \end{array}
+        \right]</script><p>$A^{[1]}$：</p>
+<script type="math/tex; mode=display">
+A^{[1]} =
+    \left[
+        \begin{array}{c}
+        \vdots & \vdots & \vdots & \vdots\\
+        \alpha^{[1](1)} & \alpha^{[1](2)} & \cdots & \alpha^{[1](m)}\\
+        \vdots & \vdots & \vdots & \vdots\\
+        \end{array}
+        \right]</script><p>向量化实现：</p>
+<script type="math/tex; mode=display">
+\left.
+        \begin{array}{r}
+        \text{$z^{[1](i)} = W^{[1](i)}x^{(i)} + b^{[1]}$}\\
+        \text{$\alpha^{[1](i)} = \sigma(z^{[1](i)})$}\\
+        \text{$z^{[2](i)} = W^{[2](i)}\alpha^{[1](i)} + b^{[2]}$}\\
+        \text{$\alpha^{[2](i)} = \sigma(z^{[2](i)})$}\\
+        \end{array}
+        \right\}
+        \implies
+        \begin{cases}
+        \text{$z^{[1]} = W^{[1]}x + b^{[1]}$}\\ 
+        \text{$A^{[1]} = \sigma(z^{[1]})$}\\
+        \text{$z^{[2]} = W^{[2]}A^{[1]} + b^{[2]}$}\\ 
+        \text{$A^{[2]} = \sigma(z^{[2]})$}\\ 
+        \end{cases}</script><h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p>sigmoid函数：</p>
+<p>$a = \sigma(z) = \frac{1}{ {1 + e}^{- z} }$</p>
+<p>tanh函数，tanh函数是sigmoid的向下平移和伸缩后的结果，穿过了$(0,0)$点，并且值域介于+1和-1之间：</p>
+<p>$a = tanh(z) = \frac{e^{z} - e^{- z} }{e^{z} + e^{- z} }$</p>
+<p>ReLu函数：</p>
+<p>$a = max(0,z)$</p>
+<p>Leaky ReLu函数：</p>
+<p>$a = max(0.01z,z)$</p>
+<p>不同激活函数的选择：sigmoid激活函数除了输出层是一个二分类问题基本不会用。tanh激活函数几乎适合所有场合。ReLu激活函数是最常用的默认函数，如果不确定用哪个激活函数，就使用ReLu或者Leaky ReLu。</p>
+<h3 id="激活函数的导数"><a href="#激活函数的导数" class="headerlink" title="激活函数的导数"></a>激活函数的导数</h3><p>sigmoid函数：</p>
+<p>$g(z) = \sigma(z) = \frac{1}{ {1 + e}^{- z} }$</p>
+<p>$\frac{d}{dz}g(z) = {\frac{1}{1 + e^{-z} } (1-\frac{1}{1 + e^{-z} })}=g(z)(1-g(z))$</p>
+<p>tanh函数：</p>
+<p>$g(z) = tanh(z) = \frac{e^{z} - e^{-z} }{e^{z} + e^{-z} } $</p>
+<p>$\frac{d}{ {d}z}g(z) = 1 - (tanh(z))^{2}$</p>
+<p>ReLu函数：</p>
+<script type="math/tex; mode=display">
+g(z)=\max(0,z) \\
+    \\
+    \\
+g(z)^{'}=
+  \begin{cases}
+  0&    \text{if z < 0}\\
+  1&    \text{if z > 0}\\
+undefined&    \text{if z = 0}
+\end{cases}</script><p>Leaky linear unit (Leaky ReLU)：</p>
+<script type="math/tex; mode=display">
+g(z)=\max(0.01z,z) \\
+    \\
+    \\
+g(z)^{'}=
+\begin{cases}
+0.01&     \text{if z < 0}\\
+1&    \text{if z > 0}\\
+undefined&    \text{if z = 0}
+\end{cases}</script><h3 id="神经网络的梯度下降"><a href="#神经网络的梯度下降" class="headerlink" title="神经网络的梯度下降"></a>神经网络的梯度下降</h3><p>正向传播（forward propagation）：</p>
+<p>(1)<br>$z^{[1]} = W^{[1]}x + b^{[1]}$</p>
+<p>(2)<br>$a^{[1]} = \sigma(z^{[1]})$</p>
+<p>(3)<br>$z^{[2]} = W^{[2]}a^{[1]} + b^{[2]}$</p>
+<p>(4)<br>$a^{[2]} = g^{[2]}(z^{[z]}) = \sigma(z^{[2]})$</p>
+<p>反向传播（back propagation）：</p>
+<p>$ dz^{[2]} = A^{[2]} - Y , Y = \begin{bmatrix}y^{[1]} &amp; y^{[2]} &amp; \cdots &amp; y^{[m]}\\ \end{bmatrix} $</p>
+<p>$ dW^{[2]} = {\frac{1}{m} }dz^{[2]}A^{[1]T} $</p>
+<p>$ {\rm d}b^{[2]} = {\frac{1}{m} }np.sum({d}z^{[2]},axis=1,keepdims=True)$</p>
+<p>$\underbrace{dZ^{[1]} }_{(n^{[1]}, m)} = \underbrace{W^{[2]T}dZ^{[2]} }_{(n^{[1]}, m)}*\underbrace{g[1]^{‘}(Z^{[1]})}_{(n^{[1]}, m)}$</p>
+<p>$dW^{[1]} = {\frac{1}{m} }dz^{[1]}x^{T}$</p>
+<p>${\underbrace{db^{[1]} }_{(n^{[1]},1)} } = {\frac{1}{m} }np.sum(dz^{[1]},axis=1,keepdims=True)$</p>
+<h3 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h3><p>$W$进行随机初始化，$b$初始化为0。</p>
+<h1 id="深层神经网络"><a href="#深层神经网络" class="headerlink" title="深层神经网络"></a>深层神经网络</h1><h3 id="深层神经网络-1"><a href="#深层神经网络-1" class="headerlink" title="深层神经网络"></a>深层神经网络</h3><p>前向传播：</p>
+<p>${ {Z}^{[l]} }={ {W}^{[l]} }{ {a}^{[l-1]} }+{ {b}^{[l]} }$，${ {A}^{[l]} }={ {g}^{[l]} }{({Z}^{[l]})}$    (${ {A}^{[0]} } = X)$</p>
+<p>反向传播：</p>
+<p>$d{ {Z}^{[l]} }=d{ {A}^{[l]} }*{ {g}^{\left[ l \right]} }’\left({ {Z}^{[l]} } \right)~~$</p>
+<p>$d{ {W}^{[l]} }=\frac{1}{m}\text{}d{ {Z}^{[l]} }\cdot { {A}^{\left[ l-1 \right]T} }$</p>
+<p>$d{ {b}^{[l]} }=\frac{1}{m}\text{ }np.sum(d{ {z}^{[l]} },axis=1,keepdims=True)$</p>
+<p>$d{ {A}^{[l-1]} }={ {W}^{\left[ l \right]T} }.d{ {Z}^{[l]} }$</p>
+<h3 id="核对矩阵的维度"><a href="#核对矩阵的维度" class="headerlink" title="核对矩阵的维度"></a>核对矩阵的维度</h3><p>$w$的维度是（下一层的维数，前一层的维数），即${ {w}^{[l]} }$: (${ {n}^{[l]} }$,${ {n}^{[l-1]} }$)</p>
+<p>$b$的维度是（下一层的维数，1），即:${ {b}^{[l]} }$ : (${ {n}^{[l]} },1)$；</p>
+<p>${ {z}^{[l]} }$,${ {a}^{[l]} }$: $({ {n}^{[l]} },1)$;</p>
+<p>${ {dw}^{[l]} }$和${ {w}^{[l]} }$维度相同，${ {db}^{[l]} }$和${ {b}^{[l]} }$维度相同，且$w$和$b$向量化维度不变，但$z$,$a$以及$x$的维度会向量化后发生变化。</p>
+<p>向量化后：</p>
+<p>${Z}^{[l]}$可以看成由每一个单独的${Z}^{[l]}$叠加而得到，${Z}^{[l]}=({ {z}^{[l][1]} }，{ {z}^{[l][2]} }，{ {z}^{[l][3]} }，…，{ {z}^{[l][m]} })$，</p>
+<p>$m$为训练集大小，所以${Z}^{[l]}$的维度不再是$({ {n}^{[l]} },1)$，而是$({ {n}^{[l]} },m)$。</p>
+<p>${A}^{[l]}$：$({n}^{[l]},m)$，${A}^{[0]} = X =({n}^{[l]},m)$</p>
+<h3 id="参数和超参数"><a href="#参数和超参数" class="headerlink" title="参数和超参数"></a>参数和超参数</h3><p>算法中的learning rate $a$（学习率）、iterations(梯度下降法循环的数量)、$L$（隐藏层数目）、${ {n}^{[l]} }$（隐藏层单元数目）、choice of activation function（激活函数的选择）都需要人为设置，这些数字实际上控制了最后的参数$W$和$b$的值，所以它们被称作超参数。</p>
+]]></content>
+      <categories>
+        <category>吴恩达深度学习笔记</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>神经网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>吴恩达机器学习笔记--下</title>
     <url>/2019/10/29/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0--%E4%B8%8B/</url>
     <content><![CDATA[<p>参考：<a href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes" target="_blank" rel="noopener">吴恩达老师的机器学习课程个人笔记 </a></p>
 <h1 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h1><h3 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h3><p>$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j}$</p>
 <p>如果$y=1​$，想要$\theta^Tx&gt;=1$（不只是$&gt;=0$）。</p>
 <p>如果$y=0$，想要$\theta^Tx&lt;=-1$（不只是$&lt;0$）。</p>
-<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>$\min_\limits{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$</p>
+<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>$\min_\limits{\theta}{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$</p>
 <p>s.t. $\theta^T{x}^{(i)}&gt;=1$ if ${y}^{i}=1$</p>
 <p>$\theta^T{x}^{(i)}&lt;=-1$ if ${y}^{i}=0$</p>
-<p>用$p^{(i)}$来表示这是第 $i$个训练样本在参数向量${ {\theta } }$上的投影。则θ^Tx^{(i)}=p^{(i)}\cdot{\left| \theta \right|}$ ，那么决策边界可以写为：</p>
-<p>$\min_\limits{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$=\frac{1}{2}{\left| \theta \right|}^{2}</p>
+<p>用$p^{(i)}$来表示这是第 $i$个训练样本在参数向量${ {\theta } }$上的投影。则$θ^Tx^{(i)}=p^{(i)}\cdot{\left| \theta \right|}$ ，那么决策边界可以写为：</p>
+<p>$\min_\limits{\theta}{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }=\min_\limits{\theta}\frac{1}{2}{\left| \theta \right|}^{2}$</p>
 <p>s.t. $p^{(i)}\cdot{\left| \theta \right|}&gt;=1$if ${y}^{i}=1$</p>
 <p>$p^{(i)}\cdot{\left| \theta \right|}&lt;=-1$ if ${y}^{i}=0$</p>
 <p>则优化时需要极大化p^{(i)}的范数，它们是训练样本到决策边界的距离，那么支持向量机最终会找到大间距分类器。</p>
@@ -55,7 +378,7 @@
 <p>类似于召回率，同类别样本被归类到相同簇中，则满足完整性;每个聚簇中正确分类的样本数占该<br>类型的总样本数比例的和</p>
 <p>(3). <strong>V-measure</strong>:</p>
 <p>均一性和完整性的加权平均 </p>
-<p>$V = \frac{(1+\beta^2)<em>pr}{\beta^2</em>p+r}$</p>
+<p>$V = \frac{(1+\beta^2)*pr}{\beta^2*p+r}$</p>
 <p>(4). 轮廓系数</p>
 <p>样本$i$的轮廓系数：$s(i)$</p>
 <p>簇内不相似度:计算样本$i$到同簇其它样本的平均距离为$a(i)$，应尽可能小。</p>
@@ -176,6 +499,229 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
 <p> ​     }<br> }</p>
 <h3 id="在线学习"><a href="#在线学习" class="headerlink" title="在线学习"></a>在线学习</h3><p>在线学习的算法与随机梯度下降算法有些类似，是对单一的实例进行学习，而非对一个提前定义的训练集进行循环。</p>
 <p>Repeat forever (as long as the website is running) {<br>Get $\left(x,y\right)$ corresponding to the current user<br>​$\theta:={\theta}_{j}-\alpha\left( {h}_{\theta}\left({x}\right)-{y} \right){ {x}_{j} }$<br>​(<strong>for</strong> $j=0:n$)<br>}</p>
+]]></content>
+      <categories>
+        <category>吴恩达机器学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>吴恩达机器学习笔记--上</title>
+    <url>/2019/10/29/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0--%E4%B8%8A/</url>
+    <content><![CDATA[<p>参考：<a href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes" target="_blank" rel="noopener">吴恩达老师的机器学习课程个人笔记 </a></p>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。</p>
+<p>回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。<br>分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。</p>
+<h3 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h3><p>据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。</p>
+<h1 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h1><h3 id="模型表示"><a href="#模型表示" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_\theta \left( x \right)=\theta_{0} + \theta_{1}x$</p>
+<p>其中 $h$ 代表学习算法的解决方案或函数也称为假设。</p>
+<h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><p>$J \left( \theta_0, \theta_1 \right) = \frac{1}{2m}\sum\limits_{i=1}^m \left( h_{\theta}(x^{(i)})-y^{(i)} \right)^{2}$</p>
+<p>目标是选择出使得建模误差的平方和能够最小的模型参数，即使得代价函数最小的参数。</p>
+<h3 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h3><p>${\theta_{j} }:={\theta_{j} }-\alpha \frac{\partial }{\partial {\theta_{j} } }J\left(\theta \right)$</p>
+<p>其中𝑎是学习率（learning rate），它决定了沿着能让代价函数下降程度最大的方向向下迈出的步子有多大。</p>
+<h3 id="梯度下降的线性回归"><a href="#梯度下降的线性回归" class="headerlink" title="梯度下降的线性回归"></a>梯度下降的线性回归</h3><p>对之前的线性回归问题运用梯度下降法，关键在于求出代价函数的导数，即：</p>
+<p>$\frac{\partial }{\partial { {\theta }_{j} } }J({ {\theta }_{0} },{ {\theta }_{1} })=\frac{\partial }{\partial { {\theta }_{j} } }\frac{1}{2m}{ {\sum\limits_{i=1}^{m}{\left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)} }^{2} }$</p>
+<p>$j=0$  时：$\frac{\partial }{\partial { {\theta }_{0} } }J({ {\theta }_{0} },{ {\theta }_{1} })=\frac{1}{m}{ {\sum\limits_{i=1}^{m}{\left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)} } }$</p>
+<p>$j=1$  时：$\frac{\partial }{\partial { {\theta }_{1} } }J({ {\theta }_{0} },{ {\theta }_{1} })=\frac{1}{m}\sum\limits_{i=1}^{m}{\left(\left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x}^{(i)} } \right)}$</p>
+<p>则算法为：</p>
+<p><strong>Repeat {</strong></p>
+<p>​                ${\theta_{0} }:={\theta_{0} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{ \left({ {h}_{\theta } }({ {x}^{(i)} })-{  {y}^{(i)} } \right)}$</p>
+<p>​                ${\theta_{1} }:={\theta_{1} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{\left( \left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x}^{(i)} } \right)}$</p>
+<p>​               <strong>}</strong></p>
+<h1 id="多变量线性回归"><a href="#多变量线性回归" class="headerlink" title="多变量线性回归"></a>多变量线性回归</h1><h3 id="模型表示-1"><a href="#模型表示-1" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_{\theta}\left( x \right)={\theta_{0} }+{\theta_{1} }{x_{1} }+{\theta_{2} }{x_{2} }+…+{\theta_{n} }{x_{n} }$</p>
+<p>引入$x_{0}=1$，公式可以简化为：$h_{\theta} \left( x \right)={\theta^{T} }X$。</p>
+<h3 id="代价函数-1"><a href="#代价函数-1" class="headerlink" title="代价函数"></a>代价函数</h3><p>$J\left({\theta_{0} },{\theta_{1} }…{\theta_{n} } \right)=\frac{1}{2m}\sum\limits_{i=1}^{m}{ { {\left( h_{\theta} \left({x}^{\left( i \right)} \right)-{y}^{\left( i \right)} \right)}^{2} } }$</p>
+<h3 id="梯度下降-1"><a href="#梯度下降-1" class="headerlink" title="梯度下降"></a>梯度下降</h3><p><strong>Repeat {</strong></p>
+<p>${\theta_{j} }:={\theta_{j} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{\left( \left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x_{j} }^{(i)} } \right)}$</p>
+<p>(<strong>simultaneously update all $\theta_{j}$</strong> )</p>
+<p>​               <strong>}</strong></p>
+<h3 id="梯度下降的实践：特征缩放、学习率"><a href="#梯度下降的实践：特征缩放、学习率" class="headerlink" title="梯度下降的实践：特征缩放、学习率"></a>梯度下降的实践：特征缩放、学习率</h3><p>优化时特征具有相近的尺度，梯度下降算法收敛更快，方法时将特征尽量缩放到-1到1之间。特征缩放的简单方法为标准化：${ {x}_{n} }=\frac{ { {x}_{n} }-{ {\mu}_{n} } }{ { {s}_{n} } }$，其中 ${\mu_{n} }$是平均值，${s_{n} }$是标准差。</p>
+<p>如果学习率$a$过小，则达到收敛所需的迭代次数会非常高；如果学习率$a$过大，每次迭代可能不会减小代价函数，可能会越过局部最小值导致无法收敛。通常可以考虑尝试些学习率：$\alpha=0.01，0.03，0.1，0.3，1，3，10$。</p>
+<h3 id="特征和多项式回归"><a href="#特征和多项式回归" class="headerlink" title="特征和多项式回归"></a>特征和多项式回归</h3><p>线性回归并不适用于所有数据，有时需要曲线来适应数据，如三次方模型：$h_{\theta}\left( x \right)={\theta_{0} }+{\theta_{1} }{x_{1} }+{\theta_{2} }{x_{2}^2}+{\theta_{3} }{x_{3}^3}$ 。可以令：${ {x}_{2} }=x_{2}^{2},{ {x}_{3} }=x_{3}^{3}$，模型就转化为线性回归模型。</p>
+<h3 id="正规方程"><a href="#正规方程" class="headerlink" title="正规方程"></a>正规方程</h3><p>正规方程是通过令代价函数导数等于0来找出使得代价函数最小的参数的：$\frac{\partial}{\partial{\theta_{j} } }J\left({\theta_{j} } \right)=0$ 。</p>
+<p>假设训练集特征矩阵为 $X$（包含了 ${ {x}_{0} }=1$）并且训练集结果为向量 $y$，则利用正规方程解出向量 $\theta ={ {\left({X^T}X \right)}^{-1} }{X^{T} }y$ 。</p>
+<p>梯度下降与正规方程的比较：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>梯度下降</th>
+<th>正规方程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需要选择学习率$\alpha$</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>需要多次迭代</td>
+<td>一次运算得出</td>
+</tr>
+<tr>
+<td>当特征数量$n$大时也能较好适用</td>
+<td>需要计算${ {\left({ {X}^{T} }X \right)}^{-1} }$ 如果特征数量n较大则运算代价大，因为矩阵逆的计算时间复杂度为$O\left({ {n}^{3} } \right)$，通常来说当$n$小于10000 时还是可以接受的</td>
+</tr>
+<tr>
+<td>适用于各种类型的模型</td>
+<td>只适用于线性模型，不适合逻辑回归模型等其他模型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>当矩阵$X’X$不可逆时，可以使用广义逆。</p>
+<h2 id="线性回归代码"><a href="#线性回归代码" class="headerlink" title="线性回归代码"></a>线性回归代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span><span class="params">(X, y, theta)</span>:</span></span><br><span class="line">    <span class="string">"""计算代价函数"""</span></span><br><span class="line">    m = X.shape[<span class="number">0</span>]</span><br><span class="line">    cost = <span class="number">1</span>/(<span class="number">2</span>*m) * np.sum(np.square(np.subtract(np.dot(X, theta), y)))</span><br><span class="line">    <span class="keyword">return</span> cost</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conputeGradient</span><span class="params">(X, y, theta)</span>:</span></span><br><span class="line">    <span class="string">"""计算梯度"""</span></span><br><span class="line"></span><br><span class="line">    m = X.shape[<span class="number">0</span>]</span><br><span class="line">    dtheta = <span class="number">1</span>/m * np.dot(X.T, (np.subtract(np.dot(X, theta), y)))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dtheta</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradientDescent</span><span class="params">(X, y, theta, alpha, iters)</span>:</span></span><br><span class="line">    <span class="string">"""批量梯度下降"""</span></span><br><span class="line"></span><br><span class="line">    costs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range (iters):</span><br><span class="line">        Jtheta = conputeGradient(X, y, theta)</span><br><span class="line">        theta -= alpha *  Jtheta</span><br><span class="line">        cost = computeCost(X, y, theta)</span><br><span class="line">        costs.append(cost)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> theta, costs</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""使用scikit-learn的线性回归函数"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</span><br><span class="line"></span><br><span class="line">model = linear_model.LinearRegression()</span><br><span class="line">model.fit(X, y)</span><br><span class="line"></span><br><span class="line">x = X.iloc[:, <span class="number">1</span>]</span><br><span class="line">f = model.predict(X).flatten()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalEqu</span><span class="params">(X, y)</span>:</span></span><br><span class="line">    <span class="string">"""正规方程"""</span></span><br><span class="line"></span><br><span class="line">    theta = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, y))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> theta</span><br></pre></td></tr></table></figure>
+<h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><h3 id="模型表示-2"><a href="#模型表示-2" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_\theta \left( x \right)=g\left(\theta^{T}X \right)$</p>
+<p>$g$ 代表逻辑函数（logistic function)是一个常用的逻辑函数为<strong>S</strong>形函数（Sigmoid function），公式为： $g\left( z \right)=\frac{1}{1+{  {e}^{-z} } }$。</p>
+<p>$h_\theta \left( x \right)$的作用是，对于给定的输入变量，根据选择的参数计算输出变量=1的可能性，即$h_\theta \left( x \right)=P\left( y=1|x;\theta \right)$。</p>
+<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>${\theta^{T} }x=0$，这条线是模型的分界线，将预测为1的区域和预测为 0的区域分隔开。</p>
+<h3 id="代价函数-2"><a href="#代价函数-2" class="headerlink" title="代价函数"></a>代价函数</h3><p>$J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{ {Cost}\left({h_\theta}\left({x}^{\left( i \right)} \right),{y}^{\left( i \right)} \right)}$</p>
+<p>其中：$Cost\left({h_\theta}\left( x \right),y \right)=-y\times log\left({h_\theta}\left( x \right) \right)-(1-y)\times log\left( 1-{h_\theta}\left( x \right) \right)$</p>
+<h3 id="梯度下降-2"><a href="#梯度下降-2" class="headerlink" title="梯度下降"></a>梯度下降</h3><p><strong>Repeat</strong> {<br>$\theta_j := \theta_j - \alpha \frac{\partial}{\partial\theta_j} J(\theta)$<br>(<strong>simultaneously update all</strong> )<br>}</p>
+<p>求导后得到：</p>
+<p><strong>Repeat</strong> {<br>${\theta_{j} }:={\theta_{j} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{\left( \left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x_{j} }^{(i)} } \right)}$<br><strong>(simultaneously update all</strong> )<br>}</p>
+<p>推导过程：</p>
+<p>$J\left( \theta  \right)=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)} }\log \left({h_\theta}\left({ {x}^{(i)} } \right) \right)+\left( 1-{ {y}^{(i)} } \right)\log \left( 1-{h_\theta}\left({ {x}^{(i)} } \right) \right)]}$<br>考虑：<br>${h_\theta}\left({ {x}^{(i)} } \right)=\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } }$<br>则：<br>${ {y}^{(i)} }\log \left({h_\theta}\left({ {x}^{(i)} } \right) \right)+\left( 1-{ {y}^{(i)} } \right)\log \left( 1-{h_\theta}\left({ {x}^{(i)} } \right) \right)$<br>$={ {y}^{(i)} }\log \left( \frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } } \right)+\left( 1-{ {y}^{(i)} } \right)\log \left( 1-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } } \right)$<br>$=-{ {y}^{(i)} }\log \left( 1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } \right)-\left( 1-{ {y}^{(i)} } \right)\log \left( 1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } \right)$</p>
+<p>所以：<br>$\frac{\partial }{\partial {\theta_{j} } }J\left( \theta  \right)=\frac{\partial }{\partial {\theta_{j} } }[-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)} }\log \left( 1+{ {e}^{-{\theta^{T} }{ {x}^{(i)} } } } \right)-\left( 1-{ {y}^{(i)} } \right)\log \left( 1+{ {e}^{ {\theta^{T} }{ {x}^{(i)} } } } \right)]}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)} }\frac{-x_{j}^{(i)}{ {e}^{-{\theta^{T} }{ {x}^{(i)} } } } }{1+{ {e}^{-{\theta^{T} }{ {x}^{(i)} } } } }-\left( 1-{ {y}^{(i)} } \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } } }]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{ {y}^{(i)} }\frac{x_j^{(i)} }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }-\left( 1-{ {y}^{(i)} } \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)} }x_j^{(i)}-x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } }+{ {y}^{(i)} }x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } } }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)} }\left( 1\text{+}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } \right)-{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }x_j^{(i)} }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)} }-\frac{ { {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } })x_j^{(i)} }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)} }-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } })x_j^{(i)} }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)} }-{h_\theta}\left({ {x}^{(i)} } \right)]x_j^{(i)} }$<br>$=\frac{1}{m}\sum\limits_{i=1}^{m}{[{h_\theta}\left({ {x}^{(i)} } \right)-{ {y}^{(i)} }]x_j^{(i)} }$</p>
+<p>其他优化方法：牛顿法，共轭梯度法，BFGS(变尺度法)，L-BFGS(限制内存BFGS)</p>
+<h3 id="多类别分类"><a href="#多类别分类" class="headerlink" title="多类别分类"></a>多类别分类</h3><p>方法：将多分类问题转换为多个二分类问题。预测时选择一个让 $h_\theta^{\left( i \right)}\left( x \right)$ 最大的$ i$，即$\mathop{\max}\limits_i\,h_\theta^{\left( i \right)}\left( x \right)$。</p>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>欠拟合和过拟合：欠拟合不能很好的拟合训练集，过拟合过于强调拟合原始数据而不能很好的预测新数据。</p>
+<p>过拟合的处理：</p>
+<p>1.丢弃一些不能帮助我们正确预测的特征。可以是手工选择保留哪些特征，或者使用一些模型选择的算法来帮忙（例如PCA）</p>
+<p>2.正则化。 保留所有的特征，但是减少参数的大小（magnitude）。</p>
+<p>加入${\cal l}_{2}$正则化的代价函数：$J\left( \theta  \right)=\frac{1}{2m}[\sum\limits_{i=1}^{m}{ { {({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })}^{2} }+\lambda \sum\limits_{j=1}^{n}{\theta_{j}^{2} }]}$</p>
+<p>其中$\lambda $又称为正则化参数（Regularization Parameter）。 注：根据惯例，不对${\theta_{0} }$ 进行惩罚。</p>
+<h3 id="正则化的线性回归模型"><a href="#正则化的线性回归模型" class="headerlink" title="正则化的线性回归模型"></a>正则化的线性回归模型</h3><p>代价函数：$J\left( \theta  \right)=\frac{1}{2m}\sum\limits_{i=1}^{m}{[({ {({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })}^{2} }+\lambda \sum\limits_{j=1}^{n}{\theta _{j}^{2} })]}$</p>
+<p>梯度下降算法：</p>
+<p>$Repeat$  $until$  $convergence${</p>
+<p>​                                                   ${\theta_0}:={\theta_0}-a\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{0}^{(i)} })$ </p>
+<p>​                                                   ${\theta_j}:={\theta_j}-a[\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{j}^{\left( i \right)} }+\frac{\lambda }{m}{\theta_j}]$ </p>
+<p>​                                                             $for$ $j=1,2,…n$</p>
+<p>​                                                   }</p>
+<h3 id="正则化的逻辑回归模型"><a href="#正则化的逻辑回归模型" class="headerlink" title="正则化的逻辑回归模型"></a>正则化的逻辑回归模型</h3><p>代价函数：$J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)} }\log \left( {h_\theta}\left( { {x}^{(i)} } \right) \right)-\left( 1-{ {y}^{(i)} } \right)\log \left( 1-{h_\theta}\left( { {x}^{(i)} } \right) \right)]}+\frac{\lambda }{2m}\sum\limits_{j=1}^{n}{\theta _{j}^{2} }$</p>
+<p>梯度下降算法：</p>
+<p>$Repeat$  $until$  $convergence${</p>
+<p>​                                                   ${\theta_0}:={\theta_0}-a\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{0}^{(i)} })$</p>
+<p>​                                                  ${\theta_j}:={\theta_j}-a[\frac{1}{m}\sum\limits_{i=1}^{m}{({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{j}^{\left( i \right)} }+\frac{\lambda }{m}{\theta_j}]$</p>
+<p>​                                                 $for$ $j=1,2,…n$</p>
+<p>​                                                 }</p>
+<h2 id="逻辑回归代码"><a href="#逻辑回归代码" class="headerlink" title="逻辑回归代码"></a>逻辑回归代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""sigmoid函数"""</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span><span class="params">(theta, X, y, lam)</span>:</span></span><br><span class="line">    <span class="string">"""计算代价函数"""</span></span><br><span class="line"></span><br><span class="line">    first = np.multiply(y, np.log(sigmoid(np.dot(X, theta))))</span><br><span class="line">    second = np.multiply(<span class="number">1</span> - y, np.log(<span class="number">1</span> - sigmoid(np.dot(X, theta))))</span><br><span class="line">    cost = - np.mean(first + second)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cost</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeGrad</span><span class="params">(theta, X, y)</span>:</span></span><br><span class="line">    <span class="string">"""计算梯度"""</span></span><br><span class="line"></span><br><span class="line">    m =X.shape[<span class="number">0</span>]</span><br><span class="line">    grad = <span class="number">1</span> / m * np.dot(X.T, sigmoid(np.dot(X, theta)) - y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> grad</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""优化"""</span></span><br><span class="line"><span class="keyword">import</span> scipy.optimize <span class="keyword">as</span> opt</span><br><span class="line">res = opt.minimize(fun=computeCost, x0=theta, args=(X, y), method=<span class="string">'Newton-CG'</span>, jac=computeGrad)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computePred</span><span class="params">(theta, X)</span>:</span></span><br><span class="line">    <span class="string">"""预测值"""</span></span><br><span class="line"></span><br><span class="line">    prob = sigmoid(np.dot(X, theta))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (prob &gt;= <span class="number">0.5</span>).astype(int)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mapFeature</span><span class="params">(x, y, power, as_ndarray = False)</span>:</span></span><br><span class="line">    <span class="string">"""多项式特征"""</span></span><br><span class="line"></span><br><span class="line">    data = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(power + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> range(i + <span class="number">1</span>):</span><br><span class="line">            data[<span class="string">"f&#123;&#125;&#123;&#125;"</span>.format(i-p, p)] = np.power(x, i-p) * np.power(y, p)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> as_ndarray == <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">return</span> pd.DataFrame(data).as_matrix()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> pd.DataFrame(data)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeGrad_Regu</span><span class="params">(theta, X, y, lam = <span class="number">1</span>)</span>:</span></span><br><span class="line">    <span class="string">"""计算带正则化的代价函数"""</span></span><br><span class="line"></span><br><span class="line">    m =X.shape[<span class="number">0</span>]</span><br><span class="line">    grad = <span class="number">1</span> / m * np.dot(X.T, sigmoid(np.dot(X, theta)) - y)</span><br><span class="line">    grad_reg = grad + lam / m * theta</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> grad_reg</span><br></pre></td></tr></table></figure>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h3 id="模型表示-3"><a href="#模型表示-3" class="headerlink" title="模型表示"></a>模型表示</h3><p>两层神经网络：</p>
+<p>${z}^{(2)}=\Theta^{(1)}{X}$</p>
+<p>${a}^{(2)}=g({ {z}^{(2)} })$</p>
+<p>${z}^{(3)}=\Theta^{(2)}{ {a}^{(2)} }$</p>
+<p>$h_\theta(x)={ {a}^{(3)} }=g({ {z}^{(3)} })$</p>
+<h3 id="代价函数-3"><a href="#代价函数-3" class="headerlink" title="代价函数"></a>代价函数</h3><p>二类分类：$S_L=0, y=0\, or\, 1$表示哪一类；</p>
+<p>$  J\left(\theta \right)=-\frac{1}{m}\left[\sum_\limits{i=1}^{m}{y}^{(i)}\log{h_\theta({x}^{(i)})}+\left(1-{y}^{(i)}\right)log\left(1-h_\theta\left({x}^{(i)}\right)\right)\right]+\frac{\lambda}{2m}\sum_\limits{j=1}^{n}{\theta_j}^{2}  $</p>
+<p>$K$类分类：$S_L=k, y_i = 1$表示分到第$i$类；$(k&gt;2)$</p>
+<p>$h_\theta\left(x\right)\in \mathbb{R}^{K}$，分量${\left({h_\theta}\left(x\right)\right)}_{i}={i}^{th} \text{output}$。</p>
+<p>$  J(\Theta) = -\frac{1}{m} \left[ \sum\limits_{i=1}^{m} \sum\limits_{k=1}^{k} {y_k}^{(i)} \log {(h_\Theta(x^{(i)}))}_{k} + \left( 1 - y_k^{(i)} \right) \log \left( 1- {\left( h_\Theta \left( x^{(i)} \right) \right)}_{k} \right) \right] + \frac{\lambda}{2m} \sum\limits_{l=1}^{L-1} \sum\limits_{i=1}^{s_l} \sum\limits_{j=1}^{s_{l+1}} \left( \Theta_{ji}^{(l)} \right)^2  $</p>
+<h3 id="反向传播算法"><a href="#反向传播算法" class="headerlink" title="反向传播算法"></a>反向传播算法</h3><p>为了计算代价函数的偏导数$\frac{\partial}{\partial\Theta^{(l)}_{ij} }J\left(\Theta\right)$，需要采用一种反向传播算法，也就是首先计算最后一层的误差，然后再一层一层反向求出各层的误差，直到倒数第二层。</p>
+<h3 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h3><p>对梯度的估计采用的方法是在代价函数上沿着切线的方向选择离两个非常近的点然后计算两个点的平均值用以估计梯度。即对于某个特定的 $\theta$，计算出在 $\theta$-$\varepsilon $ 处和 $\theta$+$\varepsilon $ 的代价值（$\varepsilon $是一个非常小的值，通常选取 0.001），然后求两个代价的平均，用以估计在 $\theta$ 处的代价值。</p>
+<p>一个只针对$\theta_1$进行检验的示例：<br>$ \frac{\partial}{\partial\theta_1}=\frac{J\left(\theta_1+\varepsilon_1,\theta_2,\theta_3…\theta_n \right)-J \left( \theta_1-\varepsilon_1,\theta_2,\theta_3…\theta_n \right)}{2\varepsilon} $</p>
+<h3 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h3><p>如果令所有的初始参数都为0，这将意味着第二层的所有激活单元都会有相同的值。同理，如果初始所有的参数都为一个非0的数，结果也是一样的。<br>所以神经网络中通常初始参数为正负ε之间的随机值。</p>
+<h3 id="训练神经网络"><a href="#训练神经网络" class="headerlink" title="训练神经网络"></a>训练神经网络</h3><p>训练神经网络：</p>
+<p>1.参数的随机初始化</p>
+<p>2.利用正向传播方法计算所有的$h_{\theta}(x)$</p>
+<p>3.编写计算代价函数 $J$ 的代码</p>
+<p>4.利用反向传播方法计算所有偏导数</p>
+<p>5.利用数值检验方法检验这些偏导数</p>
+<p>6.使用优化算法来最小化代价函数</p>
+<h1 id="应用机器学习的建议"><a href="#应用机器学习的建议" class="headerlink" title="应用机器学习的建议"></a>应用机器学习的建议</h1><h3 id="决定下一步做什么"><a href="#决定下一步做什么" class="headerlink" title="决定下一步做什么"></a>决定下一步做什么</h3><p>当运用训练好了的模型来预测未知数据的时候发现有较大的误差，下一步可以做什么？</p>
+<p>1.获得更多的训练样本——通常是有效的，但代价较大，下面的方法也可能有效，可考虑先采用下面的几种方法。</p>
+<p>2.尝试减少特征的数量</p>
+<p>3.尝试获得更多的特征</p>
+<p>4.尝试增加多项式特征</p>
+<p>5.尝试减少正则化程度$\lambda$</p>
+<p>6.尝试增加正则化程度$\lambda$</p>
+<h3 id="评估一个假设"><a href="#评估一个假设" class="headerlink" title="评估一个假设"></a>评估一个假设</h3><p>为了检验算法是否过拟合，将数据分成训练集和测试集，通常用70%的数据作为训练集，用剩下30%的数据作为测试集。</p>
+<p>在通过训练集让的模型学习得出其参数后，对测试集运用该模型，计算误差：</p>
+<p>对于线性回归模型，利用测试集数据计算代价函数$J$</p>
+<p>对于逻辑回归模型，除了可以利用测试数据集来计算代价函数外，还可以计算误分类的比例。</p>
+<h3 id="模型选择和交叉验证集"><a href="#模型选择和交叉验证集" class="headerlink" title="模型选择和交叉验证集"></a>模型选择和交叉验证集</h3><p>使用60%的数据作为训练集，使用 20%的数据作为交叉验证集，使用20%的数据作为测试集。</p>
+<p>模型选择的方法为：</p>
+<p>1.使用训练集训练出10个模型</p>
+<p>2.用10个模型分别对交叉验证集计算得出交叉验证误差（代价函数的值）</p>
+<p>3.选取代价函数值最小的模型</p>
+<p>4.用步骤3中选出的模型对测试集计算得出推广误差（代价函数的值）</p>
+<h3 id="诊断偏差和方差"><a href="#诊断偏差和方差" class="headerlink" title="诊断偏差和方差"></a>诊断偏差和方差</h3><p><strong>Bias/variance</strong></p>
+<p><strong>Training error:</strong>                               $J_{train}(\theta) = \frac{1}{2m}\sum_\limits{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})^2$</p>
+<p><strong>Cross Validation error:</strong>                $J_{cv}(\theta) = \frac{1}{2m_{cv} }\sum_\limits{i=1}^{m}(h_{\theta}(x^{(i)}_{cv})-y^{(i)}_{cv})^2$</p>
+<p>对于训练集，当 $d$ 较小时，模型拟合程度更低，误差较大；随着 $d$ 的增长，拟合程度提高，误差减小。</p>
+<p>对于交叉验证集，当 $d$ 较小时，模型拟合程度低，误差较大；但是随着 $d$ 的增长，误差呈现先减小后增大的趋势，转折点是模型开始过拟合训练数据集的时候。</p>
+<p>训练集误差和交叉验证集误差近似时：偏差/欠拟合</p>
+<p>交叉验证集误差远大于训练集误差时：方差/过拟合</p>
+<h3 id="正则化和偏差-方差"><a href="#正则化和偏差-方差" class="headerlink" title="正则化和偏差/方差"></a>正则化和偏差/方差</h3><p>选择$\lambda$的值时，把数据分为训练集、交叉验证集和测试集。</p>
+<p>1.使用训练集训练出12个不同程度正则化的模型</p>
+<p>2.用12个模型分别对交叉验证集计算的出交叉验证误差</p>
+<p>3.选择得出交叉验证误差<strong>最小</strong>的模型</p>
+<p>4.运用步骤3中选出模型对测试集计算得出推广误差，我们也可以同时将训练集和交叉验证集模型的代价函数误差与λ的值绘制在一张图表上。</p>
+<p>当 $\lambda$ 较小时，训练集误差较小（过拟合）而交叉验证集误差较大</p>
+<p>随着 $\lambda$ 的增加，训练集误差不断增加（欠拟合），而交叉验证集误差则是先减小后增加</p>
+<h3 id="学习曲线"><a href="#学习曲线" class="headerlink" title="学习曲线"></a>学习曲线</h3><p>学习曲线是将训练集误差和交叉验证集误差作为训练集样本数量（$m$）的函数绘制的图表。可以用学习曲线来判断某一个学习算法是否处于偏差、方差问题。</p>
+<h3 id="决定下一步做什么-1"><a href="#决定下一步做什么-1" class="headerlink" title="决定下一步做什么"></a>决定下一步做什么</h3><ol>
+<li><p>获得更多的训练样本——解决高方差</p>
+</li>
+<li><p>尝试减少特征的数量——解决高方差</p>
+</li>
+<li><p>尝试获得更多的特征——解决高偏差</p>
+</li>
+<li><p>尝试增加多项式特征——解决高偏差</p>
+</li>
+<li><p>尝试减少正则化程度λ——解决高偏差</p>
+</li>
+<li><p>尝试增加正则化程度λ——解决高方差</p>
+</li>
+</ol>
+<h1 id="机器学习系统的设计"><a href="#机器学习系统的设计" class="headerlink" title="机器学习系统的设计"></a>机器学习系统的设计</h1><h3 id="首先要做什么"><a href="#首先要做什么" class="headerlink" title="首先要做什么"></a>首先要做什么</h3><p>1.收集更多的数据</p>
+<p>2.基于数据开发的特征</p>
+<p>3.基于目的开发算法</p>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>构建一个学习算法的推荐方法为：</p>
+<p>1.从一个简单的能快速实现的算法开始，实现该算法并用交叉验证集数据测试这个算法</p>
+<p>2.绘制学习曲线，决定是增加更多数据，或者添加更多特征，还是其他选择</p>
+<p>3.进行误差分析：人工检查交叉验证集中我们算法中产生预测误差的样本，看看这些样本是否有某种系统化的趋势</p>
+<h3 id="类偏斜的误差度量"><a href="#类偏斜的误差度量" class="headerlink" title="类偏斜的误差度量"></a>类偏斜的误差度量</h3><p>混淆矩阵：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th><strong>预测值</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td><strong>Positive</strong></td>
+<td><strong>Negtive</strong></td>
+</tr>
+<tr>
+<td><strong>实际值</strong></td>
+<td><strong>Positive</strong></td>
+<td><strong>TP</strong></td>
+<td><strong>FN</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Negtive</strong></td>
+<td><strong>FP</strong></td>
+<td><strong>TN</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>查准率=<strong>TP/(TP+FP)</strong>。</p>
+<p>查全率=<strong>TP/(TP+FN)</strong>。</p>
+<h3 id="查准率和查全率之间的权衡"><a href="#查准率和查全率之间的权衡" class="headerlink" title="查准率和查全率之间的权衡"></a>查准率和查全率之间的权衡</h3><p><strong>F1 值</strong>（<strong>F1 Score</strong>）：${ {F}_{1} }Score:2\frac{PR}{P+R}$</p>
 ]]></content>
       <categories>
         <category>吴恩达机器学习笔记</category>
@@ -632,229 +1178,6 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
       </tags>
   </entry>
   <entry>
-    <title>吴恩达机器学习笔记--上</title>
-    <url>/2019/10/24/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0--%E4%B8%8A/</url>
-    <content><![CDATA[<p>参考：<a href="https://github.com/fengdu78/Coursera-ML-AndrewNg-Notes" target="_blank" rel="noopener">吴恩达老师的机器学习课程个人笔记 </a></p>
-<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>监督学习是指：利用一组已知类别的样本调整分类器的参数，使其达到所要求性能的过程，也称为监督训练或有教师学习。</p>
-<p>回归问题：预测的结果是连续的，如预测房价、未来的天气情况等等。<br>分类问题：预测的结果是离散的，例如预测明天天气-阴，晴，雨。</p>
-<h3 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h3><p>据类别未知(没有被标记)的训练样本解决模式识别中的各种问题，称之为无监督学习。</p>
-<h1 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h1><h3 id="模型表示"><a href="#模型表示" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_\theta \left( x \right)=\theta_{0} + \theta_{1}x$</p>
-<p>其中 $h$ 代表学习算法的解决方案或函数也称为假设。</p>
-<h3 id="代价函数"><a href="#代价函数" class="headerlink" title="代价函数"></a>代价函数</h3><p>$J \left( \theta_0, \theta_1 \right) = \frac{1}{2m}\sum\limits_{i=1}^m \left( h_{\theta}(x^{(i)})-y^{(i)} \right)^{2}$</p>
-<p>目标是选择出使得建模误差的平方和能够最小的模型参数，即使得代价函数最小的参数。</p>
-<h3 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h3><p>${\theta_{j} }:={\theta_{j} }-\alpha \frac{\partial }{\partial {\theta_{j} } }J\left(\theta \right)$</p>
-<p>其中𝑎是学习率（learning rate），它决定了沿着能让代价函数下降程度最大的方向向下迈出的步子有多大。</p>
-<h3 id="梯度下降的线性回归"><a href="#梯度下降的线性回归" class="headerlink" title="梯度下降的线性回归"></a>梯度下降的线性回归</h3><p>对之前的线性回归问题运用梯度下降法，关键在于求出代价函数的导数，即：</p>
-<p>$\frac{\partial }{\partial { {\theta }_{j} } }J({ {\theta }_{0} },{ {\theta }_{1} })=\frac{\partial }{\partial { {\theta }_{j} } }\frac{1}{2m}{ {\sum\limits_{i=1}^{m}{\left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)} }^{2} }$</p>
-<p>$j=0$  时：$\frac{\partial }{\partial { {\theta }_{0} } }J({ {\theta }_{0} },{ {\theta }_{1} })=\frac{1}{m}{ {\sum\limits_{i=1}^{m}{\left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)} } }$</p>
-<p>$j=1$  时：$\frac{\partial }{\partial { {\theta }_{1} } }J({ {\theta }_{0} },{ {\theta }_{1} })=\frac{1}{m}\sum\limits_{i=1}^{m}{\left(\left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x}^{(i)} } \right)}$</p>
-<p>则算法为：</p>
-<p><strong>Repeat {</strong></p>
-<p>​                ${\theta_{0} }:={\theta_{0} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{ \left({ {h}_{\theta } }({ {x}^{(i)} })-{  {y}^{(i)} } \right)}$</p>
-<p>​                ${\theta_{1} }:={\theta_{1} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{\left( \left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x}^{(i)} } \right)}$</p>
-<p>​               <strong>}</strong></p>
-<h1 id="多变量线性回归"><a href="#多变量线性回归" class="headerlink" title="多变量线性回归"></a>多变量线性回归</h1><h3 id="模型表示-1"><a href="#模型表示-1" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_{\theta}\left( x \right)={\theta_{0} }+{\theta_{1} }{x_{1} }+{\theta_{2} }{x_{2} }+…+{\theta_{n} }{x_{n} }$</p>
-<p>引入$x_{0}=1$，公式可以简化为：$h_{\theta} \left( x \right)={\theta^{T} }X$。</p>
-<h3 id="代价函数-1"><a href="#代价函数-1" class="headerlink" title="代价函数"></a>代价函数</h3><p>$J\left({\theta_{0} },{\theta_{1} }…{\theta_{n} } \right)=\frac{1}{2m}\sum\limits_{i=1}^{m}{ { {\left( h_{\theta} \left({x}^{\left( i \right)} \right)-{y}^{\left( i \right)} \right)}^{2} } }$</p>
-<h3 id="梯度下降-1"><a href="#梯度下降-1" class="headerlink" title="梯度下降"></a>梯度下降</h3><p><strong>Repeat {</strong></p>
-<p>${\theta_{j} }:={\theta_{j} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{\left( \left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x_{j} }^{(i)} } \right)}$</p>
-<p>(<strong>simultaneously update all $\theta_{j}$</strong> )</p>
-<p>​               <strong>}</strong></p>
-<h3 id="梯度下降的实践：特征缩放、学习率"><a href="#梯度下降的实践：特征缩放、学习率" class="headerlink" title="梯度下降的实践：特征缩放、学习率"></a>梯度下降的实践：特征缩放、学习率</h3><p>优化时特征具有相近的尺度，梯度下降算法收敛更快，方法时将特征尽量缩放到-1到1之间。特征缩放的简单方法为标准化：${ {x}_{n} }=\frac{ { {x}_{n} }-{ {\mu}_{n} } }{ { {s}_{n} } }$，其中 ${\mu_{n} }$是平均值，${s_{n} }$是标准差。</p>
-<p>如果学习率$a$过小，则达到收敛所需的迭代次数会非常高；如果学习率$a$过大，每次迭代可能不会减小代价函数，可能会越过局部最小值导致无法收敛。通常可以考虑尝试些学习率：$\alpha=0.01，0.03，0.1，0.3，1，3，10$。</p>
-<h3 id="特征和多项式回归"><a href="#特征和多项式回归" class="headerlink" title="特征和多项式回归"></a>特征和多项式回归</h3><p>线性回归并不适用于所有数据，有时需要曲线来适应数据，如三次方模型：$h_{\theta}\left( x \right)={\theta_{0} }+{\theta_{1} }{x_{1} }+{\theta_{2} }{x_{2}^2}+{\theta_{3} }{x_{3}^3}$ 。可以令：${ {x}_{2} }=x_{2}^{2},{ {x}_{3} }=x_{3}^{3}$，模型就转化为线性回归模型。</p>
-<h3 id="正规方程"><a href="#正规方程" class="headerlink" title="正规方程"></a>正规方程</h3><p>正规方程是通过令代价函数导数等于0来找出使得代价函数最小的参数的：$\frac{\partial}{\partial{\theta_{j} } }J\left({\theta_{j} } \right)=0$ 。</p>
-<p>假设训练集特征矩阵为 $X$（包含了 ${ {x}_{0} }=1$）并且训练集结果为向量 $y$，则利用正规方程解出向量 $\theta ={ {\left({X^T}X \right)}^{-1} }{X^{T} }y$ 。</p>
-<p>梯度下降与正规方程的比较：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>梯度下降</th>
-<th>正规方程</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>需要选择学习率$\alpha$</td>
-<td>不需要</td>
-</tr>
-<tr>
-<td>需要多次迭代</td>
-<td>一次运算得出</td>
-</tr>
-<tr>
-<td>当特征数量$n$大时也能较好适用</td>
-<td>需要计算${ {\left({ {X}^{T} }X \right)}^{-1} }$ 如果特征数量n较大则运算代价大，因为矩阵逆的计算时间复杂度为$O\left({ {n}^{3} } \right)$，通常来说当$n$小于10000 时还是可以接受的</td>
-</tr>
-<tr>
-<td>适用于各种类型的模型</td>
-<td>只适用于线性模型，不适合逻辑回归模型等其他模型</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>当矩阵$X’X$不可逆时，可以使用广义逆。</p>
-<h2 id="线性回归代码"><a href="#线性回归代码" class="headerlink" title="线性回归代码"></a>线性回归代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span><span class="params">(X, y, theta)</span>:</span></span><br><span class="line">    <span class="string">"""计算代价函数"""</span></span><br><span class="line">    m = X.shape[<span class="number">0</span>]</span><br><span class="line">    cost = <span class="number">1</span>/(<span class="number">2</span>*m) * np.sum(np.square(np.subtract(np.dot(X, theta), y)))</span><br><span class="line">    <span class="keyword">return</span> cost</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conputeGradient</span><span class="params">(X, y, theta)</span>:</span></span><br><span class="line">    <span class="string">"""计算梯度"""</span></span><br><span class="line"></span><br><span class="line">    m = X.shape[<span class="number">0</span>]</span><br><span class="line">    dtheta = <span class="number">1</span>/m * np.dot(X.T, (np.subtract(np.dot(X, theta), y)))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dtheta</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradientDescent</span><span class="params">(X, y, theta, alpha, iters)</span>:</span></span><br><span class="line">    <span class="string">"""批量梯度下降"""</span></span><br><span class="line"></span><br><span class="line">    costs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range (iters):</span><br><span class="line">        Jtheta = conputeGradient(X, y, theta)</span><br><span class="line">        theta -= alpha *  Jtheta</span><br><span class="line">        cost = computeCost(X, y, theta)</span><br><span class="line">        costs.append(cost)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> theta, costs</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""使用scikit-learn的线性回归函数"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</span><br><span class="line"></span><br><span class="line">model = linear_model.LinearRegression()</span><br><span class="line">model.fit(X, y)</span><br><span class="line"></span><br><span class="line">x = X.iloc[:, <span class="number">1</span>]</span><br><span class="line">f = model.predict(X).flatten()</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalEqu</span><span class="params">(X, y)</span>:</span></span><br><span class="line">    <span class="string">"""正规方程"""</span></span><br><span class="line"></span><br><span class="line">    theta = np.dot(np.linalg.inv(np.dot(X.T, X)), np.dot(X.T, y))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> theta</span><br></pre></td></tr></table></figure>
-<h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><h3 id="模型表示-2"><a href="#模型表示-2" class="headerlink" title="模型表示"></a>模型表示</h3><p>$h_\theta \left( x \right)=g\left(\theta^{T}X \right)$</p>
-<p>$g$ 代表逻辑函数（logistic function)是一个常用的逻辑函数为<strong>S</strong>形函数（Sigmoid function），公式为： $g\left( z \right)=\frac{1}{1+{  {e}^{-z} } }$。</p>
-<p>$h_\theta \left( x \right)$的作用是，对于给定的输入变量，根据选择的参数计算输出变量=1的可能性，即$h_\theta \left( x \right)=P\left( y=1|x;\theta \right)$。</p>
-<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>${\theta^{T} }x=0$，这条线是模型的分界线，将预测为1的区域和预测为 0的区域分隔开。</p>
-<h3 id="代价函数-2"><a href="#代价函数-2" class="headerlink" title="代价函数"></a>代价函数</h3><p>$J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{ {Cost}\left({h_\theta}\left({x}^{\left( i \right)} \right),{y}^{\left( i \right)} \right)}$</p>
-<p>其中：$Cost\left({h_\theta}\left( x \right),y \right)=-y\times log\left({h_\theta}\left( x \right) \right)-(1-y)\times log\left( 1-{h_\theta}\left( x \right) \right)$</p>
-<h3 id="梯度下降-2"><a href="#梯度下降-2" class="headerlink" title="梯度下降"></a>梯度下降</h3><p><strong>Repeat</strong> {<br>$\theta_j := \theta_j - \alpha \frac{\partial}{\partial\theta_j} J(\theta)$<br>(<strong>simultaneously update all</strong> )<br>}</p>
-<p>求导后得到：</p>
-<p><strong>Repeat</strong> {<br>${\theta_{j} }:={\theta_{j} }-a\frac{1}{m}\sum\limits_{i=1}^{m}{\left( \left({ {h}_{\theta } }({ {x}^{(i)} })-{ {y}^{(i)} } \right)\cdot { {x_{j} }^{(i)} } \right)}$<br><strong>(simultaneously update all</strong> )<br>}</p>
-<p>推导过程：</p>
-<p>$J\left( \theta  \right)=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)} }\log \left({h_\theta}\left({ {x}^{(i)} } \right) \right)+\left( 1-{ {y}^{(i)} } \right)\log \left( 1-{h_\theta}\left({ {x}^{(i)} } \right) \right)]}$<br>考虑：<br>${h_\theta}\left({ {x}^{(i)} } \right)=\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } }$<br>则：<br>${ {y}^{(i)} }\log \left({h_\theta}\left({ {x}^{(i)} } \right) \right)+\left( 1-{ {y}^{(i)} } \right)\log \left( 1-{h_\theta}\left({ {x}^{(i)} } \right) \right)$<br>$={ {y}^{(i)} }\log \left( \frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } } \right)+\left( 1-{ {y}^{(i)} } \right)\log \left( 1-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } } \right)$<br>$=-{ {y}^{(i)} }\log \left( 1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } \right)-\left( 1-{ {y}^{(i)} } \right)\log \left( 1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } \right)$</p>
-<p>所以：<br>$\frac{\partial }{\partial {\theta_{j} } }J\left( \theta  \right)=\frac{\partial }{\partial {\theta_{j} } }[-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)} }\log \left( 1+{ {e}^{-{\theta^{T} }{ {x}^{(i)} } } } \right)-\left( 1-{ {y}^{(i)} } \right)\log \left( 1+{ {e}^{ {\theta^{T} }{ {x}^{(i)} } } } \right)]}]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)} }\frac{-x_{j}^{(i)}{ {e}^{-{\theta^{T} }{ {x}^{(i)} } } } }{1+{ {e}^{-{\theta^{T} }{ {x}^{(i)} } } } }-\left( 1-{ {y}^{(i)} } \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } } }]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{ {y}^{(i)} }\frac{x_j^{(i)} }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }-\left( 1-{ {y}^{(i)} } \right)\frac{x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }]$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)} }x_j^{(i)}-x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } }+{ {y}^{(i)} }x_j^{(i)}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } } }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{\frac{ { {y}^{(i)} }\left( 1\text{+}{ {e}^{ {\theta^T}{ {x}^{(i)} } } } \right)-{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } }x_j^{(i)} }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)} }-\frac{ { {e}^{ {\theta^T}{ {x}^{(i)} } } } }{1+{ {e}^{ {\theta^T}{ {x}^{(i)} } } } })x_j^{(i)} }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{({ {y}^{(i)} }-\frac{1}{1+{ {e}^{-{\theta^T}{ {x}^{(i)} } } } })x_j^{(i)} }$<br>$=-\frac{1}{m}\sum\limits_{i=1}^{m}{[{ {y}^{(i)} }-{h_\theta}\left({ {x}^{(i)} } \right)]x_j^{(i)} }$<br>$=\frac{1}{m}\sum\limits_{i=1}^{m}{[{h_\theta}\left({ {x}^{(i)} } \right)-{ {y}^{(i)} }]x_j^{(i)} }$</p>
-<p>其他优化方法：牛顿法，共轭梯度法，BFGS(变尺度法)，L-BFGS(限制内存BFGS)</p>
-<h3 id="多类别分类"><a href="#多类别分类" class="headerlink" title="多类别分类"></a>多类别分类</h3><p>方法：将多分类问题转换为多个二分类问题。预测时选择一个让 $h_\theta^{\left( i \right)}\left( x \right)$ 最大的$ i$，即$\mathop{\max}\limits_i\,h_\theta^{\left( i \right)}\left( x \right)$。</p>
-<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>欠拟合和过拟合：欠拟合不能很好的拟合训练集，过拟合过于强调拟合原始数据而不能很好的预测新数据。</p>
-<p>过拟合的处理：</p>
-<p>1.丢弃一些不能帮助我们正确预测的特征。可以是手工选择保留哪些特征，或者使用一些模型选择的算法来帮忙（例如PCA）</p>
-<p>2.正则化。 保留所有的特征，但是减少参数的大小（magnitude）。</p>
-<p>加入${\cal l}_{2}$正则化的代价函数：$J\left( \theta  \right)=\frac{1}{2m}[\sum\limits_{i=1}^{m}{ { {({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })}^{2} }+\lambda \sum\limits_{j=1}^{n}{\theta_{j}^{2} }]}$</p>
-<p>其中$\lambda $又称为正则化参数（Regularization Parameter）。 注：根据惯例，不对${\theta_{0} }$ 进行惩罚。</p>
-<h3 id="正则化的线性回归模型"><a href="#正则化的线性回归模型" class="headerlink" title="正则化的线性回归模型"></a>正则化的线性回归模型</h3><p>代价函数：$J\left( \theta  \right)=\frac{1}{2m}\sum\limits_{i=1}^{m}{[({ {({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })}^{2} }+\lambda \sum\limits_{j=1}^{n}{\theta _{j}^{2} })]}$</p>
-<p>梯度下降算法：</p>
-<p>$Repeat$  $until$  $convergence${</p>
-<p>​                                                   ${\theta_0}:={\theta_0}-a\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{0}^{(i)} })$ </p>
-<p>​                                                   ${\theta_j}:={\theta_j}-a[\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{j}^{\left( i \right)} }+\frac{\lambda }{m}{\theta_j}]$ </p>
-<p>​                                                             $for$ $j=1,2,…n$</p>
-<p>​                                                   }</p>
-<h3 id="正则化的逻辑回归模型"><a href="#正则化的逻辑回归模型" class="headerlink" title="正则化的逻辑回归模型"></a>正则化的逻辑回归模型</h3><p>代价函数：$J\left( \theta  \right)=\frac{1}{m}\sum\limits_{i=1}^{m}{[-{ {y}^{(i)} }\log \left( {h_\theta}\left( { {x}^{(i)} } \right) \right)-\left( 1-{ {y}^{(i)} } \right)\log \left( 1-{h_\theta}\left( { {x}^{(i)} } \right) \right)]}+\frac{\lambda }{2m}\sum\limits_{j=1}^{n}{\theta _{j}^{2} }$</p>
-<p>梯度下降算法：</p>
-<p>$Repeat$  $until$  $convergence${</p>
-<p>​                                                   ${\theta_0}:={\theta_0}-a\frac{1}{m}\sum\limits_{i=1}^{m}{(({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{0}^{(i)} })$</p>
-<p>​                                                  ${\theta_j}:={\theta_j}-a[\frac{1}{m}\sum\limits_{i=1}^{m}{({h_\theta}({ {x}^{(i)} })-{ {y}^{(i)} })x_{j}^{\left( i \right)} }+\frac{\lambda }{m}{\theta_j}]$</p>
-<p>​                                                 $for$ $j=1,2,…n$</p>
-<p>​                                                 }</p>
-<h2 id="逻辑回归代码"><a href="#逻辑回归代码" class="headerlink" title="逻辑回归代码"></a>逻辑回归代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""sigmoid函数"""</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-z))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeCost</span><span class="params">(theta, X, y, lam)</span>:</span></span><br><span class="line">    <span class="string">"""计算代价函数"""</span></span><br><span class="line"></span><br><span class="line">    first = np.multiply(y, np.log(sigmoid(np.dot(X, theta))))</span><br><span class="line">    second = np.multiply(<span class="number">1</span> - y, np.log(<span class="number">1</span> - sigmoid(np.dot(X, theta))))</span><br><span class="line">    cost = - np.mean(first + second)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cost</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeGrad</span><span class="params">(theta, X, y)</span>:</span></span><br><span class="line">    <span class="string">"""计算梯度"""</span></span><br><span class="line"></span><br><span class="line">    m =X.shape[<span class="number">0</span>]</span><br><span class="line">    grad = <span class="number">1</span> / m * np.dot(X.T, sigmoid(np.dot(X, theta)) - y)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> grad</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""优化"""</span></span><br><span class="line"><span class="keyword">import</span> scipy.optimize <span class="keyword">as</span> opt</span><br><span class="line">res = opt.minimize(fun=computeCost, x0=theta, args=(X, y), method=<span class="string">'Newton-CG'</span>, jac=computeGrad)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computePred</span><span class="params">(theta, X)</span>:</span></span><br><span class="line">    <span class="string">"""预测值"""</span></span><br><span class="line"></span><br><span class="line">    prob = sigmoid(np.dot(X, theta))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (prob &gt;= <span class="number">0.5</span>).astype(int)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mapFeature</span><span class="params">(x, y, power, as_ndarray = False)</span>:</span></span><br><span class="line">    <span class="string">"""多项式特征"""</span></span><br><span class="line"></span><br><span class="line">    data = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(power + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> range(i + <span class="number">1</span>):</span><br><span class="line">            data[<span class="string">"f&#123;&#125;&#123;&#125;"</span>.format(i-p, p)] = np.power(x, i-p) * np.power(y, p)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> as_ndarray == <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">return</span> pd.DataFrame(data).as_matrix()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> pd.DataFrame(data)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computeGrad_Regu</span><span class="params">(theta, X, y, lam = <span class="number">1</span>)</span>:</span></span><br><span class="line">    <span class="string">"""计算带正则化的代价函数"""</span></span><br><span class="line"></span><br><span class="line">    m =X.shape[<span class="number">0</span>]</span><br><span class="line">    grad = <span class="number">1</span> / m * np.dot(X.T, sigmoid(np.dot(X, theta)) - y)</span><br><span class="line">    grad_reg = grad + lam / m * theta</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> grad_reg</span><br></pre></td></tr></table></figure>
-<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h3 id="模型表示-3"><a href="#模型表示-3" class="headerlink" title="模型表示"></a>模型表示</h3><p>两层神经网络：</p>
-<p>${z}^{(2)}=\Theta^{(1)}{X}$</p>
-<p>${a}^{(2)}=g({ {z}^{(2)} })$</p>
-<p>${z}^{(3)}=\Theta^{(2)}{ {a}^{(2)} }$</p>
-<p>$h_\theta(x)={ {a}^{(3)} }=g({ {z}^{(3)} })$</p>
-<h3 id="代价函数-3"><a href="#代价函数-3" class="headerlink" title="代价函数"></a>代价函数</h3><p>二类分类：$S_L=0, y=0\, or\, 1$表示哪一类；</p>
-<p>$  J\left(\theta \right)=-\frac{1}{m}\left[\sum_\limits{i=1}^{m}{y}^{(i)}\log{h_\theta({x}^{(i)})}+\left(1-{y}^{(i)}\right)log\left(1-h_\theta\left({x}^{(i)}\right)\right)\right]+\frac{\lambda}{2m}\sum_\limits{j=1}^{n}{\theta_j}^{2}  $</p>
-<p>$K$类分类：$S_L=k, y_i = 1$表示分到第$i$类；$(k&gt;2)$</p>
-<p>$h_\theta\left(x\right)\in \mathbb{R}^{K}$，分量${\left({h_\theta}\left(x\right)\right)}_{i}={i}^{th} \text{output}$。</p>
-<p>$  J(\Theta) = -\frac{1}{m} \left[ \sum\limits_{i=1}^{m} \sum\limits_{k=1}^{k} {y_k}^{(i)} \log {(h_\Theta(x^{(i)}))}_{k} + \left( 1 - y_k^{(i)} \right) \log \left( 1- {\left( h_\Theta \left( x^{(i)} \right) \right)}_{k} \right) \right] + \frac{\lambda}{2m} \sum\limits_{l=1}^{L-1} \sum\limits_{i=1}^{s_l} \sum\limits_{j=1}^{s_{l+1}} \left( \Theta_{ji}^{(l)} \right)^2  $</p>
-<h3 id="反向传播算法"><a href="#反向传播算法" class="headerlink" title="反向传播算法"></a>反向传播算法</h3><p>为了计算代价函数的偏导数$\frac{\partial}{\partial\Theta^{(l)}_{ij} }J\left(\Theta\right)$，需要采用一种反向传播算法，也就是首先计算最后一层的误差，然后再一层一层反向求出各层的误差，直到倒数第二层。</p>
-<h3 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h3><p>对梯度的估计采用的方法是在代价函数上沿着切线的方向选择离两个非常近的点然后计算两个点的平均值用以估计梯度。即对于某个特定的 $\theta$，计算出在 $\theta$-$\varepsilon $ 处和 $\theta$+$\varepsilon $ 的代价值（$\varepsilon $是一个非常小的值，通常选取 0.001），然后求两个代价的平均，用以估计在 $\theta$ 处的代价值。</p>
-<p>一个只针对$\theta_1$进行检验的示例：<br>$ \frac{\partial}{\partial\theta_1}=\frac{J\left(\theta_1+\varepsilon_1,\theta_2,\theta_3…\theta_n \right)-J \left( \theta_1-\varepsilon_1,\theta_2,\theta_3…\theta_n \right)}{2\varepsilon} $</p>
-<h3 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h3><p>如果令所有的初始参数都为0，这将意味着第二层的所有激活单元都会有相同的值。同理，如果初始所有的参数都为一个非0的数，结果也是一样的。<br>所以神经网络中通常初始参数为正负ε之间的随机值。</p>
-<h3 id="训练神经网络"><a href="#训练神经网络" class="headerlink" title="训练神经网络"></a>训练神经网络</h3><p>训练神经网络：</p>
-<p>1.参数的随机初始化</p>
-<p>2.利用正向传播方法计算所有的$h_{\theta}(x)$</p>
-<p>3.编写计算代价函数 $J$ 的代码</p>
-<p>4.利用反向传播方法计算所有偏导数</p>
-<p>5.利用数值检验方法检验这些偏导数</p>
-<p>6.使用优化算法来最小化代价函数</p>
-<h1 id="应用机器学习的建议"><a href="#应用机器学习的建议" class="headerlink" title="应用机器学习的建议"></a>应用机器学习的建议</h1><h3 id="决定下一步做什么"><a href="#决定下一步做什么" class="headerlink" title="决定下一步做什么"></a>决定下一步做什么</h3><p>当运用训练好了的模型来预测未知数据的时候发现有较大的误差，下一步可以做什么？</p>
-<p>1.获得更多的训练样本——通常是有效的，但代价较大，下面的方法也可能有效，可考虑先采用下面的几种方法。</p>
-<p>2.尝试减少特征的数量</p>
-<p>3.尝试获得更多的特征</p>
-<p>4.尝试增加多项式特征</p>
-<p>5.尝试减少正则化程度$\lambda$</p>
-<p>6.尝试增加正则化程度$\lambda$</p>
-<h3 id="评估一个假设"><a href="#评估一个假设" class="headerlink" title="评估一个假设"></a>评估一个假设</h3><p>为了检验算法是否过拟合，将数据分成训练集和测试集，通常用70%的数据作为训练集，用剩下30%的数据作为测试集。</p>
-<p>在通过训练集让的模型学习得出其参数后，对测试集运用该模型，计算误差：</p>
-<p>对于线性回归模型，利用测试集数据计算代价函数$J$</p>
-<p>对于逻辑回归模型，除了可以利用测试数据集来计算代价函数外，还可以计算误分类的比例。</p>
-<h3 id="模型选择和交叉验证集"><a href="#模型选择和交叉验证集" class="headerlink" title="模型选择和交叉验证集"></a>模型选择和交叉验证集</h3><p>使用60%的数据作为训练集，使用 20%的数据作为交叉验证集，使用20%的数据作为测试集。</p>
-<p>模型选择的方法为：</p>
-<p>1.使用训练集训练出10个模型</p>
-<p>2.用10个模型分别对交叉验证集计算得出交叉验证误差（代价函数的值）</p>
-<p>3.选取代价函数值最小的模型</p>
-<p>4.用步骤3中选出的模型对测试集计算得出推广误差（代价函数的值）</p>
-<h3 id="诊断偏差和方差"><a href="#诊断偏差和方差" class="headerlink" title="诊断偏差和方差"></a>诊断偏差和方差</h3><p><strong>Bias/variance</strong></p>
-<p><strong>Training error:</strong>                               $J_{train}(\theta) = \frac{1}{2m}\sum_\limits{i=1}^{m}(h_{\theta}(x^{(i)})-y^{(i)})^2$</p>
-<p><strong>Cross Validation error:</strong>                $J_{cv}(\theta) = \frac{1}{2m_{cv} }\sum_\limits{i=1}^{m}(h_{\theta}(x^{(i)}_{cv})-y^{(i)}_{cv})^2$</p>
-<p>对于训练集，当 $d$ 较小时，模型拟合程度更低，误差较大；随着 $d$ 的增长，拟合程度提高，误差减小。</p>
-<p>对于交叉验证集，当 $d$ 较小时，模型拟合程度低，误差较大；但是随着 $d$ 的增长，误差呈现先减小后增大的趋势，转折点是模型开始过拟合训练数据集的时候。</p>
-<p>训练集误差和交叉验证集误差近似时：偏差/欠拟合</p>
-<p>交叉验证集误差远大于训练集误差时：方差/过拟合</p>
-<h3 id="正则化和偏差-方差"><a href="#正则化和偏差-方差" class="headerlink" title="正则化和偏差/方差"></a>正则化和偏差/方差</h3><p>选择$\lambda$的值时，把数据分为训练集、交叉验证集和测试集。</p>
-<p>1.使用训练集训练出12个不同程度正则化的模型</p>
-<p>2.用12个模型分别对交叉验证集计算的出交叉验证误差</p>
-<p>3.选择得出交叉验证误差<strong>最小</strong>的模型</p>
-<p>4.运用步骤3中选出模型对测试集计算得出推广误差，我们也可以同时将训练集和交叉验证集模型的代价函数误差与λ的值绘制在一张图表上。</p>
-<p>当 $\lambda$ 较小时，训练集误差较小（过拟合）而交叉验证集误差较大</p>
-<p>随着 $\lambda$ 的增加，训练集误差不断增加（欠拟合），而交叉验证集误差则是先减小后增加</p>
-<h3 id="学习曲线"><a href="#学习曲线" class="headerlink" title="学习曲线"></a>学习曲线</h3><p>学习曲线是将训练集误差和交叉验证集误差作为训练集样本数量（$m$）的函数绘制的图表。可以用学习曲线来判断某一个学习算法是否处于偏差、方差问题。</p>
-<h3 id="决定下一步做什么-1"><a href="#决定下一步做什么-1" class="headerlink" title="决定下一步做什么"></a>决定下一步做什么</h3><ol>
-<li><p>获得更多的训练样本——解决高方差</p>
-</li>
-<li><p>尝试减少特征的数量——解决高方差</p>
-</li>
-<li><p>尝试获得更多的特征——解决高偏差</p>
-</li>
-<li><p>尝试增加多项式特征——解决高偏差</p>
-</li>
-<li><p>尝试减少正则化程度λ——解决高偏差</p>
-</li>
-<li><p>尝试增加正则化程度λ——解决高方差</p>
-</li>
-</ol>
-<h1 id="机器学习系统的设计"><a href="#机器学习系统的设计" class="headerlink" title="机器学习系统的设计"></a>机器学习系统的设计</h1><h3 id="首先要做什么"><a href="#首先要做什么" class="headerlink" title="首先要做什么"></a>首先要做什么</h3><p>1.收集更多的数据</p>
-<p>2.基于数据开发的特征</p>
-<p>3.基于目的开发算法</p>
-<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>构建一个学习算法的推荐方法为：</p>
-<p>1.从一个简单的能快速实现的算法开始，实现该算法并用交叉验证集数据测试这个算法</p>
-<p>2.绘制学习曲线，决定是增加更多数据，或者添加更多特征，还是其他选择</p>
-<p>3.进行误差分析：人工检查交叉验证集中我们算法中产生预测误差的样本，看看这些样本是否有某种系统化的趋势</p>
-<h3 id="类偏斜的误差度量"><a href="#类偏斜的误差度量" class="headerlink" title="类偏斜的误差度量"></a>类偏斜的误差度量</h3><p>混淆矩阵：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th><strong>预测值</strong></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td><strong>Positive</strong></td>
-<td><strong>Negtive</strong></td>
-</tr>
-<tr>
-<td><strong>实际值</strong></td>
-<td><strong>Positive</strong></td>
-<td><strong>TP</strong></td>
-<td><strong>FN</strong></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>Negtive</strong></td>
-<td><strong>FP</strong></td>
-<td><strong>TN</strong></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>查准率=<strong>TP/(TP+FP)</strong>。</p>
-<p>查全率=<strong>TP/(TP+FN)</strong>。</p>
-<h3 id="查准率和查全率之间的权衡"><a href="#查准率和查全率之间的权衡" class="headerlink" title="查准率和查全率之间的权衡"></a>查准率和查全率之间的权衡</h3><p><strong>F1 值</strong>（<strong>F1 Score</strong>）：${ {F}_{1} }Score:2\frac{PR}{P+R}$</p>
-]]></content>
-      <categories>
-        <category>吴恩达机器学习笔记</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>我的next主题配置</title>
     <url>/2019/10/17/my-next/</url>
     <content><![CDATA[<h2 id="编辑-themes-next-config-yml"><a href="#编辑-themes-next-config-yml" class="headerlink" title="编辑 themes/next/_config.yml"></a>编辑 themes/next/_config.yml</h2><h3 id="切换主题"><a href="#切换主题" class="headerlink" title="切换主题"></a>切换主题</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Schemes</span><br><span class="line">#scheme: Muse  //默认主题</span><br><span class="line">#scheme: Mist</span><br><span class="line">#scheme: Pisces</span><br><span class="line">scheme: Gemini</span><br></pre></td></tr></table></figure>
@@ -872,7 +1195,9 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
 <h3 id="设置网站的图标Favicon"><a href="#设置网站的图标Favicon" class="headerlink" title="设置网站的图标Favicon"></a>设置网站的图标Favicon</h3><p>在图标网站找一张你喜欢的图标（大：32x32 小：16x16），图标网站：<a href="https://www.easyicon.net/" target="_blank" rel="noopener">easyicon</a>或者<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>。将下载下来的小图和中图放在myBlog/themes/next/source/images，将默认的两张图片替换掉。或者 自定义图片名字，然后修改主题配置文件：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># For example, you put your favicons into `hexo-site/source/images` directory.</span><br><span class="line"># Then need to rename &amp; redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.</span><br><span class="line">favicon:</span><br><span class="line">  small: /images/favicon-16x16-next.png  //16X16小图</span><br><span class="line">  medium: /images/favicon-32x32-next.png  //32X32大图</span><br><span class="line">  apple_touch_icon: /images/apple-touch-icon-next.png  //apple-touch-icon </span><br><span class="line">  safari_pinned_tab: /images/logo.svg </span><br><span class="line">  #android_manifest: /images/manifest.json</span><br><span class="line">  #ms_browserconfig: /images/browserconfig.xml</span><br></pre></td></tr></table></figure>
 <h3 id="首页不显示全文-只显示预览"><a href="#首页不显示全文-只显示预览" class="headerlink" title="首页不显示全文(只显示预览)"></a>首页不显示全文(只显示预览)</h3><p>将enable改为true：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+<h3 id="修改底部标签样式"><a href="#修改底部标签样式" class="headerlink" title="修改底部标签样式"></a>修改底部标签样式</h3><p>修改myBlog\themes\next\layout_macro\post.swig中文件，command+f搜索rel=”tag”&gt;#，将#替换成<i class="fa fa-tag"></i>。</p>
+]]></content>
   </entry>
   <entry>
     <title>Hexo + Github Page 搭建过程</title>

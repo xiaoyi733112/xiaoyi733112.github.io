@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Xiaoyi">
 <meta property="og:description" content="编辑 themes/next/_config.yml切换主题12345# Schemes#scheme: Muse  //默认主题#scheme: Mist#scheme: Piscesscheme: Gemini 设置Menu12345678menu:  home: / || home  //首页  about: /about/ || user  //关于  tags: /tags/ || ta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-17T08:43:32.935Z">
+<meta property="og:updated_time" content="2019-11-01T11:38:52.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的next主题配置">
 <meta name="twitter:description" content="编辑 themes/next/_config.yml切换主题12345# Schemes#scheme: Muse  //默认主题#scheme: Mist#scheme: Piscesscheme: Gemini 设置Menu12345678menu:  home: / || home  //首页  about: /about/ || user  //关于  tags: /tags/ || ta">
@@ -346,6 +346,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># For example, you put your favicons into `hexo-site/source/images` directory.</span><br><span class="line"># Then need to rename &amp; redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.</span><br><span class="line">favicon:</span><br><span class="line">  small: /images/favicon-16x16-next.png  //16X16小图</span><br><span class="line">  medium: /images/favicon-32x32-next.png  //32X32大图</span><br><span class="line">  apple_touch_icon: /images/apple-touch-icon-next.png  //apple-touch-icon </span><br><span class="line">  safari_pinned_tab: /images/logo.svg </span><br><span class="line">  #android_manifest: /images/manifest.json</span><br><span class="line">  #ms_browserconfig: /images/browserconfig.xml</span><br></pre></td></tr></table></figure>
 <h3 id="首页不显示全文-只显示预览"><a href="#首页不显示全文-只显示预览" class="headerlink" title="首页不显示全文(只显示预览)"></a>首页不显示全文(只显示预览)</h3><p>将enable改为true：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
+<h3 id="修改底部标签样式"><a href="#修改底部标签样式" class="headerlink" title="修改底部标签样式"></a>修改底部标签样式</h3><p>修改myBlog\themes\next\layout_macro\post.swig中文件，command+f搜索rel=”tag”&gt;#，将#替换成<i class="fa fa-tag"></i>。</p>
+
       
     </div>
     
@@ -379,8 +381,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/24/吴恩达机器学习笔记--上/" rel="prev" title="吴恩达机器学习笔记--上">
-                吴恩达机器学习笔记--上 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/28/正则表达式/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -460,7 +462,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -471,7 +473,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -482,7 +484,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -515,7 +517,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑-themes-next-config-yml"><span class="nav-number">1.</span> <span class="nav-text">编辑 themes/next/_config.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#切换主题"><span class="nav-number">1.1.</span> <span class="nav-text">切换主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置Menu"><span class="nav-number">1.2.</span> <span class="nav-text">设置Menu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置动态背景"><span class="nav-number">1.3.</span> <span class="nav-text">设置动态背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在右上角或者左上角实现fork-me-on-github"><span class="nav-number">1.4.</span> <span class="nav-text">在右上角或者左上角实现fork me on github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置头像"><span class="nav-number">1.5.</span> <span class="nav-text">设置头像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置网站的图标Favicon"><span class="nav-number">1.6.</span> <span class="nav-text">设置网站的图标Favicon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首页不显示全文-只显示预览"><span class="nav-number">1.7.</span> <span class="nav-text">首页不显示全文(只显示预览)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑-themes-next-config-yml"><span class="nav-number">1.</span> <span class="nav-text">编辑 themes/next/_config.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#切换主题"><span class="nav-number">1.1.</span> <span class="nav-text">切换主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置Menu"><span class="nav-number">1.2.</span> <span class="nav-text">设置Menu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置动态背景"><span class="nav-number">1.3.</span> <span class="nav-text">设置动态背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在右上角或者左上角实现fork-me-on-github"><span class="nav-number">1.4.</span> <span class="nav-text">在右上角或者左上角实现fork me on github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置头像"><span class="nav-number">1.5.</span> <span class="nav-text">设置头像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置网站的图标Favicon"><span class="nav-number">1.6.</span> <span class="nav-text">设置网站的图标Favicon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首页不显示全文-只显示预览"><span class="nav-number">1.7.</span> <span class="nav-text">首页不显示全文(只显示预览)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改底部标签样式"><span class="nav-number">1.8.</span> <span class="nav-text">修改底部标签样式</span></a></li></ol></li></ol></div>
             
 
           </div>

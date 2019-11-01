@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Xiaoyi">
 <meta property="og:description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-29T10:15:52.345Z">
+<meta property="og:updated_time" content="2019-11-01T11:58:31.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达机器学习笔记--下">
 <meta name="twitter:description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
@@ -293,7 +293,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-29T18:10:00+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-29T19:00:00+08:00">
                 2019-10-29
               </time>
             
@@ -357,11 +357,11 @@
 <h1 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h1><h3 id="优化目标"><a href="#优化目标" class="headerlink" title="优化目标"></a>优化目标</h3><p>$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j}$</p>
 <p>如果$y=1​$，想要$\theta^Tx&gt;=1$（不只是$&gt;=0$）。</p>
 <p>如果$y=0$，想要$\theta^Tx&lt;=-1$（不只是$&lt;0$）。</p>
-<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>$\min_\limits{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$</p>
+<h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>$\min_\limits{\theta}{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$</p>
 <p>s.t. $\theta^T{x}^{(i)}&gt;=1$ if ${y}^{i}=1$</p>
 <p>$\theta^T{x}^{(i)}&lt;=-1$ if ${y}^{i}=0$</p>
-<p>用$p^{(i)}$来表示这是第 $i$个训练样本在参数向量${ {\theta } }$上的投影。则θ^Tx^{(i)}=p^{(i)}\cdot{\left| \theta \right|}$ ，那么决策边界可以写为：</p>
-<p>$\min_\limits{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }$=\frac{1}{2}{\left| \theta \right|}^{2}</p>
+<p>用$p^{(i)}$来表示这是第 $i$个训练样本在参数向量${ {\theta } }$上的投影。则$θ^Tx^{(i)}=p^{(i)}\cdot{\left| \theta \right|}$ ，那么决策边界可以写为：</p>
+<p>$\min_\limits{\theta}{\frac{1}{2}\sum_\limits{i=1}^{n}\theta^{2}_{j} }=\min_\limits{\theta}\frac{1}{2}{\left| \theta \right|}^{2}$</p>
 <p>s.t. $p^{(i)}\cdot{\left| \theta \right|}&gt;=1$if ${y}^{i}=1$</p>
 <p>$p^{(i)}\cdot{\left| \theta \right|}&lt;=-1$ if ${y}^{i}=0$</p>
 <p>则优化时需要极大化p^{(i)}的范数，它们是训练样本到决策边界的距离，那么支持向量机最终会找到大间距分类器。</p>
@@ -405,7 +405,7 @@
 <p>类似于召回率，同类别样本被归类到相同簇中，则满足完整性;每个聚簇中正确分类的样本数占该<br>类型的总样本数比例的和</p>
 <p>(3). <strong>V-measure</strong>:</p>
 <p>均一性和完整性的加权平均 </p>
-<p>$V = \frac{(1+\beta^2)<em>pr}{\beta^2</em>p+r}$</p>
+<p>$V = \frac{(1+\beta^2)*pr}{\beta^2*p+r}$</p>
 <p>(4). 轮廓系数</p>
 <p>样本$i$的轮廓系数：$s(i)$</p>
 <p>簇内不相似度:计算样本$i$到同簇其它样本的平均距离为$a(i)$，应尽可能小。</p>
@@ -543,7 +543,7 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
       
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
           
         </div>
       
@@ -556,8 +556,8 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/28/正则表达式/" rel="next" title="正则表达式">
-                <i class="fa fa-chevron-left"></i> 正则表达式
+              <a href="/2019/10/29/吴恩达机器学习笔记--上/" rel="next" title="吴恩达机器学习笔记--上">
+                <i class="fa fa-chevron-left"></i> 吴恩达机器学习笔记--上
               </a>
             
           </div>
@@ -565,6 +565,10 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/30/吴恩达深度学习笔记1/" rel="prev" title="吴恩达深度学习笔记-1-神经网络和深度学习">
+                吴恩达深度学习笔记-1-神经网络和深度学习 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -643,7 +647,7 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -654,7 +658,7 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -665,7 +669,7 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

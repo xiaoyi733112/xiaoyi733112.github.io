@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-new.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-new.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,神经网络,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="机器学习（ML）策略正交化正交化的概念是指，想出一个维度，这个维度想做的是控制转向角，还有另一个维度来控制你的速度，那么就需要一个旋钮尽量只控制转向角，另一个旋钮控制速度。 确保四件事情，首先，通常必须确保至少系统在训练集上得到的结果不错，所以训练集上的表现必须通过某种评估，达到能接受的程度，对于某些应用，这可能意味着达到人类水平的表现，但这取决于应用。但是，在训练集上表现不错之后，就希望系统也能">
+<meta name="keywords" content="深度学习,神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吴恩达深度学习笔记-3-结构化机器学习项目">
+<meta property="og:url" content="http://yoursite.com/2019/10/31/吴恩达深度学习笔记3/index.html">
+<meta property="og:site_name" content="Xiaoyi">
+<meta property="og:description" content="机器学习（ML）策略正交化正交化的概念是指，想出一个维度，这个维度想做的是控制转向角，还有另一个维度来控制你的速度，那么就需要一个旋钮尽量只控制转向角，另一个旋钮控制速度。 确保四件事情，首先，通常必须确保至少系统在训练集上得到的结果不错，所以训练集上的表现必须通过某种评估，达到能接受的程度，对于某些应用，这可能意味着达到人类水平的表现，但这取决于应用。但是，在训练集上表现不错之后，就希望系统也能">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-31T07:20:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="吴恩达深度学习笔记-3-结构化机器学习项目">
+<meta name="twitter:description" content="机器学习（ML）策略正交化正交化的概念是指，想出一个维度，这个维度想做的是控制转向角，还有另一个维度来控制你的速度，那么就需要一个旋钮尽量只控制转向角，另一个旋钮控制速度。 确保四件事情，首先，通常必须确保至少系统在训练集上得到的结果不错，所以训练集上的表现必须通过某种评估，达到能接受的程度，对于某些应用，这可能意味着达到人类水平的表现，但这取决于应用。但是，在训练集上表现不错之后，就希望系统也能">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/31/吴恩达深度学习笔记3/">
+
+
+
+
+
+  <title>吴恩达深度学习笔记-3-结构化机器学习项目 | Xiaoyi</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Xiaoyi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/31/吴恩达深度学习笔记3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xiaoyi Jin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiaoyi">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">吴恩达深度学习笔记-3-结构化机器学习项目</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-31T14:00:00+08:00">
+                2019-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/吴恩达深度学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">吴恩达深度学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="机器学习（ML）策略"><a href="#机器学习（ML）策略" class="headerlink" title="机器学习（ML）策略"></a>机器学习（ML）策略</h1><h3 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h3><p>正交化的概念是指，想出一个维度，这个维度想做的是控制转向角，还有另一个维度来控制你的速度，那么就需要一个旋钮尽量只控制转向角，另一个旋钮控制速度。</p>
+<p>确保四件事情，首先，通常必须确保至少系统在训练集上得到的结果不错，所以训练集上的表现必须通过某种评估，达到能接受的程度，对于某些应用，这可能意味着达到人类水平的表现，但这取决于应用。但是，在训练集上表现不错之后，就希望系统也能在开发集上有好的表现，然后希望系统在测试集上也有好的表现。在最后，希望系统在测试集上系统的成本函数在实际使用中表现令人满意。</p>
+<h3 id="单一数字指标"><a href="#单一数字指标" class="headerlink" title="单一数字指标"></a>单一数字指标</h3><p>查准率，查全率，F1值。</p>
+<h3 id="训练-开发-测试集划分"><a href="#训练-开发-测试集划分" class="headerlink" title="训练/开发/测试集划分"></a>训练/开发/测试集划分</h3><p>在设立开发集和测试集时，要选择这样的开发集和测试集，能够反映未来会得到的数据，认为很重要的数据，必须得到好结果的数据，特别是，这里的开发集和测试集可能来自同一个分布。</p>
+<p>在机器学习中，使用70/30或者60/20/20分的经验法则。在现代机器学习中，更习惯操作规模大得多的数据集，比如说有1百万个训练样本，这样分可能更合理，98%作为训练集，1%开发集，1%测试集。</p>
+<p>加权的指标：$Error = \frac{1}{\sum_{}^{}w^{(i)} }\sum_{i = 1}^{m_{ {dev} } }{w^{(i)}I\{ y_{ {pred} }^{(i)} \neq y^{(i)}\} }$。</p>
+<h3 id="与人的表现比较"><a href="#与人的表现比较" class="headerlink" title="与人的表现比较"></a>与人的表现比较</h3><p>事实证明，机器学习的进展往往相当快，直到超越人类的表现之前一直很快，当超越人类的表现时，有时进展会变慢。</p>
+<h3 id="改善模型的表现"><a href="#改善模型的表现" class="headerlink" title="改善模型的表现"></a>改善模型的表现</h3><p>如果想提升机器学习系统的性能，需要看看训练错误率和贝叶斯错误率估计值之间的距离，知道可避免偏差有多大。换句话说，就是还能做多好，对训练集的优化还有多少空间。然后看看开发错误率和训练错误率之间的距离，就知道方差问题有多大。换句话说，应该做多少努力让算法表现能够从训练集推广到开发集，算法是没有在开发集上训练的。</p>
+<p>如果想用尽一切办法减少可避免偏差，建议试试这样的策略：比如使用规模更大的模型，这样算法在训练集上的表现会更好，或者训练更久。使用更好的优化算法，比如说加入momentum或者RMSprop，或者使用更好的算法，比如Adam。还可以试试寻找更好的新神经网络架构，或者说更好的超参数。这些手段包罗万有，可以改变激活函数，改变层数或者隐藏单位数，虽然这么做可能会让模型规模变大。或者试用其他模型，其他架构，如循环神经网络和卷积神经网络。</p>
+<h3 id="进行误差分析"><a href="#进行误差分析" class="headerlink" title="进行误差分析"></a>进行误差分析</h3><p>进行错误分析，应该找一组错误样本，可能在开发集里或者测试集里，观察错误标记的样本，看看假阳性（false positives）和假阴性（false negatives），统计属于不同错误类型的错误数量。</p>
+<h3 id="清除标注错误的数据"><a href="#清除标注错误的数据" class="headerlink" title="清除标注错误的数据"></a>清除标注错误的数据</h3><p>根据比例考虑是否修正错误数据。</p>
+<p>如果要修正开发集数据，手动重新检查标签，并尝试修正一些标签。首先，不管用什么修正手段，都要同时作用到开发集和测试集上。其次，要考虑同时检验算法判断正确和判断错误的样本，要检查算法出错的样本很容易，只需要看看那些样本是否需要修正，但还有可能有些样本算法判断正确，那些也需要修正。后，如果进入到一个开发集和测试集去修正这里的部分标签，可能会，也可能不会去对训练集做同样的事情。</p>
+<h3 id="快速搭建第一个系统，并进行迭代"><a href="#快速搭建第一个系统，并进行迭代" class="headerlink" title="快速搭建第一个系统，并进行迭代"></a>快速搭建第一个系统，并进行迭代</h3><p>如果想搭建全新的机器学习程序，就是快速搭好第一个系统，然后开始迭代。我快速设立开发集和测试集还有指标，这样就决定了目标所在，如果目标定错了，之后改也是可以的。但一定要设立某个目标，然后马上搭好一个机器学习系统原型，然后找到训练集，训练一下，看看效果，开始理解算法表现如何，在开发集测试集，评估指标上表现如何。当建立第一个系统后，就可以马上用到之前说的偏差方差分析，还有错误分析，来确定下一步优先做什么。</p>
+<h3 id="使用来自不同分布的数据，进行训练和测试"><a href="#使用来自不同分布的数据，进行训练和测试" class="headerlink" title="使用来自不同分布的数据，进行训练和测试"></a>使用来自不同分布的数据，进行训练和测试</h3><p>当有几组样本时，可以让训练集数据来自和开发集、测试集不同的分布，这样就可以有更多的训练数据。</p>
+<h3 id="数据分布不匹配时，偏差与方差的分析"><a href="#数据分布不匹配时，偏差与方差的分析" class="headerlink" title="数据分布不匹配时，偏差与方差的分析"></a>数据分布不匹配时，偏差与方差的分析</h3><p>如果认为存在数据不匹配问题，建议做错误分析，或者看看训练集，或者看看开发集，试图找出，试图了解这两个数据分布到底有什么不同，然后看看是否有办法收集更多看起来像开发集的数据作训练。</p>
+<h3 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h3><p>在第一阶段训练过程中，当你进行图像识别任务训练时，你可以训练神经网络的所有常用参数，所有的权重，所有的层，然后你就得到了一个能够做图像识别预测的网络。在训练了这个神经网络后，要实现迁移学习，你现在要做的是，把数据集换成新的$(x,y)$对，现在这些变成放射科图像，而$y$是你想要预测的诊断，你要做的是初始化最后一层的权重，让我们称之为$w^{[L]}$和$b^{[L]}$随机初始化。</p>
+<p>现在，我们在这个新数据集上重新训练网络，在新的放射科数据集上训练网络。要用放射科数据集重新训练神经网络有几种做法。你可能，如果你的放射科数据集很小，你可能只需要重新训练最后一层的权重，就是$w^{[L]}$和$b^{[L]}$并保持其他参数不变。如果你有足够多的数据，你可以重新训练神经网络中剩下的所有层。经验规则是，如果你有一个小数据集，就只训练输出层前的最后一层，或者也许是最后一两层。但是如果你有很多数据，那么也许你可以重新训练网络中的所有参数。如果你重新训练神经网络中的所有参数，那么这个在图像识别数据的初期训练阶段，有时称为预训练（pre-training），因为你在用图像识别数据去预先初始化，或者预训练神经网络的权重。然后，如果你以后更新所有权重，然后在放射科数据上训练，有时这个过程叫微调（fine tuning）。如果你在深度学习文献中看到预训练和微调，你就知道它们说的是这个意思，预训练和微调的权重来源于迁移学习。</p>
+<h3 id="多任务学习"><a href="#多任务学习" class="headerlink" title="多任务学习"></a>多任务学习</h3><p>输出是一个多维向量，每一个节点是一个任务的结果。</p>
+<h3 id="什么是端到端的深度学习？"><a href="#什么是端到端的深度学习？" class="headerlink" title="什么是端到端的深度学习？"></a>什么是端到端的深度学习？</h3><p>以前有一些数据处理系统或者学习系统，它们需要多个阶段的处理。那么端到端深度学习就是忽略所有这些不同的阶段，用单个神经网络代替它。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i> 深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag"><i class="fa fa-tag"></i> 神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/30/吴恩达深度学习笔记2/" rel="next" title="吴恩达深度学习笔记-2-改善神经网络：超参数调试">
+                <i class="fa fa-chevron-left"></i> 吴恩达深度学习笔记-2-改善神经网络：超参数调试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/01/吴恩达深度学习笔记4/" rel="prev" title="吴恩达深度学习笔记-4-卷积神经网络">
+                吴恩达深度学习笔记-4-卷积神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Xiaoyi Jin">
+            
+              <p class="site-author-name" itemprop="name">Xiaoyi Jin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习（ML）策略"><span class="nav-number">1.</span> <span class="nav-text">机器学习（ML）策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正交化"><span class="nav-number">1.0.1.</span> <span class="nav-text">正交化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单一数字指标"><span class="nav-number">1.0.2.</span> <span class="nav-text">单一数字指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练-开发-测试集划分"><span class="nav-number">1.0.3.</span> <span class="nav-text">训练/开发/测试集划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与人的表现比较"><span class="nav-number">1.0.4.</span> <span class="nav-text">与人的表现比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改善模型的表现"><span class="nav-number">1.0.5.</span> <span class="nav-text">改善模型的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进行误差分析"><span class="nav-number">1.0.6.</span> <span class="nav-text">进行误差分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除标注错误的数据"><span class="nav-number">1.0.7.</span> <span class="nav-text">清除标注错误的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速搭建第一个系统，并进行迭代"><span class="nav-number">1.0.8.</span> <span class="nav-text">快速搭建第一个系统，并进行迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用来自不同分布的数据，进行训练和测试"><span class="nav-number">1.0.9.</span> <span class="nav-text">使用来自不同分布的数据，进行训练和测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据分布不匹配时，偏差与方差的分析"><span class="nav-number">1.0.10.</span> <span class="nav-text">数据分布不匹配时，偏差与方差的分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移学习"><span class="nav-number">1.0.11.</span> <span class="nav-text">迁移学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多任务学习"><span class="nav-number">1.0.12.</span> <span class="nav-text">多任务学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是端到端的深度学习？"><span class="nav-number">1.0.13.</span> <span class="nav-text">什么是端到端的深度学习？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiaoyi Jin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
