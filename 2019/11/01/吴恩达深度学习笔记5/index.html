@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Xiaoyi">
 <meta property="og:description" content="参考：吴恩达老师的深度学习课程笔记及资源 循环序列模型循环神经网络模型在$t$时刻： $a^{&amp;lt; t &amp;gt;} = g_{1}(W_{aa}a^{&amp;lt; t - 1 &amp;gt;} + W_{ax}x^{&amp;lt; t &amp;gt;} + b_{a})$ $\hat y^{&amp;lt; t &amp;gt;} = g_{2}(W_a^{&amp;lt; t &amp;gt;} + b_{y})$ RNN前向传播示意图： 通过">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-04T13:16:10.090Z">
+<meta property="og:updated_time" content="2019-11-04T13:23:36.598Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达深度学习笔记-5-序列模型">
 <meta name="twitter:description" content="参考：吴恩达老师的深度学习课程笔记及资源 循环序列模型循环神经网络模型在$t$时刻： $a^{&amp;lt; t &amp;gt;} = g_{1}(W_{aa}a^{&amp;lt; t - 1 &amp;gt;} + W_{ax}x^{&amp;lt; t &amp;gt;} + b_{a})$ $\hat y^{&amp;lt; t &amp;gt;} = g_{2}(W_a^{&amp;lt; t &amp;gt;} + b_{y})$ RNN前向传播示意图： 通过">
@@ -362,7 +362,7 @@
 <p>$L(\hat y,y) = \ \sum_{t = 1}^{T_{x}}{L^{&lt; t &gt;}(\hat  y^{&lt; t &gt;},y^{&lt; t &gt;})}$</p>
 <p>RNN反向传播示意图：</p>
 <h3 id="不同类型的循环神经网络"><a href="#不同类型的循环神经网络" class="headerlink" title="不同类型的循环神经网络"></a>不同类型的循环神经网络</h3><p>“*对多”、“多对一”、“一对一”和“一对多”的结构。</p>
-<h3 id="语言模型和序列生成"><a href="#语言模型和序列生成" class="headerlink" title="语言模型和序列生成"></a>语言模型和序列生成</h3><p>$P(y^{<1>}​,y^{<2>}​, \ldots ,y^{<t_{y}>}​)=p(y^{<1>}​)P(y^{<1>}​|y^{<2>}​) \ldots P(y^{<t_{y}>}|y^{<1>}​,y^{<2>}​, \ldots ,y^{<t_{y}>-1}​)$</t_{y}></2></1></t_{y}></2></1></1></t_{y}></2></1></p>
+<h3 id="语言模型和序列生成"><a href="#语言模型和序列生成" class="headerlink" title="语言模型和序列生成"></a>语言模型和序列生成</h3><p>$P(y^{<1>}​,y^{<2>}​,\ldots ,y^{&lt; T_{y} &gt;}​)=P(y^{<1>}​)P(y^{<1>}​|y^{<2>}​)\ldots P(y^{&lt; T_{y} &gt;}|y^{<1>}​,y^{<2>}​,\ldots ,y^{&lt; T_{y} &gt; - 1}​)$</2></1></2></1></1></2></1></p>
 <p>在某个时间步$t$，如果真正的词是$y^{&lt; t &gt;}$，而神经网络的softmax层预测结果值是$y^{&lt; t &gt;}$，那么softmax损失函数为$L\left( \hat y^{&lt; t &gt;},y^{&lt; t &gt;}&gt;\right) = - \sum_{i}^{}{y_{i}^{&lt; t &gt;}\log\hat y_{i}^{&lt; t &gt;} }$。而总体损失函数（为$L = \sum_{t}^{}{L^{&lt; t &gt;}\left( \hat y^{&lt; t &gt;},y^{&lt; t &gt;} \right)}$。</p>
 <h3 id="对新序列采样"><a href="#对新序列采样" class="headerlink" title="对新序列采样"></a>对新序列采样</h3><p>训练一个序列模型之后，要想了解到这个模型学到了什么，一种非正式的方法就是进行一次新序列采样。</p>
 <p>一个序列模型模拟了任意特定单词序列的概率，要做的就是对这些概率分布进行采样来生成一个新的单词序列。</p>
