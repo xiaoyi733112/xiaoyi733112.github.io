@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Xiaoyi">
 <meta property="og:description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-01T11:58:31.110Z">
+<meta property="og:updated_time" content="2019-11-07T03:16:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="吴恩达机器学习笔记--下">
 <meta name="twitter:description" content="参考：吴恩达老师的机器学习课程个人笔记  支持向量机优化目标$\min_\limits{\theta}C\sum_\limits{i=1}^{m}\left[y^{(i)}{\cos}t_{1}\left(\theta^{T}x^{(i)}\right)+\left(1-y^{(i)}\right){\cos}t\left(\theta^{T}x^{(i)}\right)\right]+\frac">
@@ -374,10 +374,10 @@
 <h3 id="使用支持向量机"><a href="#使用支持向量机" class="headerlink" title="使用支持向量机"></a>使用支持向量机</h3><p>支持向量机可以不使用核函数，不使用核函数又称为线性核函数(linear kernel)</p>
 <p>核函数的选择：高斯核函数(Gaussian Kernel)，多项式核函数（Polynomial Kerne），字符串核函数（String kernel），卡方核函数（ chi-square kernel），直方图交集核函数（histogram intersection kernel）等。</p>
 <p>使用逻辑回归还是支持向量机的准则：</p>
-<p>(1)如果相较于$m$而言，$n$要大许多，即训练集数据量不够支持我们训练一个复杂的非线性模型，我们选用逻辑回归模型或者不带核函数的支持向量机。</p>
+<p>(1)如果相较于$m$而言，$n$要大许多，即训练集数据量不够支持训练一个复杂的非线性模型， 选用逻辑回归模型或者不带核函数的支持向量机。</p>
 <p>(2)如果$n$较小，而且$m$大小中等，例如$n$在 1-1000 之间，而$m$在10-10000之间，使用高斯核函数的支持向量机。</p>
 <p>(3)如果$n$较小，而$m$较大，例如$n$在1-1000之间，而$m$大于50000，则使用支持向量机会非常慢，解决方案是创造、增加更多的特征，然后使用逻辑回归或不带核函数的支持向量机。</p>
-<h1 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h1><h3 id="无监督学习：简介"><a href="#无监督学习：简介" class="headerlink" title="无监督学习：简介"></a>无监督学习：简介</h3><p>训练集时一些列点$x^{(1)}$,$x^{(2)}$…$x^{(m)}$，但没有任何标签$y$。聚类算法将无标签的训练集分成一些不同的组。在理论上，相同的组的数据之间有相同的属性或者是特征，不同组数据之间的属性或者特征相差较大。</p>
+<h1 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h1><h3 id="无监督学习：简介"><a href="#无监督学习：简介" class="headerlink" title="无监督学习：简介"></a>无监督学习：简介</h3><p>训练集是一系列点$x^{(1)}$,$x^{(2)}$…$x^{(m)}$，但没有任何标签$y$。聚类算法将无标签的训练集分成一些不同的组。在理论上，相同的组的数据之间有相同的属性或者是特征，不同组数据之间的属性或者特征相差较大。</p>
 <h3 id="K-均值算法"><a href="#K-均值算法" class="headerlink" title="K-均值算法"></a>K-均值算法</h3><p>K-均值是一个迭代算法，假设我们想要将数据聚类成n个组，其方法为:</p>
 <p>首先选择$K$个随机的点，称为聚类中心（cluster centroids）；</p>
 <p>对于数据集中的每一个数据，按照距离$K$个中心点的距离，将其与距离最近的中心点关联起来，与同一个中心点关联的所有点聚成一类。</p>
@@ -422,7 +422,7 @@
 <h1 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h1><h3 id="降维动机"><a href="#降维动机" class="headerlink" title="降维动机"></a>降维动机</h3><p>数据压缩</p>
 <p>数据可视化</p>
 <h3 id="主成分分析"><a href="#主成分分析" class="headerlink" title="主成分分析"></a>主成分分析</h3><p>PCA减少$n$维到$k$维：</p>
-<p>第一步是均值归一化。我们需要计算出所有特征的均值，然后令 $x_j= x_j-μ_j$。如果特征是在不同的数量级上，我们还需要将其除以标准差 $σ^2$。</p>
+<p>第一步是均值归一化。需要计算出所有特征的均值，然后令 $x_j= x_j-μ_j$。如果特征是在不同的数量级上，还需要将其除以标准差 $σ^2$。</p>
 <p>第二步是计算协方差矩阵（covariance matrix）$Σ$：<br>$\sum=\dfrac {1}{m}\sum^{n}_{i=1}\left( x^{(i)}\right) \left( x^{(i)}\right) ^{T}$</p>
 <p>第三步是计算协方差矩阵$Σ$*特征向量（eigenvectors）：奇异值分解（singular value decomposition）&amp;[U, S, V]= svd(sigma)&amp;，其中<script type="math/tex">Sigma=\dfrac {1}{m}\sum^{n}_{i=1}\left( x^{(i)}\right) \left( x^{(i)}\right) ^{T}</script>。</p>
 <h3 id="选择主成分的数量"><a href="#选择主成分的数量" class="headerlink" title="选择主成分的数量"></a>选择主成分的数量</h3><p>主要成分分析是减少投射的平均均方误差，训练集的方差为：$\dfrac {1}{m}\sum^{m}_{i=1}\left| x^{\left( i\right) }\right| ^{2}$。</p>
@@ -433,16 +433,16 @@
 <script type="math/tex; mode=display">x^{\left( i\right) }_{approx}=U_{reduce}z^{(i)}</script><h3 id="重建的压缩表示"><a href="#重建的压缩表示" class="headerlink" title="重建的压缩表示"></a>重建的压缩表示</h3><p>降维：$z=U^{T}_{reduce}x$。回到原始空间：$x_{appox}=U_{reduce}\cdot z$，$x_{appox}\approx x$。</p>
 <h1 id="异常检测-Anomaly-Detection"><a href="#异常检测-Anomaly-Detection" class="headerlink" title="异常检测(Anomaly Detection)"></a>异常检测(Anomaly Detection)</h1><h3 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h3><p>通常如果认为变量 $x$ 符合高斯分布 $x \sim N(\mu, \sigma^2)$则其概率密度函数为：</p>
 <p>$p(x,\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$</p>
-<p>我们利用已有的数据来预测总体中的$μ$和$σ^2$的计算方法如下：</p>
+<p>利用已有的数据来预测总体中的$μ$和$σ^2$的计算方法如下：</p>
 <p>$\mu=\frac{1}{m}\sum\limits_{i=1}^{m}x^{(i)}$</p>
 <p>$\sigma^2=\frac{1}{m}\sum\limits_{i=1}^{m}(x^{(i)}-\mu)^2$</p>
 <h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>应用高斯分布开发异常检测算法：</p>
-<p>对于给定的数据集 $x^{(1)},x^{(2)},…,x^{(m)}$，我们要针对每一个特征计算 $\mu$ 和 $\sigma^2$ 的估计值。</p>
+<p>对于给定的数据集 $x^{(1)},x^{(2)},…,x^{(m)}$，要针对每一个特征计算 $\mu$ 和 $\sigma^2$ 的估计值。</p>
 <p>$\mu_j=\frac{1}{m}\sum\limits_{i=1}^{m}x_j^{(i)}$</p>
 <p>$\sigma_j^2=\frac{1}{m}\sum\limits_{i=1}^m(x_j^{(i)}-\mu_j)^2$</p>
 <p>一旦获得了平均值和方差的估计值，给定新的一个训练实例，根据模型计算 $p(x)$：</p>
 <p>$p(x)=\prod\limits_{j=1}^np(x_j;\mu_j,\sigma_j^2)=\prod\limits_{j=1}^1\frac{1}{\sqrt{2\pi}\sigma_j}exp(-\frac{(x_j-\mu_j)^2}{2\sigma_j^2})$</p>
-<p>当$p(x) &lt; \varepsilon$时，为异常。</p>
+<p>当$p(x) &lt; \varepsilon$时，认为是异常数据。</p>
 <h3 id="异常检测与监督学习对比"><a href="#异常检测与监督学习对比" class="headerlink" title="异常检测与监督学习对比"></a>异常检测与监督学习对比</h3><div class="table-container">
 <table>
 <thead>
@@ -481,13 +481,13 @@
 <p>代价函数：</p>
 <p>针对用户 $j$，该线性回归模型的代价为预测误差的平方和，加上正则化项：</p>
 <script type="math/tex; mode=display">
-\min_{\theta (j)}\frac{1}{2}\sum_{i:r(i,j)=1}\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)^2+\frac{\lambda}{2}\left(\theta_{k}^{(j)}\right)^2</script><p>其中 $i:r(i,j)$表示我们只计算那些用户 $j$ 评过分的电影。在一般的线性回归模型中，误差项和正则项应该都是乘以$1/2m$，在这将$m$去掉。并且不对方差项$\theta_0$进行正则化处理。</p>
+\min_{\theta (j)}\frac{1}{2}\sum_{i:r(i,j)=1}\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)^2+\frac{\lambda}{2}\left(\theta_{k}^{(j)}\right)^2</script><p>其中 $i:r(i,j)$表示只计算那些用户 $j$ 评过分的电影。在一般的线性回归模型中，误差项和正则项应该都是乘以$1/2m$，在这将$m$去掉。并且不对方差项$\theta_0$进行正则化处理。</p>
 <p>上面的代价函数只是针对一个用户的，为了学习所有用户，将所有用户的代价函数求和：</p>
 <script type="math/tex; mode=display">
 \min_{\theta^{(1)},...,\theta^{(n_u)} } \frac{1}{2}\sum_{j=1}^{n_u}\sum_{i:r(i,j)=1}\left((\theta^{(j)})^Tx^{(i)}-y^{(i,j)}\right)^2+\frac{\lambda}{2}\sum_{j=1}^{n_u}\sum_{k=1}^{n}(\theta_k^{(j)})^2</script><p>梯度下降的更新公式：</p>
 <script type="math/tex; mode=display">
 \theta_k^{(j)}:=\theta_k^{(j)}-\alpha\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})x_{k}^{(i)} \quad (\text{for} \, k = 0)</script><script type="math/tex; mode=display">
-\theta_k^{(j)}:=\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})x_{k}^{(i)}+\lambda\theta_k^{(j)}\right) \quad (\text{for} \, k\neq 0)</script><h3 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h3><p>基于内容的推荐系统中，对于每一部电影，都掌握了可用的特征，使用这些特征训练出了每一个用户的参数。相反地，如果拥有用户的参数，我可以学习得出电影的特征。</p>
+\theta_k^{(j)}:=\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})x_{k}^{(i)}+\lambda\theta_k^{(j)}\right) \quad (\text{for} \, k\neq 0)</script><h3 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h3><p>基于内容的推荐系统中，对于每一部电影，都掌握了可用的特征，使用这些特征训练出了每一个用户的参数。相反地，如果拥有用户的参数，可以学习得出电影的特征。</p>
 <script type="math/tex; mode=display">
 \mathop{min}\limits_{x^{(1)},...,x^{(n_m)} }\frac{1}{2}\sum_{i=1}^{n_m}\sum_{j{r(i,j)=1} }((\theta^{(j)})^Tx^{(i)}-y^{(i,j)})^2+\frac{\lambda}{2}\sum_{i=1}^{n_m}\sum_{k=1}^{n}(x_k^{(i)})^2</script><p>但是如果既没有用户的参数，也没有电影的特征，这两种方法都不可行了。协同过滤算法可以同时学习这两者。</p>
 <p>优化目标便改为同时针对$x$和$\theta$进行。</p>
@@ -647,7 +647,7 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -669,7 +669,7 @@ J(x^{(1)},...,x^{(n_m)},\theta^{(1)},...,\theta^{(n_u)})=\frac{1}{2}\sum_{(i,j):
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
