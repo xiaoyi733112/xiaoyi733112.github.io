@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Xiaoyi">
 <meta property="og:description" content="编辑 themes/next/_config.yml切换主题12345# Schemes#scheme: Muse  //默认主题#scheme: Mist#scheme: Piscesscheme: Gemini 设置Menu12345678menu:  home: / || home  //首页  about: /about/ || user  //关于  tags: /tags/ || ta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-01T11:38:52.027Z">
+<meta property="og:updated_time" content="2021-04-06T02:14:20.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的next主题配置">
 <meta name="twitter:description" content="编辑 themes/next/_config.yml切换主题12345# Schemes#scheme: Muse  //默认主题#scheme: Mist#scheme: Piscesscheme: Gemini 设置Menu12345678menu:  home: / || home  //首页  about: /about/ || user  //关于  tags: /tags/ || ta">
@@ -339,10 +339,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: tags</span><br><span class="line">date: 2018-01-20 18:57:48</span><br><span class="line">type: &quot;tags&quot;</span><br></pre></td></tr></table></figure>
 <h3 id="设置动态背景"><a href="#设置动态背景" class="headerlink" title="设置动态背景"></a>设置动态背景</h3><p>主题配置文件中找到canvas_nest，设置成ture。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Canvas-nest</span><br><span class="line">canvas_nest: ture</span><br></pre></td></tr></table></figure>
-<h3 id="在右上角或者左上角实现fork-me-on-github"><a href="#在右上角或者左上角实现fork-me-on-github" class="headerlink" title="在右上角或者左上角实现fork me on github"></a>在右上角或者左上角实现fork me on github</h3><p>在<a href="https://github.blog/2008-12-19-github-ribbons/" target="_blank" rel="noopener">GitHub Ribbons</a>或<a href="http://tholman.com/github-corners/" target="_blank" rel="noopener">GitHub Corners</a>选择一款喜欢的挂饰，拷贝方框内的代码。将复制的挂饰代码，添加到Blog/themes/next/layout/_layout.swig文件中，添加位置为放在\<div class="headband" \>\&lt;/div>下方。</div></p>
+<h3 id="在右上角或者左上角实现fork-me-on-github"><a href="#在右上角或者左上角实现fork-me-on-github" class="headerlink" title="在右上角或者左上角实现fork me on github"></a>在右上角或者左上角实现fork me on github</h3><p>在<a href="https://github.blog/2008-12-19-github-ribbons/" target="_blank" rel="noopener">GitHub Ribbons</a>或<a href="http://tholman.com/github-corners/" target="_blank" rel="noopener">GitHub Corners</a>选择一款喜欢的挂饰，拷贝方框内的代码。将复制的挂饰代码，添加到Blog/themes/next/layout/_layout.swig文件中，添加位置为放在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\&lt;div class=&quot;headband&quot;\&gt;\&lt;/div\&gt;</span><br></pre></td></tr></table></figure>
+<p>下方。</p>
 <h3 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h3><p>在myBlog/_config.yml中添加头像链接地址：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar: /images/avatar.gif</span><br></pre></td></tr></table></figure>
-<h3 id="设置网站的图标Favicon"><a href="#设置网站的图标Favicon" class="headerlink" title="设置网站的图标Favicon"></a>设置网站的图标Favicon</h3><p>在图标网站找一张你喜欢的图标（大：32x32 小：16x16），图标网站：<a href="https://www.easyicon.net/" target="_blank" rel="noopener">easyicon</a>或者<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>。将下载下来的小图和中图放在myBlog/themes/next/source/images，将默认的两张图片替换掉。或者 自定义图片名字，然后修改主题配置文件：</p>
+<h3 id="设置网站的图标Favicon"><a href="#设置网站的图标Favicon" class="headerlink" title="设置网站的图标Favicon"></a>设置网站的图标Favicon</h3><p>在图标网站找一张你喜欢的图标（大：32x32 小：16x16），图标网站：<a href="https://www.easyicon.net/" target="_blank" rel="noopener">easyicon</a>或者<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>。将下载下来的小图和中图放在myBlog/themes/next/source/images，将默认的两张图片替换掉。或者自定义图片名字，然后修改主题配置文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># For example, you put your favicons into `hexo-site/source/images` directory.</span><br><span class="line"># Then need to rename &amp; redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.</span><br><span class="line">favicon:</span><br><span class="line">  small: /images/favicon-16x16-next.png  //16X16小图</span><br><span class="line">  medium: /images/favicon-32x32-next.png  //32X32大图</span><br><span class="line">  apple_touch_icon: /images/apple-touch-icon-next.png  //apple-touch-icon </span><br><span class="line">  safari_pinned_tab: /images/logo.svg </span><br><span class="line">  #android_manifest: /images/manifest.json</span><br><span class="line">  #ms_browserconfig: /images/browserconfig.xml</span><br></pre></td></tr></table></figure>
 <h3 id="首页不显示全文-只显示预览"><a href="#首页不显示全文-只显示预览" class="headerlink" title="首页不显示全文(只显示预览)"></a>首页不显示全文(只显示预览)</h3><p>将enable改为true：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure>
@@ -462,7 +464,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -473,7 +475,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -484,7 +486,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -537,7 +539,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
